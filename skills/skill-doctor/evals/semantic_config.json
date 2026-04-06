@@ -1,0 +1,112 @@
+{
+  "fallback_positive_concepts": [
+    "skill_library",
+    "cleanup_management",
+    "security_scan"
+  ],
+  "positive_concepts": {
+    "skill_library": {
+      "weight": 0.34,
+      "phrases": [
+        "local skill",
+        "local skills",
+        "skills library",
+        "skill library",
+        "skill folder",
+        "skill directory",
+        "downloaded skills",
+        "third-party skills",
+        "clean the library"
+      ]
+    },
+    "cleanup_management": {
+      "weight": 0.28,
+      "phrases": [
+        "cleanup",
+        "archive",
+        "delete",
+        "backup",
+        "整理",
+        "清理",
+        "归档",
+        "备份",
+        "删除",
+        "cleanup priority",
+        "stale",
+        "duplicate candidates",
+        "usage warmth"
+      ]
+    },
+    "security_scan": {
+      "weight": 0.28,
+      "phrases": [
+        "security risk",
+        "security scan",
+        "prompt injection",
+        "token leakage",
+        "hardcoded secret",
+        "hardcoded secrets",
+        "unsafe shell execution",
+        "risky shell execution",
+        "network fetch",
+        "unsafe network fetches",
+        "safety scan"
+      ]
+    },
+    "inventory_usage": {
+      "weight": 0.1,
+      "phrases": [
+        "inventory",
+        "usage estimate",
+        "usage warmth",
+        "what each skill does",
+        "active warm cold"
+      ]
+    }
+  },
+  "negative_concepts": {
+    "create_skill": {
+      "weight": 0.35,
+      "exclusive": true,
+      "phrases": [
+        "create a skill",
+        "build a skill",
+        "new skill",
+        "meta skill",
+        "package it for team reuse"
+      ]
+    },
+    "generic_security": {
+      "weight": 0.3,
+      "exclusive": true,
+      "phrases": [
+        "repository security review",
+        "app security audit",
+        "security issues in this app",
+        "generic security audit on this app",
+        "not on the skills library"
+      ]
+    },
+    "generic_cleanup": {
+      "weight": 0.3,
+      "exclusive": true,
+      "phrases": [
+        "downloads folder",
+        "generic files",
+        "just delete old files",
+        "do not analyze skill purpose",
+        "do not analyze skill purpose usage or security"
+      ]
+    },
+    "summary_only": {
+      "weight": 0.28,
+      "exclusive": true,
+      "phrases": [
+        "explain what",
+        "just explain",
+        "summary only",
+        "only a summary"
+      ]
+    }
+  }
+}

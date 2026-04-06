@@ -16,6 +16,8 @@ Only add a skill when it is suitable for public release:
 - understandable without private context
 - clean of secrets, logs, caches, and output artifacts
 
+Generated local outputs should stay local by default.
+
 ## Sync rule
 
 Use these `sync_status` values:
@@ -29,7 +31,8 @@ Use these `sync_status` values:
 
 1. Import or update the public skill copy
 2. Upsert `registry/skills.json`
-3. Regenerate `README.md`
+3. Add or update `docs/skills/<slug>.md`
+4. Regenerate `README.md`
 
 ## Paths
 

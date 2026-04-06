@@ -19,6 +19,7 @@ def parse_args():
     parser.add_argument("--sync-status", default="local-only")
     parser.add_argument("--github-repo")
     parser.add_argument("--github-url", default="")
+    parser.add_argument("--guide-path", default="")
     parser.add_argument("--license", default="TBD")
     parser.add_argument("--tags", default="")
     parser.add_argument("--last-synced-at", default="")
@@ -52,6 +53,7 @@ def main():
         "sync_status": args.sync_status,
         "github_repo": args.github_repo or repo_name,
         "github_url": args.github_url,
+        "guide_path": args.guide_path,
         "license": args.license,
         "tags": tags,
         "last_synced_at": args.last_synced_at or None,

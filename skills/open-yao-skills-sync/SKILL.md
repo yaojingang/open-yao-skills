@@ -23,6 +23,7 @@ Only read repo-wide docs under `../../docs/` if you need more human-facing detai
 - Evaluate whether a local skill is suitable for public release
 - Create a clean public copy under `skills/<slug>/`
 - Register or update the skill in `registry/skills.json`
+- Add or update a human-facing usage guide under `docs/skills/<slug>.md`
 - Regenerate the README catalog so the collection homepage stays in sync
 - Record whether the skill is only local, staged, published, or needs an update
 - Push collection changes to GitHub when the user wants the public repo updated
@@ -40,6 +41,7 @@ Given a local path from the user:
 Watch for:
 
 - `output/`, `downloads/`, `.venv/`, `node_modules/`, caches, logs
+- generated reports, exported results, `.command` helpers, and local scan artifacts
 - private APIs, tokens, cookies, internal references, customer data
 - assets or references that may not be redistributable
 
@@ -58,6 +60,7 @@ When approved:
 - Copy the public version into `skills/<slug>/` under the repo root
 - Keep only the files needed for the public skill
 - Make the structure self-contained and understandable
+- Exclude local output artifacts by default unless the user explicitly wants a safe sample included
 
 ### 4. Register the skill
 
@@ -89,6 +92,22 @@ python3 scripts/render_readme_catalog.py
 ```
 
 README is a rendered view. Do not maintain the catalog table manually.
+
+### 5.5 Write the usage guide
+
+For every published skill, add or update:
+
+```text
+docs/skills/<slug>.md
+```
+
+The guide should explain:
+
+- what the skill does
+- when to use it
+- the main workflow
+- important inputs and outputs
+- any local-only outputs that should not be committed back into the repo
 
 ### 6. Publish to GitHub when requested
 

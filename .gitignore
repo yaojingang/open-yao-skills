@@ -2,4 +2,9 @@
 __pycache__/
 *.pyc
 .venv/
-
+skills/**/_skill_doctor_reports/
+skills/**/_skill_doctor_archive/
+skills/**/_skill_doctor_quarantine/
+skills/**/_skill_doctor_deleted/
+skills/**/.pytest_cache/
+skills/**/node_modules/

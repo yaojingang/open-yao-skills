@@ -20,21 +20,27 @@ def format_source_path(source_path: str, repo_root: Path) -> str:
 def render_table(skills, repo_root: Path):
     lines = [
         START_MARKER,
-        "| Skill | Lifecycle | Sync | Collection Path | Source Path | GitHub |",
-        "| --- | --- | --- | --- | --- | --- |",
+        "| Skill | Guide | Lifecycle | Sync | Collection Path | Source Path | GitHub |",
+        "| --- | --- | --- | --- | --- | --- | --- |",
     ]
 
     for skill in skills:
         collection = "[{path}]({path})".format(path=skill["collection_path"])
         source = format_source_path(skill["source_local_path"], repo_root)
+        guide = (
+            "[guide]({path})".format(path=skill["guide_path"])
+            if skill.get("guide_path")
+            else "pending"
+        )
         github = (
             "[link]({url})".format(url=skill["github_url"])
             if skill["github_url"]
             else "pending"
         )
         lines.append(
-            "| [{slug}]({collection_path}/SKILL.md) | `{lifecycle}` | `{sync}` | {collection} | {source} | {github} |".format(
+            "| [{slug}]({collection_path}/SKILL.md) | {guide} | `{lifecycle}` | `{sync}` | {collection} | {source} | {github} |".format(
                 slug=skill["slug"],
+                guide=guide,
                 lifecycle=skill["lifecycle"],
                 sync=skill["sync_status"],
                 collection=collection,

@@ -23,6 +23,7 @@
 - `sync_status`: `local-only`, `staged`, `published`, or `needs-update`
 - `github_repo`: normally `open-yao-skills`
 - `github_url`: public GitHub URL when available
+- `guide_path`: path to the human-facing usage guide inside `docs/skills/`
 - `license`: intended license for the public copy
 - `tags`: flat tag list
 - `last_synced_at`: `YYYY-MM-DD` or `null`

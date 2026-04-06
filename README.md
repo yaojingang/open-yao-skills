@@ -12,6 +12,15 @@ Open Yao Skills is a growing collection of AI-native skills designed for real-wo
 - 作为本地同步管理中心，记录哪些 Skill 已纳入合集、当前公开状态如何、说明页是否已更新。
 - 作为后续版本迭代的发布入口，在每次确认更新后同步推送到 GitHub。
 
+## Navigation
+
+- [OpenYao 理念](#openyao-理念)
+- [推荐入口](#推荐入口)
+- [Published Skill Guides](#published-skill-guides)
+- [Skill Catalog](#skill-catalog)
+- [发布规则](docs/publishing-rules.md)
+- [仓库设计](docs/repository-design.md)
+
 ## OpenYao 理念
 
 `open-yao-skills` 想公开的不是“零散 prompt 收藏”，而是一套更稳定的 AI 资产观：
@@ -95,6 +104,12 @@ open-yao-skills/
 
 它们当前只是占位目录，用来约束未来的扩展方向。
 
+## Published Skill Guides
+
+- [Skill Guides Index](docs/skills/README.md)
+- [Open Yao Skills Sync](docs/skills/open-yao-skills-sync.md)
+- [Skill Doctor](docs/skills/skill-doctor.md)
+
 ## 工作流
 
 1. 你给出一个本地 Skill 路径。
@@ -128,9 +143,10 @@ open-yao-skills/
 ## Skill Catalog
 
 <!-- catalog:start -->
-| Skill | Lifecycle | Sync | Collection Path | Source Path | GitHub |
-| --- | --- | --- | --- | --- | --- |
-| [open-yao-skills-sync](skills/open-yao-skills-sync/SKILL.md) | `active` | `published` | [skills/open-yao-skills-sync](skills/open-yao-skills-sync) | [skills/open-yao-skills-sync](skills/open-yao-skills-sync) | [link](https://github.com/yaojingang/open-yao-skills/tree/main/skills/open-yao-skills-sync) |
+| Skill | Guide | Lifecycle | Sync | Collection Path | Source Path | GitHub |
+| --- | --- | --- | --- | --- | --- | --- |
+| [open-yao-skills-sync](skills/open-yao-skills-sync/SKILL.md) | [guide](docs/skills/open-yao-skills-sync.md) | `active` | `published` | [skills/open-yao-skills-sync](skills/open-yao-skills-sync) | [skills/open-yao-skills-sync](skills/open-yao-skills-sync) | [link](https://github.com/yaojingang/open-yao-skills/tree/main/skills/open-yao-skills-sync) |
+| [skill-doctor](skills/skill-doctor/SKILL.md) | [guide](docs/skills/skill-doctor.md) | `active` | `published` | [skills/skill-doctor](skills/skill-doctor) | `external-local-source` | [link](https://github.com/yaojingang/open-yao-skills/tree/main/skills/skill-doctor) |
 <!-- catalog:end -->
 
 ## 后续约定

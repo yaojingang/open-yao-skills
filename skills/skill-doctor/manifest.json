@@ -1,0 +1,22 @@
+{
+  "name": "skill-doctor",
+  "version": "0.1.0",
+  "owner": "laoyao",
+  "updated_at": "2026-04-06",
+  "status": "active",
+  "maturity_tier": "production",
+  "lifecycle_stage": "production",
+  "context_budget_tier": "production",
+  "review_cadence": "monthly",
+  "target_platforms": [
+    "openai",
+    "claude",
+    "generic",
+    "agent-skills-compatible"
+  ],
+  "factory_components": [
+    "references",
+    "scripts",
+    "evals"
+  ]
+}

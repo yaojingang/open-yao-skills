@@ -38,12 +38,14 @@
 - `skills/<slug>/`: 公开版 Skill 实体目录
 - `registry/skills.json`: 收录、同步和来源状态的结构化登记表
 - `README.md`: 面向人阅读的合集首页，由登记表生成目录区块
+- `docs/skills/<slug>.md`: 面向人阅读的每个 Skill 使用说明
 
 约束如下：
 
 - Skill 的真实公开内容以 `skills/<slug>/` 为准
 - Skill 的状态以 `registry/skills.json` 为准
 - README 只做展示，不手工当事实源维护
+- 每个已开源 Skill 都应有对应的 guide 文档
 
 ## 3. 目录规则
 
@@ -131,6 +133,7 @@ open-yao-skills/
 - `sync_status`
 - `github_repo`
 - `github_url`
+- `guide_path`
 - `license`
 - `tags`
 - `last_synced_at`
@@ -141,6 +144,9 @@ open-yao-skills/
 - 我本地的哪个 Skill 已被收录
 - 它在合集中的哪个目录
 - 它是否已经同步到 GitHub 公开仓库
+- 它的使用说明应该去哪里看
+
+其中 `source_local_path` 记录的是原始来源路径，通常是导入前的本地目录，而不是复制进合集之后的 `collection_path`。
 
 其中 GitHub 同步状态不是推断值，而是显式登记值。只有仓库已经成功推送后，才允许标记为 `published`。
 
@@ -151,8 +157,11 @@ open-yao-skills/
 - 复制公开版副本，不直接暴露原始目录
 - 优先保留 `SKILL.md`、必要 `scripts/`、必要 `references/`、必要 `assets/`
 - 删除 `output/`、`downloads/`、`node_modules/`、`.venv/`、缓存、临时文件、私有日志
+- 先检查该 Skill 已生成的本地输出文件是否包含绝对路径、报告数据、私有样本、账号信息或其他敏感内容
+- 原则上不上传本地运行后产生的输出目录、扫描结果、缓存和操作脚本
 - 删除账号、令牌、Cookie、内网地址、私有数据样本
 - 若依赖个人私有路径，需改成公开可解释的路径或写成说明
+- 导入完成后，为该 Skill 新增 `docs/skills/<slug>.md` 使用说明
 
 ## 7. README 同步规则
 

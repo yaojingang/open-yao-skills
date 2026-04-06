@@ -1,0 +1,73 @@
+{
+  "recommended_threshold": 0.33,
+  "should_trigger": [
+    {
+      "text": "Audit my local skill library and rank cleanup priority, duplicate candidates, and security risk.",
+      "family": "skill_library_audit"
+    },
+    {
+      "text": "Review these downloaded skills before I install them. I want prompt injection, token leakage, and risky shell execution flagged.",
+      "family": "third_party_skill_security"
+    },
+    {
+      "text": "Inventory this skill directory, summarize what each skill does, estimate usage warmth, and recommend archive, backup, or delete direction.",
+      "family": "inventory_and_cleanup"
+    },
+    {
+      "text": "Check this skill folder for hardcoded secrets, unsafe network fetches, and whether the stale ones should be archived.",
+      "family": "security_plus_cleanup"
+    },
+    {
+      "text": "I downloaded a batch of third-party skills. Do a safety scan and cleanup review before anything gets installed or run.",
+      "family": "third_party_skill_security"
+    },
+    {
+      "text": "Scan my local skills and tell me which ones are active, warm, cold, duplicated, or risky before I clean the library.",
+      "family": "skill_library_audit"
+    }
+  ],
+  "should_not_trigger": [
+    {
+      "text": "Create a new skill from this workflow and package it for team reuse.",
+      "family": "meta_skill_creation"
+    },
+    {
+      "text": "Review this Python repository for security issues.",
+      "family": "generic_code_security"
+    },
+    {
+      "text": "Delete these old files from my Downloads folder.",
+      "family": "generic_file_cleanup"
+    },
+    {
+      "text": "Explain what prompt injection is.",
+      "family": "explain_only"
+    },
+    {
+      "text": "Improve the description of this single skill.",
+      "family": "edit_single_skill_copy"
+    },
+    {
+      "text": "Summarize the risks in this note without scanning any files.",
+      "family": "summary_only"
+    }
+  ],
+  "near_neighbor": [
+    {
+      "text": "Create a skill that audits local skills for cleanup and security.",
+      "family": "create_vs_use"
+    },
+    {
+      "text": "Refactor this existing skill and add trigger evals.",
+      "family": "meta_skill_iteration"
+    },
+    {
+      "text": "Run a generic security audit on this app, not on the skills library.",
+      "family": "security_outside_skill_library"
+    },
+    {
+      "text": "Clean this directory, but do not analyze skill purpose, usage, or security.",
+      "family": "generic_cleanup_only"
+    }
+  ]
+}

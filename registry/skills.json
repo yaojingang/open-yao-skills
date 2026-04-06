@@ -1,0 +1,25 @@
+{
+  "repo_name": "openyao-skills",
+  "updated_at": "2026-04-06",
+  "skills": [
+    {
+      "slug": "openyao-skills-sync",
+      "title": "OpenYao Skills Sync",
+      "summary": "Manage intake, registration, sync state, and README updates for the openyao-skills public collection.",
+      "source_local_path": "/Users/laoyao/AI Coding/03-Development/Skills/openyao-skills/skills/openyao-skills-sync",
+      "collection_path": "skills/openyao-skills-sync",
+      "lifecycle": "active",
+      "sync_status": "local-only",
+      "github_repo": "openyao-skills",
+      "github_url": "",
+      "license": "MIT",
+      "tags": [
+        "catalog",
+        "governance",
+        "publishing"
+      ],
+      "last_synced_at": null,
+      "updated_at": "2026-04-06"
+    }
+  ]
+}

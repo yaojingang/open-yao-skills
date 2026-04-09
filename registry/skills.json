@@ -9,9 +9,9 @@
       "source_local_path": "/Users/laoyao/AI Coding/03-Development/Skills/personalized-learning-tutorial",
       "collection_path": "skills/learning-tutorial-builder",
       "lifecycle": "active",
-      "sync_status": "staged",
+      "sync_status": "published",
       "github_repo": "open-yao-skills",
-      "github_url": "",
+      "github_url": "https://github.com/yaojingang/open-yao-skills/tree/main/skills/learning-tutorial-builder",
       "guide_path": "docs/skills/learning-tutorial-builder.md",
       "license": "MIT",
       "tags": [
@@ -21,7 +21,7 @@
         "export",
         "personalization"
       ],
-      "last_synced_at": null,
+      "last_synced_at": "2026-04-09",
       "updated_at": "2026-04-09"
     },
     {

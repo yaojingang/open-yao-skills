@@ -8,6 +8,6 @@ Each published skill should have one guide file:
 
 Current guides:
 
+- [learning-tutorial-builder](learning-tutorial-builder.md)
 - [open-yao-skills-sync](open-yao-skills-sync.md)
 - [skill-doctor](skill-doctor.md)
-

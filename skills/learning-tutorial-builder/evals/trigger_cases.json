@@ -1,0 +1,18 @@
+{
+  "recommended_threshold": 0.33,
+  "should_trigger": [
+    "Build a personalized tutorial on the OpenAI Responses API from official docs, export it to docx and pdf, and tailor it for a PM with little coding background.",
+    "Guide me through a learner intake, research authoritative sources, and turn the result into a study packet with exercises.",
+    "Create a source-backed learning guide for our team on SOC 2 basics, then offer a personalized webpage after the document is ready."
+  ],
+  "should_not_trigger": [
+    "Answer one question about the OpenAI API.",
+    "Design a marketing landing page for a course.",
+    "Convert this finished markdown file to pdf only."
+  ],
+  "near_neighbor": [
+    "Research this topic and summarize the top links, but do not create a tutorial.",
+    "Write a blog post from these sources.",
+    "Make a generic course homepage with no study guide behind it."
+  ]
+}

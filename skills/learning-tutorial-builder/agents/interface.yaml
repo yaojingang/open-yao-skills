@@ -1,0 +1,24 @@
+interface:
+  display_name: "Learning Tutorial Builder"
+  short_description: "Build authority-first study guides and export them"
+  default_prompt: "Use $learning-tutorial-builder to clarify the learner profile, research authoritative sources, write a personalized tutorial, and export it to docx or pdf with an optional learning webpage."
+compatibility:
+  canonical_format: "agent-skills"
+  adapter_targets:
+    - "openai"
+    - "claude"
+    - "generic"
+  activation:
+    mode: "manual"
+    paths: []
+  execution:
+    context: "inline"
+    shell: "bash"
+  trust:
+    source_tier: "local"
+    remote_inline_execution: "forbid"
+    remote_metadata_policy: "allow-metadata-only"
+  degradation:
+    openai: "metadata-adapter"
+    claude: "neutral-source-plus-adapter"
+    generic: "neutral-source"

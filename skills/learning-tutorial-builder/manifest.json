@@ -1,0 +1,25 @@
+{
+  "name": "learning-tutorial-builder",
+  "version": "0.1.0",
+  "owner": "Yao Team",
+  "updated_at": "2026-04-09",
+  "status": "active",
+  "maturity_tier": "production",
+  "lifecycle_stage": "active",
+  "context_budget_tier": "production",
+  "review_cadence": "monthly",
+  "category": "education",
+  "complexity_tier": "complex",
+  "target_platforms": [
+    "openai",
+    "claude",
+    "generic"
+  ],
+  "factory_components": [
+    "references",
+    "scripts",
+    "evals",
+    "input",
+    "reports"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "topic": "",
+  "learner_role": "",
+  "current_level": "",
+  "target_outcome": "",
+  "time_budget": "",
+  "language": "zh-CN",
+  "preferred_tone": "",
+  "preferred_examples": [],
+  "must_cover": [],
+  "out_of_scope": [],
+  "required_domains": [],
+  "forbidden_domains": [],
+  "deliverables": [
+    "markdown"
+  ],
+  "want_personalized_webpage": false
+}

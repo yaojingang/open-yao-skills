@@ -145,6 +145,7 @@ open-yao-skills/
 <!-- catalog:start -->
 | Skill | Guide | Lifecycle | Sync | Collection Path | Source Path | GitHub |
 | --- | --- | --- | --- | --- | --- | --- |
+| [learning-tutorial-builder](skills/learning-tutorial-builder/SKILL.md) | [guide](docs/skills/learning-tutorial-builder.md) | `active` | `staged` | [skills/learning-tutorial-builder](skills/learning-tutorial-builder) | `external-local-source` | pending |
 | [open-yao-skills-sync](skills/open-yao-skills-sync/SKILL.md) | [guide](docs/skills/open-yao-skills-sync.md) | `active` | `published` | [skills/open-yao-skills-sync](skills/open-yao-skills-sync) | [skills/open-yao-skills-sync](skills/open-yao-skills-sync) | [link](https://github.com/yaojingang/open-yao-skills/tree/main/skills/open-yao-skills-sync) |
 | [skill-doctor](skills/skill-doctor/SKILL.md) | [guide](docs/skills/skill-doctor.md) | `active` | `published` | [skills/skill-doctor](skills/skill-doctor) | `external-local-source` | [link](https://github.com/yaojingang/open-yao-skills/tree/main/skills/skill-doctor) |
 <!-- catalog:end -->

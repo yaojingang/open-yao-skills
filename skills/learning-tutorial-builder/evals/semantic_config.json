@@ -1,0 +1,168 @@
+{
+  "optimizer_hints": {
+    "capability": "Create personalized learning tutorials from authoritative sources",
+    "inputs": [
+      "learner profile",
+      "topic",
+      "authority sources",
+      "constraints",
+      "desired deliverables"
+    ],
+    "trigger_actions": [
+      "clarify the learner profile",
+      "research authoritative sources",
+      "build a tutorial or study guide",
+      "export to docx or pdf",
+      "optionally extend to a learning webpage"
+    ],
+    "exclusions": [
+      "one-off answers",
+      "generic research summaries",
+      "blog writing",
+      "export-only requests",
+      "webpage-only requests"
+    ],
+    "artifacts": [
+      "tutorial markdown",
+      "source appendix",
+      "docx",
+      "pdf",
+      "optional webpage"
+    ]
+  },
+  "fallback_positive_concepts": [
+    "guided_intake",
+    "authority_research",
+    "tutorial_packet",
+    "personalization",
+    "export_formats"
+  ],
+  "positive_concepts": {
+    "guided_intake": {
+      "weight": 0.2,
+      "phrases": [
+        "guided intake",
+        "learner intake",
+        "clarify goals",
+        "learner profile",
+        "current level",
+        "target outcome",
+        "background",
+        "constraints"
+      ]
+    },
+    "authority_research": {
+      "weight": 0.26,
+      "phrases": [
+        "official docs",
+        "official documentation",
+        "authoritative sources",
+        "primary sources",
+        "source-backed",
+        "standards",
+        "maintainer docs",
+        "regulator guidance"
+      ]
+    },
+    "tutorial_packet": {
+      "weight": 0.24,
+      "phrases": [
+        "personalized tutorial",
+        "tutorial",
+        "study guide",
+        "learning guide",
+        "study packet",
+        "tutorial packet",
+        "course packet"
+      ]
+    },
+    "personalization": {
+      "weight": 0.16,
+      "phrases": [
+        "tailor it",
+        "personalized",
+        "learner-specific",
+        "for a pm",
+        "for a product manager",
+        "for our team",
+        "fit the learner"
+      ]
+    },
+    "export_formats": {
+      "weight": 0.1,
+      "phrases": [
+        "docx",
+        "word",
+        "pdf",
+        "export it",
+        "exported to word or pdf"
+      ]
+    },
+    "webpage_extension": {
+      "weight": 0.04,
+      "phrases": [
+        "personalized webpage",
+        "learning webpage",
+        "webpage after the document is ready",
+        "after the tutorial is ready"
+      ]
+    }
+  },
+  "negative_concepts": {
+    "one_off_answer": {
+      "weight": 0.3,
+      "exclusive": true,
+      "phrases": [
+        "answer one question",
+        "just answer",
+        "single question",
+        "quick answer",
+        "one-off factual answer"
+      ]
+    },
+    "generic_research": {
+      "weight": 0.3,
+      "exclusive": true,
+      "phrases": [
+        "summarize the top links",
+        "top links",
+        "just research",
+        "research this topic and summarize",
+        "generic research"
+      ]
+    },
+    "blog_writing": {
+      "weight": 0.26,
+      "exclusive": true,
+      "phrases": [
+        "blog post",
+        "marketing landing page",
+        "landing page for a course",
+        "marketing copy",
+        "article"
+      ]
+    },
+    "export_only": {
+      "weight": 0.35,
+      "exclusive": true,
+      "phrases": [
+        "convert this finished markdown file",
+        "to pdf only",
+        "export only",
+        "just convert",
+        "conversion only"
+      ]
+    },
+    "no_tutorial_directive": {
+      "weight": 0.35,
+      "exclusive": true,
+      "phrases": [
+        "do not create a tutorial",
+        "no tutorial",
+        "no study guide",
+        "with no study guide behind it",
+        "standalone webpage"
+      ]
+    }
+  }
+}

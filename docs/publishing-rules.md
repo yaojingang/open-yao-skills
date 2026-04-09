@@ -94,6 +94,10 @@ README 首页至少要反映：
 - slug 一旦公开，尽量不改名
 - 本地源路径允许变化，但登记表必须更新
 
+详细命名建议见：
+
+- [naming-conventions.md](naming-conventions.md)
+
 ## 9. 冲突处理
 
 如果某个本地 Skill 同时满足“值得公开”和“包含敏感材料”，优先做分离：

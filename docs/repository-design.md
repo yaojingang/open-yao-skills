@@ -18,6 +18,10 @@
 
 它定义的是如何创建、评估、治理和打包 Skill；而 `open-yao-skills` 负责承接其中那些已经值得公开分享的成果。
 
+相关命名规则见：
+
+- [naming-conventions.md](naming-conventions.md)
+
 ## 1. 定位
 
 `open-yao-skills` 不是“当前 Skills 工作区的完整镜像”，而是一个精选的公开合集仓库。

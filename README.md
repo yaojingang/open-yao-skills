@@ -19,6 +19,7 @@ Open Yao Skills is a growing collection of AI-native skills designed for real-wo
 - [Published Skill Guides](#published-skill-guides)
 - [Skill Catalog](#skill-catalog)
 - [发布规则](docs/publishing-rules.md)
+- [命名规范](docs/naming-conventions.md)
 - [仓库设计](docs/repository-design.md)
 
 ## OpenYao 理念
@@ -77,6 +78,7 @@ Evaluate and rank skills based on real impact.
 详细规则见：
 
 - [docs/repository-design.md](docs/repository-design.md)
+- [docs/naming-conventions.md](docs/naming-conventions.md)
 - [docs/publishing-rules.md](docs/publishing-rules.md)
 
 ## 目录结构

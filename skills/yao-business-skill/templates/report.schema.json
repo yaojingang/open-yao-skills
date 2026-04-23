@@ -1,0 +1,869 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://yao.team/skills/yao-business-skill/report.schema.json",
+  "title": "Yao Business Skill Report",
+  "type": "object",
+  "required": [
+    "analysis_mode",
+    "entity",
+    "market_environment",
+    "evidence_items",
+    "risk_flags",
+    "unknowns",
+    "next_validation",
+    "ai_fit"
+  ],
+  "properties": {
+    "analysis_mode": {
+      "type": "string",
+      "enum": [
+        "idea_to_model",
+        "model_diagnosis",
+        "company_case_study"
+      ]
+    },
+    "entity": {
+      "$ref": "#/$defs/Entity"
+    },
+    "market_environment": {
+      "$ref": "#/$defs/MarketEnvironment"
+    },
+    "chart_modules": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ChartModule"
+      }
+    },
+    "evidence_items": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/EvidenceItem"
+      }
+    },
+    "current_business_models": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/BusinessModelLine"
+      }
+    },
+    "financial_estimates": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/FinancialEstimate"
+      }
+    },
+    "idea_options": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/IdeaOption"
+      }
+    },
+    "scenario_forecast": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ScenarioPoint"
+      }
+    },
+    "validation_plan": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ValidationAction"
+      }
+    },
+    "direct_competitors": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Competitor"
+      }
+    },
+    "cross_industry_analogs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Competitor"
+      }
+    },
+    "benchmark": {
+      "$ref": "#/$defs/Benchmark"
+    },
+    "upgrade_recommendations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Recommendation"
+      }
+    },
+    "profit_pools": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ProfitPool"
+      }
+    },
+    "strengths": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "weaknesses": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "transferable_patterns": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/PatternNote"
+      }
+    },
+    "environment_dependencies": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/PatternNote"
+      }
+    },
+    "risk_flags": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/RiskFlag"
+      }
+    },
+    "unknowns": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "next_validation": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ValidationAction"
+      }
+    },
+    "ai_fit": {
+      "$ref": "#/$defs/AIFit"
+    },
+    "appendix": {
+      "$ref": "#/$defs/Appendix"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "analysis_mode": {
+            "const": "idea_to_model"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "idea_options",
+          "scenario_forecast",
+          "validation_plan"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "analysis_mode": {
+            "const": "model_diagnosis"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "current_business_models",
+          "financial_estimates",
+          "direct_competitors",
+          "cross_industry_analogs",
+          "benchmark",
+          "upgrade_recommendations"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "analysis_mode": {
+            "const": "company_case_study"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "current_business_models",
+          "profit_pools",
+          "strengths",
+          "weaknesses",
+          "transferable_patterns",
+          "environment_dependencies"
+        ]
+      }
+    }
+  ],
+  "$defs": {
+    "CurrencyRange": {
+      "type": "object",
+      "required": [
+        "low",
+        "base",
+        "high",
+        "currency"
+      ],
+      "properties": {
+        "low": {
+          "type": "number"
+        },
+        "base": {
+          "type": "number"
+        },
+        "high": {
+          "type": "number"
+        },
+        "currency": {
+          "type": "string"
+        }
+      }
+    },
+    "Entity": {
+      "type": "object",
+      "required": [
+        "input"
+      ],
+      "properties": {
+        "input": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "domain": {
+          "type": "string"
+        },
+        "legal_name": {
+          "type": "string"
+        },
+        "jurisdiction": {
+          "type": "string"
+        },
+        "region": {
+          "type": "string"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        }
+      }
+    },
+    "EvidenceItem": {
+      "type": "object",
+      "required": [
+        "claim",
+        "source_url",
+        "source_tier"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "claim": {
+          "type": "string"
+        },
+        "source_url": {
+          "type": "string"
+        },
+        "source_tier": {
+          "type": "string",
+          "enum": [
+            "S",
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        "source_type": {
+          "type": "string"
+        },
+        "source_date": {
+          "type": "string"
+        },
+        "quote": {
+          "type": "string"
+        },
+        "extracted_fields": {
+          "type": "object"
+        }
+      }
+    },
+    "MarketEnvironment": {
+      "type": "object",
+      "required": [
+        "company_origin",
+        "target_market",
+        "delivery_direction"
+      ],
+      "properties": {
+        "company_origin": {
+          "type": "string"
+        },
+        "target_market": {
+          "type": "string"
+        },
+        "delivery_direction": {
+          "type": "string",
+          "enum": [
+            "china_to_china",
+            "china_to_overseas",
+            "overseas_to_china",
+            "overseas_to_overseas",
+            "custom"
+          ]
+        },
+        "primary_buyer": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "payment_environment": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "channel_environment": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "compliance_environment": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "trust_environment": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "service_environment": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "competition_environment": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "channel_fit": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "payment_fit": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "compliance_fit": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "trust_fit": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "service_fit": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "competition_fit": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "environment_fit_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "fit_summary": {
+          "type": "string"
+        },
+        "regional_constraints": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "regional_opportunities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "BusinessModelLine": {
+      "type": "object",
+      "required": [
+        "model_label",
+        "status",
+        "confidence"
+      ],
+      "properties": {
+        "model_label": {
+          "type": "string"
+        },
+        "taxonomy_id": {
+          "type": "string"
+        },
+        "payer": {
+          "type": "string"
+        },
+        "pricing_unit": {
+          "type": "string"
+        },
+        "revenue_basis": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "confirmed",
+            "estimated",
+            "latent",
+            "hypothesis"
+          ]
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "FinancialEstimate": {
+      "type": "object",
+      "required": [
+        "label",
+        "formula",
+        "range",
+        "confidence"
+      ],
+      "properties": {
+        "label": {
+          "type": "string"
+        },
+        "formula": {
+          "type": "string"
+        },
+        "variables": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "range": {
+          "$ref": "#/$defs/CurrencyRange"
+        },
+        "gross_margin_range": {
+          "$ref": "#/$defs/CurrencyRange"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "basis": {
+          "type": "string"
+        },
+        "assumptions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "Competitor": {
+      "type": "object",
+      "required": [
+        "type",
+        "name",
+        "score"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "direct",
+            "adjacent",
+            "cross_industry"
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "model_tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "selection_reason": {
+          "type": "string"
+        },
+        "scores": {
+          "type": "object"
+        },
+        "evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "Benchmark": {
+      "type": "object",
+      "properties": {
+        "summary": {
+          "type": "string"
+        },
+        "scorecard": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "price_benchmark": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "unit_economics": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "Recommendation": {
+      "type": "object",
+      "required": [
+        "title",
+        "mechanism",
+        "impact",
+        "effort",
+        "risk",
+        "validation",
+        "formula"
+      ],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "mechanism": {
+          "type": "string"
+        },
+        "impact": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "effort": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "risk": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "formula": {
+          "type": "string"
+        },
+        "validation": {
+          "type": "string"
+        },
+        "environment_adjustment": {
+          "type": "string"
+        }
+      }
+    },
+    "IdeaOption": {
+      "type": "object",
+      "required": [
+        "title",
+        "model_combo",
+        "payer",
+        "pricing_unit",
+        "formula",
+        "priority_score"
+      ],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "model_combo": {
+          "type": "string"
+        },
+        "payer": {
+          "type": "string"
+        },
+        "pricing_unit": {
+          "type": "string"
+        },
+        "formula": {
+          "type": "string"
+        },
+        "priority_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "range": {
+          "$ref": "#/$defs/CurrencyRange"
+        },
+        "ai_role": {
+          "type": "string"
+        },
+        "validation": {
+          "type": "string"
+        }
+      }
+    },
+    "ScenarioPoint": {
+      "type": "object",
+      "required": [
+        "year",
+        "low",
+        "base",
+        "high"
+      ],
+      "properties": {
+        "year": {
+          "type": "string"
+        },
+        "low": {
+          "type": "number"
+        },
+        "base": {
+          "type": "number"
+        },
+        "high": {
+          "type": "number"
+        }
+      }
+    },
+    "ValidationAction": {
+      "type": "object",
+      "required": [
+        "title"
+      ],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "time_horizon": {
+          "type": "string"
+        },
+        "success_signal": {
+          "type": "string"
+        }
+      }
+    },
+    "ProfitPool": {
+      "type": "object",
+      "required": [
+        "label",
+        "explanation"
+      ],
+      "properties": {
+        "label": {
+          "type": "string"
+        },
+        "contribution": {
+          "type": "string"
+        },
+        "explanation": {
+          "type": "string"
+        }
+      }
+    },
+    "PatternNote": {
+      "type": "object",
+      "required": [
+        "title",
+        "note"
+      ],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "note": {
+          "type": "string"
+        }
+      }
+    },
+    "RiskFlag": {
+      "type": "object",
+      "required": [
+        "type",
+        "severity"
+      ],
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "severity": {
+          "type": "string",
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "critical"
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "safe_control": {
+          "type": "string"
+        }
+      }
+    },
+    "AIFit": {
+      "type": "object",
+      "required": [
+        "role",
+        "summary"
+      ],
+      "properties": {
+        "role": {
+          "type": "string",
+          "enum": [
+            "cost_reducer",
+            "differentiator",
+            "billable_unit",
+            "mixed"
+          ]
+        },
+        "summary": {
+          "type": "string"
+        },
+        "leverage_points": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "disruption_risks": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "pricing_implication": {
+          "type": "string"
+        }
+      }
+    },
+    "ChartModule": {
+      "type": "object",
+      "required": [
+        "id",
+        "chart_type",
+        "title",
+        "insight"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "chart_type": {
+          "type": "string"
+        },
+        "title": {},
+        "subtitle": {},
+        "insight": {},
+        "data": {
+          "type": "object"
+        }
+      }
+    },
+    "Appendix": {
+      "type": "object",
+      "properties": {
+        "formulas": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "assumptions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "source_notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

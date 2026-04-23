@@ -1,0 +1,2247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Yao Business Skill Report</title>
+    <style>
+      :root {
+        --bg: #ffffff;
+        --panel: #ffffff;
+        --panel-soft: #fafafa;
+        --ink: #111111;
+        --muted: #5f6368;
+        --line: #e7e7e7;
+        --accent: #111111;
+        --accent-soft: #f3f4f6;
+        --good: #117a4f;
+        --warn: #b76b1f;
+        --bad: #c73b2d;
+        --shadow: 0 18px 48px rgba(15, 23, 42, 0.05);
+        --radius: 24px;
+        --nav-height: 72px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: "PingFang SC", "SF Pro SC", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+        color: var(--ink);
+        background: var(--bg);
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 60;
+        background: rgba(255, 255, 255, 0.94);
+        border-bottom: 1px solid rgba(17, 17, 17, 0.08);
+        backdrop-filter: blur(16px);
+      }
+
+      .topbar-inner {
+        width: min(1280px, calc(100vw - 32px));
+        min-height: var(--nav-height);
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 18px;
+        align-items: center;
+      }
+
+      .brand {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .brand-mark {
+        font-size: 12px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .brand-name {
+        font-size: 16px;
+        font-weight: 700;
+      }
+
+      .nav {
+        display: flex;
+        gap: 10px;
+        overflow-x: auto;
+        padding-bottom: 2px;
+        scrollbar-width: none;
+      }
+
+      .nav::-webkit-scrollbar {
+        display: none;
+      }
+
+      .nav-link {
+        flex: 0 0 auto;
+        padding: 10px 14px;
+        border-radius: 999px;
+        color: var(--muted);
+        font-size: 13px;
+        transition: background 0.2s ease, color 0.2s ease;
+      }
+
+      .nav-link:hover,
+      .nav-link.active {
+        background: var(--accent-soft);
+        color: var(--ink);
+      }
+
+      .lang-toggle {
+        display: inline-flex;
+        padding: 4px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: #ffffff;
+      }
+
+      .lang-btn {
+        border: 0;
+        background: transparent;
+        color: var(--muted);
+        padding: 8px 14px;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .lang-btn.active {
+        background: var(--ink);
+        color: #ffffff;
+      }
+
+      .page {
+        width: min(1280px, calc(100vw - 32px));
+        margin: 24px auto 72px;
+      }
+
+      .anchor {
+        scroll-margin-top: calc(var(--nav-height) + 20px);
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1.35fr 0.95fr;
+        gap: 18px;
+        margin-bottom: 18px;
+      }
+
+      .panel {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+      }
+
+      .hero-main {
+        padding: 34px 36px;
+        min-height: 280px;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        padding: 8px 13px;
+        border-radius: 999px;
+        background: var(--accent-soft);
+        color: var(--muted);
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        margin: 0;
+        line-height: 1.08;
+        font-family: "Songti SC", "Noto Serif SC", Georgia, serif;
+      }
+
+      h1 {
+        margin-top: 18px;
+        font-size: clamp(34px, 4vw, 58px);
+      }
+
+      h2 {
+        font-size: 28px;
+      }
+
+      h3 {
+        font-size: 18px;
+      }
+
+      h4 {
+        font-size: 15px;
+      }
+
+      .subhead {
+        max-width: 64ch;
+        margin-top: 16px;
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.8;
+      }
+
+      .hero-meta {
+        margin-top: 28px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .meta-pill {
+        padding: 10px 12px;
+        border-radius: 14px;
+        background: var(--panel-soft);
+        border: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .hero-side {
+        display: grid;
+        gap: 18px;
+      }
+
+      .kpi-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        padding: 18px;
+      }
+
+      .kpi {
+        padding: 16px;
+        border-radius: 18px;
+        background: var(--panel-soft);
+        border: 1px solid var(--line);
+      }
+
+      .kpi-label {
+        color: var(--muted);
+        font-size: 12px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .kpi-value {
+        margin-top: 10px;
+        font-size: 27px;
+        font-weight: 700;
+      }
+
+      .section-grid {
+        display: grid;
+        gap: 18px;
+      }
+
+      .two-col {
+        grid-template-columns: 1.1fr 0.9fr;
+      }
+
+      .section {
+        padding: 26px 28px;
+      }
+
+      .section + .section {
+        margin-top: 0;
+      }
+
+      .module-title {
+        display: flex;
+        justify-content: space-between;
+        gap: 14px;
+        align-items: flex-end;
+        margin-bottom: 18px;
+      }
+
+      .module-title p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.6;
+      }
+
+      .section-note {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.8;
+      }
+
+      .card-grid {
+        display: grid;
+        gap: 12px;
+      }
+
+      .card-grid.three {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .card-grid.two {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .card-stack {
+        display: grid;
+        gap: 12px;
+      }
+
+      .card {
+        padding: 16px;
+        border-radius: 18px;
+        background: var(--panel-soft);
+        border: 1px solid var(--line);
+      }
+
+      .card-top {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: flex-start;
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .chip {
+        padding: 8px 12px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: #ffffff;
+        font-size: 13px;
+        line-height: 1.4;
+      }
+
+      .label {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .label-good {
+        background: rgba(17, 122, 79, 0.11);
+        color: var(--good);
+      }
+
+      .label-warn {
+        background: rgba(183, 107, 31, 0.12);
+        color: var(--warn);
+      }
+
+      .label-bad {
+        background: rgba(199, 59, 45, 0.11);
+        color: var(--bad);
+      }
+
+      .score-row {
+        display: grid;
+        grid-template-columns: 96px 1fr 52px;
+        gap: 12px;
+        align-items: center;
+        margin-top: 12px;
+      }
+
+      .score-row:first-child {
+        margin-top: 0;
+      }
+
+      .scorebar {
+        width: 100%;
+        height: 10px;
+        border-radius: 999px;
+        background: #ececec;
+        overflow: hidden;
+      }
+
+      .scorebar > span {
+        display: block;
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, #bdbdbd, #111111);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        text-align: left;
+        padding: 12px 10px;
+        border-bottom: 1px solid var(--line);
+        vertical-align: top;
+        font-size: 14px;
+        line-height: 1.65;
+      }
+
+      th {
+        color: var(--muted);
+        font-size: 12px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .empty {
+        padding: 18px;
+        border: 1px dashed var(--line);
+        border-radius: 18px;
+        color: var(--muted);
+        background: #fcfcfc;
+      }
+
+      .method-list {
+        display: grid;
+        gap: 12px;
+      }
+
+      .method-item {
+        padding: 16px;
+        border-radius: 18px;
+        border: 1px solid var(--line);
+        background: var(--panel-soft);
+      }
+
+      .formula-box {
+        padding: 16px;
+        border-radius: 18px;
+        border: 1px solid var(--line);
+        background: #ffffff;
+        font-family: "SFMono-Regular", "Menlo", "Monaco", Consolas, monospace;
+        font-size: 13px;
+        line-height: 1.7;
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+
+      .chart-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .chart-card {
+        padding: 18px;
+        border-radius: 20px;
+        border: 1px solid var(--line);
+        background: var(--panel-soft);
+      }
+
+      .chart-card h3 {
+        font-size: 17px;
+      }
+
+      .chart-card p {
+        margin: 8px 0 0;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.7;
+      }
+
+      .chart-insight {
+        margin-top: 12px;
+        padding-top: 12px;
+        border-top: 1px dashed var(--line);
+        color: var(--ink);
+        font-size: 13px;
+        line-height: 1.7;
+      }
+
+      .chart-bars,
+      .chart-heatmap,
+      .chart-legend,
+      .balance-grid {
+        display: grid;
+        gap: 10px;
+      }
+
+      .chart-bar-row {
+        display: grid;
+        grid-template-columns: minmax(88px, 126px) 1fr auto;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .chart-bar-label,
+      .chart-bar-value {
+        font-size: 13px;
+      }
+
+      .chart-bar-label {
+        color: var(--muted);
+      }
+
+      .chart-track {
+        position: relative;
+        width: 100%;
+        height: 10px;
+        border-radius: 999px;
+        background: #ececec;
+        overflow: hidden;
+      }
+
+      .chart-fill {
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, #a9a9a9, #111111);
+      }
+
+      .range-row {
+        display: grid;
+        gap: 8px;
+      }
+
+      .range-track {
+        position: relative;
+        height: 12px;
+        border-radius: 999px;
+        background: #ececec;
+      }
+
+      .range-segment {
+        position: absolute;
+        top: 0;
+        height: 100%;
+        border-radius: 999px;
+        background: linear-gradient(90deg, #d4d4d4, #4b5563);
+      }
+
+      .range-base {
+        position: absolute;
+        top: -4px;
+        width: 14px;
+        height: 20px;
+        border-radius: 999px;
+        background: #111111;
+        transform: translateX(-50%);
+      }
+
+      .stacked-track {
+        display: flex;
+        width: 100%;
+        height: 16px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: #ececec;
+      }
+
+      .stacked-segment {
+        height: 100%;
+      }
+
+      .chart-heatmap {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      }
+
+      .heatmap-cell {
+        padding: 14px;
+        border-radius: 16px;
+        border: 1px solid var(--line);
+      }
+
+      .heatmap-cell strong,
+      .balance-item strong {
+        display: block;
+        font-size: 15px;
+      }
+
+      .heatmap-cell span,
+      .balance-item span {
+        display: block;
+        margin-top: 6px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .timeline-grid {
+        display: flex;
+        gap: 14px;
+        align-items: flex-end;
+        min-height: 170px;
+      }
+
+      .timeline-item {
+        flex: 1 1 0;
+        display: grid;
+        gap: 8px;
+        justify-items: center;
+      }
+
+      .timeline-bar {
+        width: 100%;
+        max-width: 48px;
+        border-radius: 14px 14px 0 0;
+        background: linear-gradient(180deg, #111111, #9ca3af);
+      }
+
+      .timeline-label {
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .gap-row {
+        display: grid;
+        grid-template-columns: minmax(96px, 148px) 1fr;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .gap-track {
+        position: relative;
+        height: 28px;
+      }
+
+      .gap-track::before {
+        content: "";
+        position: absolute;
+        inset: 13px 0 auto 0;
+        height: 2px;
+        background: #d9d9d9;
+      }
+
+      .gap-marker {
+        position: absolute;
+        top: 6px;
+        width: 14px;
+        height: 14px;
+        border-radius: 999px;
+        transform: translateX(-50%);
+      }
+
+      .gap-marker.peer {
+        background: #9ca3af;
+      }
+
+      .gap-marker.current {
+        background: #111111;
+      }
+
+      .gap-meta {
+        margin-top: 4px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .quadrant {
+        position: relative;
+        height: 260px;
+        border-radius: 20px;
+        border: 1px solid var(--line);
+        background:
+          linear-gradient(to right, transparent calc(50% - 0.5px), #d9d9d9 calc(50% - 0.5px), #d9d9d9 calc(50% + 0.5px), transparent calc(50% + 0.5px)),
+          linear-gradient(to bottom, transparent calc(50% - 0.5px), #d9d9d9 calc(50% - 0.5px), #d9d9d9 calc(50% + 0.5px), transparent calc(50% + 0.5px)),
+          #ffffff;
+      }
+
+      .quadrant-axis {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .quad-point {
+        position: absolute;
+        width: 14px;
+        height: 14px;
+        border-radius: 999px;
+        background: #111111;
+        transform: translate(-50%, 50%);
+      }
+
+      .quad-point.high-risk {
+        background: var(--bad);
+      }
+
+      .quad-label {
+        position: absolute;
+        transform: translate(-50%, -8px);
+        font-size: 12px;
+        color: var(--ink);
+        white-space: nowrap;
+      }
+
+      .balance-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .balance-item {
+        padding: 14px;
+        border-radius: 16px;
+        border: 1px solid var(--line);
+        background: #ffffff;
+      }
+
+      .balance-positive strong {
+        color: var(--good);
+      }
+
+      .balance-negative strong {
+        color: var(--bad);
+      }
+
+      .radar-shell {
+        display: grid;
+        justify-items: center;
+        gap: 12px;
+      }
+
+      .radar-shell svg {
+        width: min(100%, 280px);
+        height: auto;
+      }
+
+      @media (max-width: 980px) {
+        .topbar-inner,
+        .page {
+          width: min(1280px, calc(100vw - 20px));
+        }
+
+        .hero,
+        .two-col,
+        .card-grid.three,
+        .card-grid.two,
+        .chart-grid,
+        .balance-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .topbar-inner {
+          grid-template-columns: 1fr;
+          padding: 12px 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="brand-mark" id="brand-mark"></div>
+          <div class="brand-name" id="brand-name"></div>
+        </div>
+        <nav class="nav" id="top-nav">
+          <a class="nav-link" data-target="overview" href="#overview"></a>
+          <a class="nav-link" data-target="guide" href="#guide"></a>
+          <a class="nav-link" data-target="environment" href="#environment"></a>
+          <a class="nav-link" data-target="models" href="#models"></a>
+          <a class="nav-link" data-target="charts" href="#charts"></a>
+          <a class="nav-link" data-target="competition" href="#competition"></a>
+          <a class="nav-link" data-target="ai" href="#ai"></a>
+          <a class="nav-link" data-target="evidence" href="#evidence"></a>
+          <a class="nav-link" data-target="methodology" href="#methodology"></a>
+        </nav>
+        <div class="lang-toggle">
+          <button class="lang-btn active" data-lang="zh" id="lang-zh">中文</button>
+          <button class="lang-btn" data-lang="en" id="lang-en">EN</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="page">
+      <section class="hero anchor" id="overview">
+        <div class="panel hero-main">
+          <div class="eyebrow" id="hero-eyebrow"></div>
+          <h1 id="report-title">Business Model Report</h1>
+          <p class="subhead" id="report-subhead"></p>
+          <div class="hero-meta" id="hero-meta"></div>
+        </div>
+        <div class="hero-side">
+          <div class="panel kpi-grid" id="kpi-grid"></div>
+        </div>
+      </section>
+
+      <section class="panel section anchor" id="guide">
+        <div class="module-title">
+          <div>
+            <h2 id="guide-title"></h2>
+            <p id="guide-subtitle"></p>
+          </div>
+        </div>
+        <div class="section-grid two-col">
+          <div>
+            <h3 id="module-guide-title"></h3>
+            <div class="card-grid two" id="module-guide-cards" style="margin-top: 12px;"></div>
+          </div>
+          <div>
+            <h3 id="metric-guide-title"></h3>
+            <div class="card-stack" id="metric-guide-cards" style="margin-top: 12px;"></div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-grid" style="margin-top: 18px;">
+        <div class="section-grid two-col">
+          <section class="panel section anchor" id="environment">
+            <div class="module-title">
+              <div>
+                <h2 id="environment-title"></h2>
+                <p id="environment-subtitle"></p>
+              </div>
+              <p id="direction-pill"></p>
+            </div>
+            <div id="environment-summary" class="section-note"></div>
+            <div id="environment-scores" style="margin-top: 18px;"></div>
+            <div style="margin-top: 18px;">
+              <h3 id="constraints-title"></h3>
+              <div class="chips" id="environment-constraints" style="margin-top: 10px;"></div>
+            </div>
+            <div style="margin-top: 18px;">
+              <h3 id="opportunities-title"></h3>
+              <div class="chips" id="environment-opportunities" style="margin-top: 10px;"></div>
+            </div>
+          </section>
+
+          <section class="panel section" id="summary">
+            <div class="module-title">
+              <div>
+                <h2 id="summary-title"></h2>
+                <p id="summary-subtitle"></p>
+              </div>
+              <p id="analysis-mode"></p>
+            </div>
+            <div class="card-stack" id="summary-cards"></div>
+          </section>
+        </div>
+
+        <section class="panel section anchor" id="models">
+          <div class="module-title">
+            <div>
+              <h2 id="models-title"></h2>
+              <p id="models-subtitle"></p>
+            </div>
+          </div>
+          <div id="models-or-ideas"></div>
+        </section>
+
+        <section class="panel section" id="financial">
+          <div class="module-title">
+            <div>
+              <h2 id="financial-title"></h2>
+              <p id="financial-subtitle"></p>
+            </div>
+          </div>
+          <div id="financial-view"></div>
+        </section>
+
+        <section class="panel section anchor" id="charts">
+          <div class="module-title">
+            <div>
+              <h2 id="charts-title"></h2>
+              <p id="charts-subtitle"></p>
+            </div>
+            <p id="charts-count"></p>
+          </div>
+          <div class="chart-grid" id="chart-modules"></div>
+        </section>
+
+        <section class="panel section anchor" id="competition">
+          <div class="module-title">
+            <div>
+              <h2 id="competition-title"></h2>
+              <p id="competition-subtitle"></p>
+            </div>
+          </div>
+          <div class="section-grid two-col">
+            <div>
+              <h3 id="direct-title"></h3>
+              <div id="direct-competitors" style="margin-top: 12px;"></div>
+            </div>
+            <div>
+              <h3 id="analog-title"></h3>
+              <div id="cross-analogs" style="margin-top: 12px;"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel section anchor" id="ai">
+          <div class="module-title">
+            <div>
+              <h2 id="ai-title"></h2>
+              <p id="ai-subtitle"></p>
+            </div>
+          </div>
+          <div class="section-grid two-col">
+            <div id="ai-fit"></div>
+            <div id="recommendations"></div>
+          </div>
+        </section>
+
+        <section class="panel section anchor" id="evidence">
+          <div class="module-title">
+            <div>
+              <h2 id="evidence-title"></h2>
+              <p id="evidence-subtitle"></p>
+            </div>
+          </div>
+          <div class="section-grid two-col">
+            <div id="evidence-map"></div>
+            <div>
+              <div id="risks"></div>
+              <div style="margin-top: 18px;" id="next-actions"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel section anchor" id="methodology">
+          <div class="module-title">
+            <div>
+              <h2 id="method-title"></h2>
+              <p id="method-subtitle"></p>
+            </div>
+          </div>
+          <div class="section-grid two-col">
+            <div>
+              <h3 id="principles-title"></h3>
+              <div class="method-list" id="principles-list" style="margin-top: 12px;"></div>
+            </div>
+            <div>
+              <h3 id="formula-title"></h3>
+              <div class="card-stack" id="formula-list" style="margin-top: 12px;"></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <script id="report-json" type="application/json">__REPORT_JSON__</script>
+    <script>
+      const PLACEHOLDER = "__REPORT_" + "JSON__";
+      const PREVIEW_REPORT = {
+        analysis_mode: "model_diagnosis",
+        entity: {
+          input: "https://preview.example",
+          name: {
+            zh: "预览版商业模式对象",
+            en: "Preview Business Model Target"
+          },
+          type: "private_company_or_product",
+          region: {
+            zh: "模板预览环境",
+            en: "Template preview environment"
+          },
+          jurisdiction: "Singapore",
+          confidence: 78
+        },
+        market_environment: {
+          company_origin: "china",
+          target_market: "overseas",
+          delivery_direction: "china_to_overseas",
+          primary_buyer: ["SMB", "merchant", "support_team"],
+          channel_fit: 74,
+          payment_fit: 71,
+          compliance_fit: 62,
+          trust_fit: 67,
+          service_fit: 73,
+          competition_fit: 64,
+          environment_fit_score: 68,
+          fit_summary: {
+            zh: "这是模板的预览数据，用来展示纯白背景、置顶导航、双语切换与说明模块的结构。",
+            en: "This is preview data for the template so the standalone file can show layout, sticky navigation, bilingual switching, and guidance modules."
+          },
+          regional_constraints: [
+            { zh: "直接打开模板时没有真实业务数据", en: "No real business payload is embedded when the template is opened directly" },
+            { zh: "样例分数仅用于页面预览", en: "Scores are illustrative only in preview mode" }
+          ],
+          regional_opportunities: [
+            { zh: "可以直接预览导航、结构和中英文切换", en: "You can preview navigation, section layout, and bilingual switching immediately" },
+            { zh: "注入真实 JSON 后会自动替换成正式报告", en: "Injected report JSON will automatically replace the preview content" }
+          ]
+        },
+        evidence_items: [
+          {
+            claim: { zh: "模板默认提供一条示例证据，避免空白页。", en: "The template ships with one preview evidence item to avoid a blank page." },
+            source_tier: "A",
+            source_date: "2026-04-21"
+          }
+        ],
+        current_business_models: [
+          {
+            model_label: { zh: "订阅 + 用量计费", en: "Subscription plus usage pricing" },
+            status: "confirmed",
+            payer: { zh: "运营团队", en: "Operations team" },
+            pricing_unit: { zh: "席位/月 + AI 点数", en: "Seat/month plus AI credits" },
+            confidence: 72
+          }
+        ],
+        financial_estimates: [
+          {
+            label: { zh: "示例收入线", en: "Preview revenue line" },
+            formula: "customers * subscription_fee * 12 + usage * unit_price",
+            range: { low: 100000, base: 260000, high: 520000, currency: "USD" },
+            confidence: 65
+          }
+        ],
+        direct_competitors: [
+          {
+            type: "direct",
+            name: "Preview Direct Competitor",
+            category: { zh: "直接竞品示例", en: "Direct competitor example" },
+            score: 79,
+            selection_reason: {
+              zh: "用于展示竞品卡片样式和分数呈现。",
+              en: "Used to preview competitor cards and scoring presentation."
+            }
+          }
+        ],
+        cross_industry_analogs: [
+          {
+            type: "cross_industry",
+            name: "Preview Cross-Industry Analog",
+            category: { zh: "跨行业类比示例", en: "Cross-industry analog example" },
+            score: 71,
+            selection_reason: {
+              zh: "用于展示跨行业类比模块。",
+              en: "Used to preview the cross-industry analog section."
+            }
+          }
+        ],
+        benchmark: {
+          summary: {
+            zh: "预览模式下不会展示完整 benchmark 数据，只保留基本骨架。",
+            en: "Preview mode keeps only a lightweight benchmark summary."
+          }
+        },
+        upgrade_recommendations: [
+          {
+            title: { zh: "把模板切换为真实报告数据", en: "Replace preview content with real report data" },
+            mechanism: "subscription_plus_usage",
+            impact: 80,
+            risk: 30,
+            formula: "rendered_report = template + report_json",
+            validation: {
+              zh: "运行 render_report.py 重新生成正式 HTML。",
+              en: "Run render_report.py to generate a fully rendered report."
+            }
+          }
+        ],
+        risk_flags: [
+          {
+            type: "preview_mode",
+            severity: "medium",
+            safe_control: {
+              zh: "当前是模板预览，不代表正式分析结论。",
+              en: "This is preview mode and should not be treated as a formal analysis result."
+            }
+          }
+        ],
+        unknowns: [
+          { zh: "尚未注入真实报告 JSON。", en: "No real report JSON has been injected yet." }
+        ],
+        next_validation: [
+          {
+            title: { zh: "刷新或重新渲染页面", en: "Refresh or re-render the page" },
+            success_signal: {
+              zh: "模板页可以直接预览，样例页能展示真实报告数据。",
+              en: "The template page renders in preview mode and the sample page renders real report data."
+            }
+          }
+        ],
+        ai_fit: {
+          role: "mixed",
+          summary: {
+            zh: "预览模式下，这里用来展示 AI 模块的版式与双语切换。",
+            en: "In preview mode this block exists to show the AI section layout and bilingual switching."
+          },
+          leverage_points: [
+            { zh: "用于演示模块结构", en: "Demonstrates section structure" }
+          ],
+          disruption_risks: [
+            { zh: "如果未注入 JSON，旧模板会白屏", en: "Without injected JSON, the old template would render blank" }
+          ],
+          pricing_implication: "base_plan_plus_ai_usage"
+        },
+        appendix: {
+          formulas: [
+            {
+              zh: "环境适配度 = 渠道 + 支付 + 合规 + 信任 + 服务 + 竞争维度的加权结果",
+              en: "Environment fit = weighted combination of channel, payment, compliance, trust, service, and competition dimensions"
+            }
+          ]
+        }
+      };
+
+      function readReportPayload() {
+        const node = document.getElementById("report-json");
+        const raw = node ? node.textContent.trim() : "";
+        if (!raw || raw === PLACEHOLDER) return PREVIEW_REPORT;
+        try {
+          return JSON.parse(raw);
+        } catch (error) {
+          console.error("Failed to parse report payload. Falling back to preview data.", error);
+          return PREVIEW_REPORT;
+        }
+      }
+
+      const report = readReportPayload();
+      let currentLang = "zh";
+
+      const UI = {
+        zh: {
+          brandMark: "Yao Business Skill",
+          brandName: "商业模式分析报告",
+          heroEyebrow: "Business Model Analysis",
+          nav: {
+            overview: "总览",
+            guide: "模块说明",
+            environment: "环境适配",
+            models: "模式与财务",
+            charts: "图表分析",
+            competition: "竞争与类比",
+            ai: "AI与建议",
+            evidence: "证据与风险",
+            methodology: "分析原理"
+          },
+          heroFallbackTitle: "商业模式报告",
+          heroFallbackSubhead: "基于证据的商业模式分析，覆盖经营环境适配、AI 影响与可执行建议。",
+          heroMeta: {
+            direction: "经营方向",
+            mode: "分析模式",
+            note: "语言切换说明：若某条内容没有双语字段，页面会保留原文。"
+          },
+          kpis: {
+            mode: "分析模式",
+            entityConfidence: "主体可信度",
+            environmentFit: "环境适配度",
+            evidenceCount: "证据数量"
+          },
+          guideTitle: "模块与指标说明",
+          guideSubtitle: "先看这部分，再看主体分析，会更容易理解报告每个模块和分数意味着什么。",
+          moduleGuideTitle: "模块说明",
+          metricGuideTitle: "指标说明",
+          moduleGuideCards: [
+            { title: "环境适配", body: "判断这个商业模式与目标市场、支付、渠道、合规和服务环境是否匹配。" },
+            { title: "模式与财务", body: "拆解现有或候选收入机制，并把关键收入线转换成可审计的公式与区间。" },
+            { title: "竞争与类比", body: "同时看直接竞品和跨行业模式类比，避免只在同赛道内卷。" },
+            { title: "AI 与建议", body: "分析 AI 是成本压力、差异化能力，还是新的收费单元，并据此给建议。" }
+          ],
+          metricGuideCards: [
+            { title: "主体可信度", body: "基于来源质量、可直接观察性、三角验证、可比性、时效和口径清晰度综合得出。" },
+            { title: "环境适配度", body: "衡量模式和目标经营环境是否匹配，尤其关注渠道、支付、合规、信任与服务。"},
+            { title: "竞品综合分", body: "不是品牌大小排名，而是围绕客群、需求、功能、定价、渠道和证据强度计算的相似度。"},
+            { title: "证据数量", body: "反映当前结论背后的公开证据覆盖度，不代表结论一定正确，但能提示审计深度。"}
+          ],
+          environmentTitle: "经营环境适配",
+          environmentSubtitle: "先判断这门生意处在什么市场环境，再判断什么模式适合它。",
+          constraintsTitle: "主要约束",
+          opportunitiesTitle: "主要机会",
+          summaryTitle: "执行摘要",
+          summarySubtitle: "给决策者的高层摘要。默认先看对象、买方与主要不确定性。",
+          modelsTitle: "商业模式与财务结构",
+          modelsSubtitle: "当前模式、候选模式或新想法方案，会根据分析模式自动切换展示。",
+          financialTitle: "财务区间与情景",
+          financialSubtitle: "所有估算都应以区间、公式和可信度呈现，而不是假装精确。",
+          chartsTitle: "图表分析模块",
+          chartsSubtitle: "不少于 10 个图表分析，用同一份结构化数据从环境、证据、财务、竞争、建议和风险多个角度拆解商业模式。",
+          competitionTitle: "竞争格局与跨行业类比",
+          competitionSubtitle: "同业告诉你谁在抢同一客户，跨行业类比告诉你有哪些模式可迁移。",
+          directTitle: "直接竞品",
+          analogTitle: "跨行业类比",
+          aiTitle: "AI 作用与建议",
+          aiSubtitle: "这里既看 AI 的收入机会，也看 AI 对毛利和防御力的反向压力。",
+          evidenceTitle: "证据、风险与下一步",
+          evidenceSubtitle: "把证据链、风险控制和最小验证动作放在一起，避免只剩观点。",
+          methodTitle: "分析原理",
+          methodSubtitle: "这份报告默认遵循证据优先、环境优先、区间估算、AI 双向影响四个原则。",
+          principlesTitle: "分析原则",
+          formulaTitle: "核心公式与口径",
+          principles: [
+            { title: "证据优先", body: "优先使用财报、官网、价格页、产品文档和官方案例。弱证据只用于估算，不用于强结论。" },
+            { title: "环境优先", body: "同一模式在中国、海外、出海、入华四类方向上，渠道、支付、信任和合规要求都会变化。" },
+            { title: "区间估算", body: "收入、毛利和贡献默认使用低 / 中 / 高区间，避免把代理指标包装成确定事实。" },
+            { title: "AI 双向影响", body: "AI 既可能成为新收费单元，也可能成为套件化挤压和毛利波动的来源。" }
+          ],
+          fallbackFormula: "当前报告没有附录公式，建议至少展示可信度、环境适配度和核心收入线公式。",
+          fallbackPrinciple: "当前报告没有额外方法说明。",
+          labels: {
+            entity: "分析对象",
+            buyer: "目标买方",
+            unknowns: "主要不确定性",
+            formula: "公式",
+            range: "区间",
+            validation: "验证动作",
+            leverage: "AI 杠杆点",
+            disruption: "AI 冲击风险",
+            nextActions: "下一步动作",
+            claim: "结论",
+            tier: "证据层级",
+            date: "日期",
+            line: "收入线",
+            confidence: "可信度",
+            year: "年份",
+            low: "低值",
+            base: "中值",
+            high: "高值",
+            current: "当前",
+            peer: "同行中位数",
+            positive: "正向杠杆",
+            negative: "反向压力",
+            model: "模式",
+            status: "状态",
+            payer: "付费方",
+            unit: "计费单位",
+            noItems: "暂无内容",
+            notProvided: "未提供"
+          },
+          maps: {
+            analysis_mode: {
+              idea_to_model: "新想法设计",
+              model_diagnosis: "现有模式诊断",
+              company_case_study: "成熟公司案例分析"
+            },
+            delivery_direction: {
+              china_to_china: "中国主体服务中国市场",
+              china_to_overseas: "中国主体服务海外市场",
+              overseas_to_china: "海外主体进入中国市场",
+              overseas_to_overseas: "海外主体服务海外市场",
+              custom: "自定义方向"
+            },
+            status: {
+              confirmed: "已确认",
+              estimated: "估算",
+              latent: "潜在模式",
+              hypothesis: "假设"
+            },
+            severity: {
+              low: "低",
+              medium: "中",
+              high: "高",
+              critical: "极高"
+            },
+            ai_role: {
+              cost_reducer: "成本优化",
+              differentiator: "差异化能力",
+              billable_unit: "可收费单元",
+              mixed: "混合型"
+            },
+            token: {
+              private_company_or_product: "私有公司或产品",
+              china: "中国主体",
+              overseas: "海外市场",
+              global_multi_region: "全球多区域",
+              SMB: "中小企业",
+              merchant: "商家",
+              support_team: "客服团队",
+              credit_card: "信用卡",
+              annual_contract: "年度合约",
+              invoice_for_larger_accounts: "大客户发票结算",
+              seo: "SEO",
+              shopify_app_store: "Shopify 应用市场",
+              partner_referrals: "伙伴转介绍",
+              content_led_growth: "内容驱动增长",
+              consumer_privacy: "消费者隐私",
+              data_cross_border: "数据跨境",
+              platform_policy_dependence: "平台政策依赖",
+              trial_required: "需要试用",
+              case_studies_required: "需要案例证明",
+              response_sla_matters: "响应 SLA 重要",
+              self_serve_onboarding: "自助式 onboarding",
+              localized_support: "本地化支持",
+              light_implementation: "轻实施",
+              suite_pressure: "套件化压力",
+              fragmented_support_stack: "支持工具碎片化",
+              price_sensitive_mid_market: "中端市场价格敏感",
+              workspace_month: "工作空间/月",
+              base_plan_plus_ai_usage: "基础订阅 + AI 用量",
+              subscription_plus_usage: "订阅 + 用量",
+              subscription: "订阅",
+              usage_revenue: "用量收入",
+              recognized_revenue: "确认收入",
+              services_revenue: "服务收入",
+              app_marketplace: "应用市场",
+              team_subscription: "团队订阅",
+              freemium: "免费增值",
+              seat_subscription: "按席位订阅",
+              ai_add_on: "AI 附加包",
+              enterprise: "企业向",
+              automation: "自动化",
+              ecommerce: "电商",
+              support_suite: "客服套件"
+            }
+          }
+        },
+        en: {
+          brandMark: "Yao Business Skill",
+          brandName: "Business Model Report",
+          heroEyebrow: "Business Model Analysis",
+          nav: {
+            overview: "Overview",
+            guide: "Guide",
+            environment: "Environment",
+            models: "Models & Finance",
+            charts: "Charts",
+            competition: "Competition",
+            ai: "AI & Advice",
+            evidence: "Evidence & Risk",
+            methodology: "Methodology"
+          },
+          heroFallbackTitle: "Business Model Report",
+          heroFallbackSubhead: "Evidence-based business model analysis covering market fit, AI implications, and decision-ready recommendations.",
+          heroMeta: {
+            direction: "Route",
+            mode: "Mode",
+            note: "Language note: if a field has no bilingual value, the report keeps the original text."
+          },
+          kpis: {
+            mode: "Mode",
+            entityConfidence: "Entity Confidence",
+            environmentFit: "Environment Fit",
+            evidenceCount: "Evidence Count"
+          },
+          guideTitle: "Module And Metric Guide",
+          guideSubtitle: "Read this first to understand what each section and score is trying to answer.",
+          moduleGuideTitle: "Module Guide",
+          metricGuideTitle: "Metric Guide",
+          moduleGuideCards: [
+            { title: "Environment Fit", body: "Tests whether the business model matches the target market, channel, payment, compliance, and service conditions." },
+            { title: "Models And Finance", body: "Breaks down current or candidate revenue mechanisms and turns them into auditable formulas and ranges." },
+            { title: "Competition And Analogs", body: "Direct competitors show who fights for the same buyer. Cross-industry analogs show what can be migrated." },
+            { title: "AI And Advice", body: "Explains whether AI is a cost pressure, a differentiator, or a billable unit, then uses that to shape recommendations." }
+          ],
+          metricGuideCards: [
+            { title: "Entity Confidence", body: "Built from source quality, direct observability, triangulation, benchmark fit, recency, and accounting clarity." },
+            { title: "Environment Fit", body: "Measures whether the model suits the operating environment, especially channel, payment, compliance, trust, and service." },
+            { title: "Competitor Score", body: "Not brand size. It is a similarity score based on buyer overlap, need overlap, features, pricing, channel, and evidence." },
+            { title: "Evidence Count", body: "Shows how much public evidence supports the report. It signals audit depth, not automatic truth." }
+          ],
+          environmentTitle: "Market Environment Fit",
+          environmentSubtitle: "The operating environment is judged before the business model is judged.",
+          constraintsTitle: "Constraints",
+          opportunitiesTitle: "Opportunities",
+          summaryTitle: "Executive Summary",
+          summarySubtitle: "A short view for decision-makers: who this is for, what the buyer looks like, and where uncertainty remains.",
+          modelsTitle: "Business Model And Financial Structure",
+          modelsSubtitle: "Displays current models, candidate models, or idea options depending on the analysis mode.",
+          financialTitle: "Ranges And Scenarios",
+          financialSubtitle: "Estimates should appear as ranges, formulas, and confidence levels instead of fake precision.",
+          chartsTitle: "Chart Analysis Layer",
+          chartsSubtitle: "At least 10 chart analyses turn the same structured report into a multi-angle visual diagnosis across environment, evidence, finance, competition, recommendations, and risk.",
+          competitionTitle: "Competition And Cross-Industry Analogs",
+          competitionSubtitle: "Direct competitors show market pressure; analogs show migration paths.",
+          directTitle: "Direct Competitors",
+          analogTitle: "Cross-Industry Analogs",
+          aiTitle: "AI Role And Recommendations",
+          aiSubtitle: "This section captures both AI upside and AI pressure on margin and defensibility.",
+          evidenceTitle: "Evidence, Risks, And Next Steps",
+          evidenceSubtitle: "Keep the audit trail, risk controls, and minimum validation actions together.",
+          methodTitle: "Methodology",
+          methodSubtitle: "The report follows four default principles: evidence first, environment first, bounded estimation, and two-sided AI analysis.",
+          principlesTitle: "Principles",
+          formulaTitle: "Core Formulas And Bases",
+          principles: [
+            { title: "Evidence First", body: "Use filings, official sites, pricing pages, product docs, and official customer stories before weaker signals." },
+            { title: "Environment First", body: "The same model behaves differently across China, overseas, outbound, and inbound operating environments." },
+            { title: "Bounded Estimation", body: "Revenue, margin, and contribution should default to low / base / high ranges." },
+            { title: "Two-Sided AI Analysis", body: "AI can create new billable units while also increasing suite pressure and margin volatility." }
+          ],
+          fallbackFormula: "No appendix formulas were provided. At minimum, show confidence, environment-fit, and core revenue formulas.",
+          fallbackPrinciple: "No additional methodology notes were provided.",
+          labels: {
+            entity: "Entity",
+            buyer: "Buyer",
+            unknowns: "Unknowns",
+            formula: "Formula",
+            range: "Range",
+            validation: "Validation",
+            leverage: "Leverage",
+            disruption: "Disruption Risks",
+            nextActions: "Next Actions",
+            claim: "Claim",
+            tier: "Tier",
+            date: "Date",
+            line: "Line",
+            confidence: "Confidence",
+            year: "Year",
+            low: "Low",
+            base: "Base",
+            high: "High",
+            current: "Current",
+            peer: "Peer Median",
+            positive: "Positive Levers",
+            negative: "Negative Pressure",
+            model: "Model",
+            status: "Status",
+            payer: "Payer",
+            unit: "Unit",
+            noItems: "No items supplied",
+            notProvided: "Not provided"
+          },
+          maps: {
+            analysis_mode: {
+              idea_to_model: "New Idea Design",
+              model_diagnosis: "Model Diagnosis",
+              company_case_study: "Company Case Study"
+            },
+            delivery_direction: {
+              china_to_china: "China to China",
+              china_to_overseas: "China to Overseas",
+              overseas_to_china: "Overseas to China",
+              overseas_to_overseas: "Overseas to Overseas",
+              custom: "Custom"
+            },
+            status: {
+              confirmed: "Confirmed",
+              estimated: "Estimated",
+              latent: "Latent",
+              hypothesis: "Hypothesis"
+            },
+            severity: {
+              low: "Low",
+              medium: "Medium",
+              high: "High",
+              critical: "Critical"
+            },
+            ai_role: {
+              cost_reducer: "Cost Reducer",
+              differentiator: "Differentiator",
+              billable_unit: "Billable Unit",
+              mixed: "Mixed"
+            },
+            token: {
+              private_company_or_product: "Private company or product",
+              china: "China-based",
+              overseas: "Overseas market",
+              global_multi_region: "Multi-region global",
+              SMB: "SMB",
+              merchant: "Merchant",
+              support_team: "Support team",
+              credit_card: "Credit card",
+              annual_contract: "Annual contract",
+              invoice_for_larger_accounts: "Invoice for larger accounts",
+              seo: "SEO",
+              shopify_app_store: "Shopify app store",
+              partner_referrals: "Partner referrals",
+              content_led_growth: "Content-led growth",
+              consumer_privacy: "Consumer privacy",
+              data_cross_border: "Cross-border data",
+              platform_policy_dependence: "Platform policy dependence",
+              trial_required: "Trial required",
+              case_studies_required: "Case studies required",
+              response_sla_matters: "Response SLA matters",
+              self_serve_onboarding: "Self-serve onboarding",
+              localized_support: "Localized support",
+              light_implementation: "Light implementation",
+              suite_pressure: "Suite pressure",
+              fragmented_support_stack: "Fragmented support stack",
+              price_sensitive_mid_market: "Price-sensitive mid-market",
+              workspace_month: "Workspace / month",
+              base_plan_plus_ai_usage: "Base plan plus AI usage",
+              subscription_plus_usage: "Subscription plus usage",
+              subscription: "Subscription",
+              usage_revenue: "Usage revenue",
+              recognized_revenue: "Recognized revenue",
+              services_revenue: "Services revenue",
+              app_marketplace: "App marketplace",
+              team_subscription: "Team subscription",
+              freemium: "Freemium",
+              seat_subscription: "Seat subscription",
+              ai_add_on: "AI add-on",
+              enterprise: "Enterprise",
+              automation: "Automation",
+              ecommerce: "Ecommerce",
+              support_suite: "Support suite"
+            }
+          }
+        }
+      };
+
+      const reportFormulas = safeArray(report.appendix?.formulas);
+
+      function safeArray(value) {
+        return Array.isArray(value) ? value : [];
+      }
+
+      function ui() {
+        return UI[currentLang];
+      }
+
+      function fallbackText() {
+        return ui().labels.notProvided;
+      }
+
+      function localize(value, fallback = "") {
+        if (value && typeof value === "object" && !Array.isArray(value)) {
+          if (currentLang === "zh" && value.zh) return String(value.zh);
+          if (currentLang === "en" && value.en) return String(value.en);
+          if (value.zh) return String(value.zh);
+          if (value.en) return String(value.en);
+        }
+        if (value === null || value === undefined || value === "") return fallback;
+        return String(value);
+      }
+
+      function looksLikeToken(value) {
+        return typeof value === "string" && /^[A-Za-z0-9_]+$/.test(value);
+      }
+
+      function humanizeToken(value) {
+        return String(value).replace(/_/g, " ");
+      }
+
+      function tokenLabel(value) {
+        const raw = localize(value, "");
+        if (!raw) return fallbackText();
+        const maps = ui().maps.token || {};
+        if (maps[raw]) return maps[raw];
+        if (looksLikeToken(raw)) return humanizeToken(raw);
+        return raw;
+      }
+
+      function mappedLabel(group, value, fallback = "") {
+        const raw = localize(value, fallback);
+        if (!raw) return fallback || fallbackText();
+        const maps = ui().maps[group] || {};
+        return maps[raw] || tokenLabel(raw);
+      }
+
+      function escapeHtml(value) {
+        const string = localize(value, "");
+        return string.replace(/[&<>"']/g, (ch) => ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          "\"": "&quot;",
+          "'": "&#39;"
+        })[ch]);
+      }
+
+      function currencyRange(range) {
+        if (!range) return fallbackText();
+        const currency = localize(range.currency, "");
+        return `${currency} ${range.low ?? "-"} / ${range.base ?? "-"} / ${range.high ?? "-"}`;
+      }
+
+      function labelClass(value) {
+        const raw = localize(value, "").toLowerCase();
+        if (raw === "low" || raw === "good") return "label-good";
+        if (raw === "high" || raw === "critical" || raw === "bad") return "label-bad";
+        return "label-warn";
+      }
+
+      function chips(items, mode = "text") {
+        const list = safeArray(items);
+        if (!list.length) return `<div class="empty">${escapeHtml(ui().labels.noItems)}</div>`;
+        return list.map((item) => {
+          const text = mode === "token" ? tokenLabel(item) : localize(item, fallbackText());
+          return `<span class="chip">${escapeHtml(text)}</span>`;
+        }).join("");
+      }
+
+      function scoreBar(label, value) {
+        const safeValue = Number.isFinite(Number(value)) ? Number(value) : 0;
+        return `
+          <div class="score-row">
+            <div>${escapeHtml(label)}</div>
+            <div class="scorebar"><span style="width:${Math.max(0, Math.min(100, safeValue))}%"></span></div>
+            <div>${safeValue}</div>
+          </div>
+        `;
+      }
+
+      function formatCompactNumber(value, unit = "") {
+        const numeric = Number(value);
+        if (!Number.isFinite(numeric)) return fallbackText();
+        let display = "";
+        const abs = Math.abs(numeric);
+        if (unit === "%") {
+          display = numeric.toFixed(1).replace(/\.0$/, "");
+          return `${display}%`;
+        }
+        if (abs >= 1_000_000_000) {
+          display = `${(numeric / 1_000_000_000).toFixed(2).replace(/\.00$/, "")}B`;
+        } else if (abs >= 1_000_000) {
+          display = `${(numeric / 1_000_000).toFixed(2).replace(/\.00$/, "")}M`;
+        } else if (abs >= 1_000) {
+          display = `${(numeric / 1_000).toFixed(1).replace(/\.0$/, "")}K`;
+        } else {
+          display = numeric.toFixed(abs % 1 === 0 ? 0 : 1);
+        }
+        return unit ? `${unit} ${display}` : display;
+      }
+
+      function chartIntensity(value) {
+        const safeValue = Math.max(0, Math.min(100, Number(value) || 0));
+        const alpha = 0.08 + safeValue / 140;
+        return `rgba(17, 17, 17, ${alpha})`;
+      }
+
+      function renderRankedBarChart(data = {}) {
+        const items = safeArray(data.items);
+        const maxValue = Number(data.max_value) || Math.max(...items.map((item) => Number(item.value) || 0), 1);
+        return `<div class="chart-bars">${items.map((item) => {
+          const value = Number(item.value) || 0;
+          const width = Math.max(4, (value / maxValue) * 100);
+          return `
+            <div class="chart-bar-row">
+              <div class="chart-bar-label">${escapeHtml(localize(item.label, fallbackText()))}</div>
+              <div class="chart-track"><div class="chart-fill" style="width:${width}%"></div></div>
+              <div class="chart-bar-value">${escapeHtml(formatCompactNumber(value, item.unit || ""))}</div>
+            </div>
+          `;
+        }).join("")}</div>`;
+      }
+
+      function renderHeatmapChart(data = {}) {
+        const cells = safeArray(data.cells);
+        return `<div class="chart-heatmap">${cells.map((cell) => `
+          <div class="heatmap-cell" style="background:${chartIntensity(cell.value)};">
+            <strong>${escapeHtml(localize(cell.label, fallbackText()))}</strong>
+            <span>${escapeHtml(formatCompactNumber(cell.value, cell.unit || ""))}</span>
+          </div>
+        `).join("")}</div>`;
+      }
+
+      function renderTimelineChart(data = {}) {
+        const items = safeArray(data.items);
+        const maxValue = Number(data.max_value) || Math.max(...items.map((item) => Number(item.value) || 0), 1);
+        return `<div class="timeline-grid">${items.map((item) => {
+          const value = Number(item.value) || 0;
+          const height = Math.max(18, (value / maxValue) * 140);
+          return `
+            <div class="timeline-item">
+              <div class="chart-bar-value">${escapeHtml(formatCompactNumber(value, item.unit || ""))}</div>
+              <div class="timeline-bar" style="height:${height}px;"></div>
+              <div class="timeline-label">${escapeHtml(localize(item.label, fallbackText()))}</div>
+            </div>
+          `;
+        }).join("")}</div>`;
+      }
+
+      function renderRangeBarChart(data = {}) {
+        const items = safeArray(data.items);
+        const maxHigh = Math.max(...items.map((item) => Number(item.high) || 0), 1);
+        return `<div class="chart-bars">${items.map((item) => {
+          const low = Number(item.low) || 0;
+          const base = Number(item.base) || 0;
+          const high = Number(item.high) || 0;
+          const left = (low / maxHigh) * 100;
+          const width = Math.max(2, ((high - low) / maxHigh) * 100);
+          const baseLeft = (base / maxHigh) * 100;
+          return `
+            <div class="range-row">
+              <div class="card-top">
+                <div class="chart-bar-label">${escapeHtml(localize(item.label, fallbackText()))}</div>
+                <div class="chart-bar-value">${escapeHtml(formatCompactNumber(base, item.unit || ""))}</div>
+              </div>
+              <div class="range-track">
+                <div class="range-segment" style="left:${left}%; width:${width}%;"></div>
+                <div class="range-base" style="left:${baseLeft}%;"></div>
+              </div>
+            </div>
+          `;
+        }).join("")}</div>`;
+      }
+
+      function renderStackedBarChart(data = {}) {
+        const items = safeArray(data.items);
+        const total = Number(data.total) || items.reduce((sum, item) => sum + (Number(item.value) || 0), 0);
+        const palette = ["#111111", "#444444", "#6b7280", "#9ca3af", "#cbd5e1", "#e5e7eb"];
+        return `
+          <div class="stacked-track">
+            ${items.map((item, index) => {
+              const width = total ? Math.max(2, ((Number(item.value) || 0) / total) * 100) : 0;
+              return `<div class="stacked-segment" style="width:${width}%; background:${palette[index % palette.length]};"></div>`;
+            }).join("")}
+          </div>
+          <div class="chart-bars" style="margin-top:12px;">
+            ${items.map((item, index) => `
+              <div class="chart-bar-row">
+                <div class="chart-bar-label">${escapeHtml(localize(item.label, fallbackText()))}</div>
+                <div class="chart-track"><div class="chart-fill" style="width:${total ? ((Number(item.value) || 0) / total) * 100 : 0}%; background:${palette[index % palette.length]};"></div></div>
+                <div class="chart-bar-value">${escapeHtml(total ? `${(((Number(item.value) || 0) / total) * 100).toFixed(1)}%` : "0%")}</div>
+              </div>
+            `).join("")}
+          </div>
+        `;
+      }
+
+      function renderGapBarChart(data = {}) {
+        const items = safeArray(data.items);
+        return `<div class="chart-bars">${items.map((item) => `
+          <div class="range-row">
+            <div class="gap-row">
+              <div class="chart-bar-label">${escapeHtml(localize(item.label, fallbackText()))}</div>
+              <div class="gap-track">
+                <span class="gap-marker peer" style="left:${Math.max(0, Math.min(100, Number(item.peer) || 0))}%"></span>
+                <span class="gap-marker current" style="left:${Math.max(0, Math.min(100, Number(item.current) || 0))}%"></span>
+              </div>
+            </div>
+            <div class="gap-meta">${escapeHtml(ui().labels.current)} ${escapeHtml(formatCompactNumber(item.current, "%"))} | ${escapeHtml(ui().labels.peer)} ${escapeHtml(formatCompactNumber(item.peer, "%"))}</div>
+          </div>
+        `).join("")}</div>`;
+      }
+
+      function renderQuadrantChart(data = {}) {
+        const items = safeArray(data.items);
+        return `
+          <div class="quadrant">
+            ${items.map((item) => {
+              const left = Math.max(4, Math.min(96, Number(item.x) || 0));
+              const bottom = Math.max(4, Math.min(96, Number(item.y) || 0));
+              const tone = item.tone === "high_risk" ? "high-risk" : "";
+              return `
+                <div class="quad-label" style="left:${left}%; bottom:${bottom}%;">${escapeHtml(localize(item.label, fallbackText()))}</div>
+                <div class="quad-point ${tone}" style="left:${left}%; bottom:${bottom}%;"></div>
+              `;
+            }).join("")}
+          </div>
+          <div class="quadrant-axis">
+            <span>${escapeHtml(localize(data.x_label, fallbackText()))}</span>
+            <span>${escapeHtml(localize(data.y_label, fallbackText()))}</span>
+          </div>
+        `;
+      }
+
+      function renderBalanceChart(data = {}) {
+        const positives = safeArray(data.positive);
+        const negatives = safeArray(data.negative);
+        return `
+          <div class="balance-grid">
+            <div class="card-stack">
+              ${positives.map((item) => `
+                <div class="balance-item balance-positive">
+                  <strong>${escapeHtml(ui().labels.positive)}</strong>
+                  <span>${escapeHtml(localize(item, fallbackText()))}</span>
+                </div>
+              `).join("")}
+            </div>
+            <div class="card-stack">
+              ${negatives.map((item) => `
+                <div class="balance-item balance-negative">
+                  <strong>${escapeHtml(ui().labels.negative)}</strong>
+                  <span>${escapeHtml(localize(item, fallbackText()))}</span>
+                </div>
+              `).join("")}
+            </div>
+          </div>
+        `;
+      }
+
+      function renderRadarChart(data = {}) {
+        const metrics = safeArray(data.metrics);
+        if (!metrics.length) return `<div class="empty">${escapeHtml(ui().labels.noItems)}</div>`;
+        const size = 240;
+        const center = size / 2;
+        const radius = 78;
+        const rings = [20, 40, 60, 80, 100];
+        const axisLines = metrics.map((item, index) => {
+          const angle = (Math.PI * 2 * index) / metrics.length - Math.PI / 2;
+          const x = center + Math.cos(angle) * radius;
+          const y = center + Math.sin(angle) * radius;
+          return `<line x1="${center}" y1="${center}" x2="${x}" y2="${y}" stroke="#d9d9d9" stroke-width="1"></line>`;
+        }).join("");
+        const ringPolygons = rings.map((ring) => {
+          const points = metrics.map((_, index) => {
+            const angle = (Math.PI * 2 * index) / metrics.length - Math.PI / 2;
+            const x = center + Math.cos(angle) * radius * (ring / 100);
+            const y = center + Math.sin(angle) * radius * (ring / 100);
+            return `${x},${y}`;
+          }).join(" ");
+          return `<polygon points="${points}" fill="none" stroke="#e5e7eb" stroke-width="1"></polygon>`;
+        }).join("");
+        const valuePolygon = metrics.map((item, index) => {
+          const angle = (Math.PI * 2 * index) / metrics.length - Math.PI / 2;
+          const value = Math.max(0, Math.min(100, Number(item.value) || 0));
+          const x = center + Math.cos(angle) * radius * (value / 100);
+          const y = center + Math.sin(angle) * radius * (value / 100);
+          return `${x},${y}`;
+        }).join(" ");
+        const labels = metrics.map((item, index) => {
+          const angle = (Math.PI * 2 * index) / metrics.length - Math.PI / 2;
+          const x = center + Math.cos(angle) * (radius + 24);
+          const y = center + Math.sin(angle) * (radius + 24);
+          return `<text x="${x}" y="${y}" font-size="11" text-anchor="middle" fill="#5f6368">${escapeHtml(localize(item.label, fallbackText()))}</text>`;
+        }).join("");
+        return `
+          <div class="radar-shell">
+            <svg viewBox="0 0 ${size} ${size}">
+              ${ringPolygons}
+              ${axisLines}
+              <polygon points="${valuePolygon}" fill="rgba(17,17,17,0.16)" stroke="#111111" stroke-width="2"></polygon>
+              ${labels}
+            </svg>
+          </div>
+        `;
+      }
+
+      function renderChartVisual(module) {
+        const type = module.chart_type;
+        if (type === "radar") return renderRadarChart(module.data);
+        if (type === "heatmap") return renderHeatmapChart(module.data);
+        if (type === "timeline") return renderTimelineChart(module.data);
+        if (type === "range_bar") return renderRangeBarChart(module.data);
+        if (type === "stacked_bar") return renderStackedBarChart(module.data);
+        if (type === "gap_bar") return renderGapBarChart(module.data);
+        if (type === "quadrant") return renderQuadrantChart(module.data);
+        if (type === "balance") return renderBalanceChart(module.data);
+        return renderRankedBarChart(module.data);
+      }
+
+      function renderChrome() {
+        document.documentElement.lang = currentLang === "zh" ? "zh-CN" : "en";
+        document.title = currentLang === "zh" ? "Yao Business Skill 报告" : "Yao Business Skill Report";
+        document.getElementById("brand-mark").textContent = ui().brandMark;
+        document.getElementById("brand-name").textContent = ui().brandName;
+        document.getElementById("hero-eyebrow").textContent = ui().heroEyebrow;
+        document.querySelectorAll(".nav-link").forEach((link) => {
+          link.textContent = ui().nav[link.dataset.target];
+        });
+        document.getElementById("lang-zh").classList.toggle("active", currentLang === "zh");
+        document.getElementById("lang-en").classList.toggle("active", currentLang === "en");
+      }
+
+      function renderHero() {
+        const entity = report.entity || {};
+        const aiSummary = localize(report.ai_fit?.summary, "");
+        document.getElementById("report-title").textContent = localize(entity.name, entity.input || ui().heroFallbackTitle);
+        document.getElementById("report-subhead").textContent = [
+          localize(entity.type, ""),
+          localize(entity.region, ""),
+          aiSummary
+        ].filter(Boolean).join(currentLang === "zh" ? "。 " : ". ") || ui().heroFallbackSubhead;
+
+        document.getElementById("hero-meta").innerHTML = [
+          `${ui().heroMeta.direction}: ${mappedLabel("delivery_direction", report.market_environment?.delivery_direction, fallbackText())}`,
+          `${ui().heroMeta.mode}: ${mappedLabel("analysis_mode", report.analysis_mode, fallbackText())}`,
+          ui().heroMeta.note
+        ].map((item) => `<div class="meta-pill">${escapeHtml(item)}</div>`).join("");
+      }
+
+      function renderKpis() {
+        const entity = report.entity || {};
+        const environment = report.market_environment || {};
+        const metrics = [
+          [ui().kpis.mode, mappedLabel("analysis_mode", report.analysis_mode, fallbackText())],
+          [ui().kpis.entityConfidence, `${entity.confidence ?? "-"} / 100`],
+          [ui().kpis.environmentFit, `${environment.environment_fit_score ?? "-"} / 100`],
+          [ui().kpis.evidenceCount, safeArray(report.evidence_items).length]
+        ];
+        document.getElementById("kpi-grid").innerHTML = metrics.map(([label, value]) => `
+          <div class="kpi">
+            <div class="kpi-label">${escapeHtml(label)}</div>
+            <div class="kpi-value">${escapeHtml(value)}</div>
+          </div>
+        `).join("");
+      }
+
+      function renderGuide() {
+        document.getElementById("guide-title").textContent = ui().guideTitle;
+        document.getElementById("guide-subtitle").textContent = ui().guideSubtitle;
+        document.getElementById("module-guide-title").textContent = ui().moduleGuideTitle;
+        document.getElementById("metric-guide-title").textContent = ui().metricGuideTitle;
+        document.getElementById("module-guide-cards").innerHTML = ui().moduleGuideCards.map((item) => `
+          <div class="card">
+            <h3>${escapeHtml(item.title)}</h3>
+            <div class="section-note" style="margin-top:10px;">${escapeHtml(item.body)}</div>
+          </div>
+        `).join("");
+        document.getElementById("metric-guide-cards").innerHTML = ui().metricGuideCards.map((item) => `
+          <div class="card">
+            <h3>${escapeHtml(item.title)}</h3>
+            <div class="section-note" style="margin-top:10px;">${escapeHtml(item.body)}</div>
+          </div>
+        `).join("");
+      }
+
+      function renderEnvironment() {
+        const env = report.market_environment || {};
+        document.getElementById("environment-title").textContent = ui().environmentTitle;
+        document.getElementById("environment-subtitle").textContent = ui().environmentSubtitle;
+        document.getElementById("direction-pill").textContent = mappedLabel("delivery_direction", env.delivery_direction, fallbackText());
+        document.getElementById("constraints-title").textContent = ui().constraintsTitle;
+        document.getElementById("opportunities-title").textContent = ui().opportunitiesTitle;
+        document.getElementById("environment-summary").textContent = localize(env.fit_summary, fallbackText());
+        document.getElementById("environment-scores").innerHTML = [
+          [currentLang === "zh" ? "渠道" : "Channel", env.channel_fit],
+          [currentLang === "zh" ? "支付" : "Payment", env.payment_fit],
+          [currentLang === "zh" ? "合规" : "Compliance", env.compliance_fit],
+          [currentLang === "zh" ? "信任" : "Trust", env.trust_fit],
+          [currentLang === "zh" ? "服务" : "Service", env.service_fit],
+          [currentLang === "zh" ? "竞争" : "Competition", env.competition_fit]
+        ].map(([label, value]) => scoreBar(label, value)).join("");
+        document.getElementById("environment-constraints").innerHTML = chips(env.regional_constraints);
+        document.getElementById("environment-opportunities").innerHTML = chips(env.regional_opportunities);
+      }
+
+      function renderSummary() {
+        const entity = report.entity || {};
+        const env = report.market_environment || {};
+        document.getElementById("summary-title").textContent = ui().summaryTitle;
+        document.getElementById("summary-subtitle").textContent = ui().summarySubtitle;
+        document.getElementById("analysis-mode").textContent = mappedLabel("analysis_mode", report.analysis_mode, fallbackText());
+        const cards = [
+          {
+            title: ui().labels.entity,
+            body: `${localize(entity.name, entity.input || fallbackText())} | ${localize(entity.jurisdiction, fallbackText())}`
+          },
+          {
+            title: ui().labels.buyer,
+            body: safeArray(env.primary_buyer).map((item) => tokenLabel(item)).join(currentLang === "zh" ? "、" : ", ") || fallbackText()
+          },
+          {
+            title: ui().labels.unknowns,
+            body: safeArray(report.unknowns).slice(0, 3).map((item) => localize(item, fallbackText())).join(currentLang === "zh" ? "；" : "; ") || fallbackText()
+          }
+        ];
+        document.getElementById("summary-cards").innerHTML = cards.map((card) => `
+          <div class="card">
+            <h3>${escapeHtml(card.title)}</h3>
+            <div class="section-note" style="margin-top:8px;">${escapeHtml(card.body)}</div>
+          </div>
+        `).join("");
+      }
+
+      function renderModelsOrIdeas() {
+        document.getElementById("models-title").textContent = ui().modelsTitle;
+        document.getElementById("models-subtitle").textContent = ui().modelsSubtitle;
+        const models = safeArray(report.current_business_models);
+        const ideas = safeArray(report.idea_options);
+        if (ideas.length) {
+          document.getElementById("models-or-ideas").innerHTML = ideas.map((item) => `
+            <div class="card" style="margin-bottom:12px;">
+              <div class="card-top">
+                <div>
+                  <h3>${escapeHtml(localize(item.title, fallbackText()))}</h3>
+                  <div class="muted" style="margin-top:6px;">${escapeHtml(localize(item.model_combo, fallbackText()))}</div>
+                </div>
+                <span class="label ${labelClass("warn")}">${escapeHtml(item.priority_score)} / 100</span>
+              </div>
+              <div class="muted" style="margin-top:10px;">${escapeHtml(localize(item.payer, fallbackText()))} | ${escapeHtml(localize(item.pricing_unit, fallbackText()))}</div>
+              <div style="margin-top:10px;"><strong>${escapeHtml(ui().labels.formula)}:</strong> ${escapeHtml(localize(item.formula, fallbackText()))}</div>
+              <div style="margin-top:10px;"><strong>${escapeHtml(ui().labels.range)}:</strong> ${escapeHtml(currencyRange(item.range))}</div>
+              <div style="margin-top:10px;"><strong>${escapeHtml(ui().labels.validation)}:</strong> ${escapeHtml(localize(item.validation, fallbackText()))}</div>
+            </div>
+          `).join("");
+          return;
+        }
+        if (models.length) {
+          document.getElementById("models-or-ideas").innerHTML = `
+            <table>
+              <thead>
+                <tr>
+                  <th>${escapeHtml(ui().labels.model)}</th>
+                  <th>${escapeHtml(ui().labels.status)}</th>
+                  <th>${escapeHtml(ui().labels.payer)}</th>
+                  <th>${escapeHtml(ui().labels.unit)}</th>
+                  <th>${escapeHtml(ui().labels.confidence)}</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${models.map((item) => `
+                  <tr>
+                    <td>${escapeHtml(localize(item.model_label, fallbackText()))}</td>
+                    <td>${escapeHtml(mappedLabel("status", item.status, fallbackText()))}</td>
+                    <td>${escapeHtml(localize(item.payer, fallbackText()))}</td>
+                    <td>${escapeHtml(localize(item.pricing_unit, fallbackText()))}</td>
+                    <td>${escapeHtml(item.confidence)}</td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          `;
+          return;
+        }
+        document.getElementById("models-or-ideas").innerHTML = `<div class="empty">${escapeHtml(ui().labels.noItems)}</div>`;
+      }
+
+      function renderFinancials() {
+        document.getElementById("financial-title").textContent = ui().financialTitle;
+        document.getElementById("financial-subtitle").textContent = ui().financialSubtitle;
+        const financials = safeArray(report.financial_estimates);
+        const forecast = safeArray(report.scenario_forecast);
+        if (financials.length) {
+          document.getElementById("financial-view").innerHTML = `
+            <table>
+              <thead>
+                <tr>
+                  <th>${escapeHtml(ui().labels.line)}</th>
+                  <th>${escapeHtml(ui().labels.formula)}</th>
+                  <th>${escapeHtml(ui().labels.range)}</th>
+                  <th>${escapeHtml(ui().labels.confidence)}</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${financials.map((item) => `
+                  <tr>
+                    <td>${escapeHtml(localize(item.label, fallbackText()))}</td>
+                    <td>${escapeHtml(localize(item.formula, fallbackText()))}</td>
+                    <td>${escapeHtml(currencyRange(item.range))}</td>
+                    <td>${escapeHtml(item.confidence)}</td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          `;
+          return;
+        }
+        if (forecast.length) {
+          document.getElementById("financial-view").innerHTML = `
+            <table>
+              <thead>
+                <tr>
+                  <th>${escapeHtml(ui().labels.year)}</th>
+                  <th>${escapeHtml(ui().labels.low)}</th>
+                  <th>${escapeHtml(ui().labels.base)}</th>
+                  <th>${escapeHtml(ui().labels.high)}</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${forecast.map((item) => `
+                  <tr>
+                    <td>${escapeHtml(localize(item.year, fallbackText()))}</td>
+                    <td>${escapeHtml(item.low)}</td>
+                    <td>${escapeHtml(item.base)}</td>
+                    <td>${escapeHtml(item.high)}</td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          `;
+          return;
+        }
+        document.getElementById("financial-view").innerHTML = `<div class="empty">${escapeHtml(ui().labels.noItems)}</div>`;
+      }
+
+      function renderCharts() {
+        document.getElementById("charts-title").textContent = ui().chartsTitle;
+        document.getElementById("charts-subtitle").textContent = ui().chartsSubtitle;
+        const modules = safeArray(report.chart_modules);
+        document.getElementById("charts-count").textContent = currentLang === "zh" ? `${modules.length} 个图表` : `${modules.length} charts`;
+        if (!modules.length) {
+          document.getElementById("chart-modules").innerHTML = `<div class="empty">${escapeHtml(ui().labels.noItems)}</div>`;
+          return;
+        }
+        document.getElementById("chart-modules").innerHTML = modules.map((module) => `
+          <div class="chart-card">
+            <h3>${escapeHtml(localize(module.title, fallbackText()))}</h3>
+            <p>${escapeHtml(localize(module.subtitle, fallbackText()))}</p>
+            <div style="margin-top:14px;">${renderChartVisual(module)}</div>
+            <div class="chart-insight">${escapeHtml(localize(module.insight, fallbackText()))}</div>
+          </div>
+        `).join("");
+      }
+
+      function renderCompetitorGroup(elementId, items, emptyLabel) {
+        const list = safeArray(items);
+        if (!list.length) {
+          document.getElementById(elementId).innerHTML = `<div class="empty">${escapeHtml(emptyLabel)}</div>`;
+          return;
+        }
+        document.getElementById(elementId).innerHTML = list.slice(0, 10).map((item) => `
+          <div class="card" style="margin-bottom:12px;">
+            <div class="card-top">
+              <div>
+                <h3>${escapeHtml(localize(item.name, fallbackText()))}</h3>
+                <div class="muted" style="margin-top:6px;">${escapeHtml(localize(item.category, fallbackText()))}</div>
+              </div>
+              <span class="label ${labelClass("good")}">${escapeHtml(item.score)} / 100</span>
+            </div>
+            <div class="section-note" style="margin-top:10px;">${escapeHtml(localize(item.selection_reason, fallbackText()))}</div>
+          </div>
+        `).join("");
+      }
+
+      function renderCompetition() {
+        document.getElementById("competition-title").textContent = ui().competitionTitle;
+        document.getElementById("competition-subtitle").textContent = ui().competitionSubtitle;
+        document.getElementById("direct-title").textContent = ui().directTitle;
+        document.getElementById("analog-title").textContent = ui().analogTitle;
+        renderCompetitorGroup("direct-competitors", report.direct_competitors, ui().labels.noItems);
+        renderCompetitorGroup("cross-analogs", report.cross_industry_analogs, ui().labels.noItems);
+      }
+
+      function renderAiAndRecommendations() {
+        const ai = report.ai_fit || {};
+        document.getElementById("ai-title").textContent = ui().aiTitle;
+        document.getElementById("ai-subtitle").textContent = ui().aiSubtitle;
+        document.getElementById("ai-fit").innerHTML = `
+          <div class="card">
+            <div class="card-top">
+              <h3>${escapeHtml(mappedLabel("ai_role", ai.role, fallbackText()))}</h3>
+              <span class="label ${labelClass("warn")}">${escapeHtml(tokenLabel(ai.pricing_implication || fallbackText()))}</span>
+            </div>
+            <div class="section-note" style="margin-top:10px;">${escapeHtml(localize(ai.summary, fallbackText()))}</div>
+            <div style="margin-top:14px;">
+              <h4>${escapeHtml(ui().labels.leverage)}</h4>
+              <div class="chips" style="margin-top:10px;">${chips(ai.leverage_points)}</div>
+            </div>
+            <div style="margin-top:14px;">
+              <h4>${escapeHtml(ui().labels.disruption)}</h4>
+              <div class="chips" style="margin-top:10px;">${chips(ai.disruption_risks)}</div>
+            </div>
+          </div>
+        `;
+
+        const recs = safeArray(report.upgrade_recommendations);
+        if (!recs.length) {
+          document.getElementById("recommendations").innerHTML = `<div class="empty">${escapeHtml(ui().labels.noItems)}</div>`;
+          return;
+        }
+        document.getElementById("recommendations").innerHTML = recs.slice(0, 6).map((item) => `
+          <div class="card" style="margin-bottom:12px;">
+            <div class="card-top">
+              <h3>${escapeHtml(localize(item.title, fallbackText()))}</h3>
+              <span class="label ${labelClass(item.risk > 70 ? "bad" : "warn")}">${escapeHtml(item.impact)} / 100</span>
+            </div>
+            <div class="muted" style="margin-top:8px;">${escapeHtml(tokenLabel(item.mechanism || fallbackText()))}</div>
+            <div style="margin-top:10px;"><strong>${escapeHtml(ui().labels.formula)}:</strong> ${escapeHtml(localize(item.formula, fallbackText()))}</div>
+            <div style="margin-top:10px;"><strong>${escapeHtml(ui().labels.validation)}:</strong> ${escapeHtml(localize(item.validation, fallbackText()))}</div>
+          </div>
+        `).join("");
+      }
+
+      function renderEvidence() {
+        document.getElementById("evidence-title").textContent = ui().evidenceTitle;
+        document.getElementById("evidence-subtitle").textContent = ui().evidenceSubtitle;
+        const evidence = safeArray(report.evidence_items);
+        if (!evidence.length) {
+          document.getElementById("evidence-map").innerHTML = `<div class="empty">${escapeHtml(ui().labels.noItems)}</div>`;
+          return;
+        }
+        document.getElementById("evidence-map").innerHTML = `
+          <table>
+            <thead>
+              <tr>
+                <th>${escapeHtml(ui().labels.claim)}</th>
+                <th>${escapeHtml(ui().labels.tier)}</th>
+                <th>${escapeHtml(ui().labels.date)}</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${evidence.slice(0, 12).map((item) => `
+                <tr>
+                  <td>${escapeHtml(localize(item.claim, fallbackText()))}</td>
+                  <td>${escapeHtml(localize(item.source_tier, fallbackText()))}</td>
+                  <td>${escapeHtml(localize(item.source_date, fallbackText()))}</td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        `;
+      }
+
+      function renderRisksAndNextActions() {
+        const risks = safeArray(report.risk_flags);
+        document.getElementById("risks").innerHTML = risks.length ? risks.map((risk) => `
+          <div class="card" style="margin-bottom:12px;">
+            <div class="card-top">
+              <h3>${escapeHtml(tokenLabel(risk.type || fallbackText()))}</h3>
+              <span class="label ${labelClass(risk.severity)}">${escapeHtml(mappedLabel("severity", risk.severity, fallbackText()))}</span>
+            </div>
+            <div class="section-note" style="margin-top:8px;">${escapeHtml(localize(risk.safe_control, fallbackText()))}</div>
+          </div>
+        `).join("") : `<div class="empty">${escapeHtml(ui().labels.noItems)}</div>`;
+
+        const next = safeArray(report.next_validation);
+        document.getElementById("next-actions").innerHTML = next.length ? `
+          <h3>${escapeHtml(ui().labels.nextActions)}</h3>
+          <div class="card-stack" style="margin-top: 12px;">
+            ${next.map((item) => `
+              <div class="card">
+                <strong>${escapeHtml(localize(item.title, fallbackText()))}</strong>
+                <div class="section-note" style="margin-top:8px;">${escapeHtml(localize(item.success_signal, fallbackText()))}</div>
+              </div>
+            `).join("")}
+          </div>
+        ` : `<div class="empty">${escapeHtml(ui().labels.noItems)}</div>`;
+      }
+
+      function renderMethodology() {
+        document.getElementById("method-title").textContent = ui().methodTitle;
+        document.getElementById("method-subtitle").textContent = ui().methodSubtitle;
+        document.getElementById("principles-title").textContent = ui().principlesTitle;
+        document.getElementById("formula-title").textContent = ui().formulaTitle;
+        document.getElementById("principles-list").innerHTML = ui().principles.map((item) => `
+          <div class="method-item">
+            <h3>${escapeHtml(item.title)}</h3>
+            <div class="section-note" style="margin-top:8px;">${escapeHtml(item.body)}</div>
+          </div>
+        `).join("");
+        const formulas = reportFormulas.length ? reportFormulas : [ui().fallbackFormula];
+        document.getElementById("formula-list").innerHTML = formulas.map((formula) => `
+          <div class="formula-box">${escapeHtml(localize(formula, fallbackText()))}</div>
+        `).join("");
+      }
+
+      function bindLanguageToggle() {
+        document.querySelectorAll(".lang-btn").forEach((button) => {
+          button.addEventListener("click", () => {
+            currentLang = button.dataset.lang;
+            renderApp();
+          });
+        });
+      }
+
+      function bindScrollSpy() {
+        const links = [...document.querySelectorAll(".nav-link")];
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            links.forEach((link) => link.classList.toggle("active", link.dataset.target === entry.target.id));
+          });
+        }, {
+          rootMargin: "-25% 0px -60% 0px",
+          threshold: 0.01
+        });
+
+        links.forEach((link) => {
+          const section = document.getElementById(link.dataset.target);
+          if (section) observer.observe(section);
+        });
+      }
+
+      function renderApp() {
+        renderChrome();
+        renderHero();
+        renderKpis();
+        renderGuide();
+        renderEnvironment();
+        renderSummary();
+        renderModelsOrIdeas();
+        renderFinancials();
+        renderCharts();
+        renderCompetition();
+        renderAiAndRecommendations();
+        renderEvidence();
+        renderRisksAndNextActions();
+        renderMethodology();
+      }
+
+      bindLanguageToggle();
+      bindScrollSpy();
+      renderApp();
+    </script>
+  </body>
+</html>

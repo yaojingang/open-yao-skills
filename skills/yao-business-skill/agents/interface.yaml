@@ -1,0 +1,24 @@
+interface:
+  display_name: "Yao Business Skill"
+  short_description: "Design and diagnose business models with environment fit"
+  default_prompt: "Use $yao-business-skill to design or diagnose a business model with market-environment fit."
+compatibility:
+  canonical_format: "agent-skills"
+  adapter_targets:
+    - "openai"
+    - "claude"
+    - "generic"
+  activation:
+    mode: "manual"
+    paths: []
+  execution:
+    context: "inline"
+    shell: "bash"
+  trust:
+    source_tier: "local"
+    remote_inline_execution: "forbid"
+    remote_metadata_policy: "allow-metadata-only"
+  degradation:
+    openai: "metadata-adapter"
+    claude: "neutral-source-plus-adapter"
+    generic: "neutral-source"

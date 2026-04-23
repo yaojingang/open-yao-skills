@@ -68,6 +68,29 @@
       "updated_at": "2026-04-23"
     },
     {
+      "slug": "yao-business-skill",
+      "title": "Yao Business Skill",
+      "summary": "Design, diagnose, and study business models with market-environment fit, chart-rich reporting, competitor analysis, and AI-era upgrade guidance.",
+      "source_local_path": "/Users/laoyao/AI Coding/03-Development/Skills/yao-business-skill",
+      "collection_path": "skills/yao-business-skill",
+      "lifecycle": "active",
+      "sync_status": "published",
+      "github_repo": "yao-open-skills",
+      "github_url": "https://github.com/yaojingang/yao-open-skills/tree/main/skills/yao-business-skill",
+      "guide_path": "docs/skills/yao-business-skill.md",
+      "license": "MIT",
+      "tags": [
+        "business-model",
+        "strategy",
+        "diagnosis",
+        "competition",
+        "reporting",
+        "ai"
+      ],
+      "last_synced_at": "2026-04-23",
+      "updated_at": "2026-04-23"
+    },
+    {
       "slug": "yao-open-skills-sync",
       "title": "Yao Open Skills Sync",
       "summary": "Manage intake, registration, sync state, and README updates for the yao-open-skills public collection.",

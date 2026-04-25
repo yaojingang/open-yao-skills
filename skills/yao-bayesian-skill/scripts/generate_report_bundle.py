@@ -119,10 +119,10 @@ SKILL_CAPABILITIES = [
         "en_body": "Re-runs the decision under alternative priors, evidence strength, and dependency discounts to show whether the conclusion is robust.",
     },
     {
-        "zh_title": "自动化报告 bundle",
-        "zh_body": "从同一个结构化输入自动生成 JSON、Markdown、双语 HTML、PDF 和 Word 报告，并保持内容同步。",
-        "en_title": "Automated report bundle",
-        "en_body": "Automatically generates synchronized JSON, Markdown, bilingual HTML, PDF, and Word reports from the same structured input.",
+        "zh_title": "自动化 HTML / Markdown 报告",
+        "zh_body": "从同一个结构化输入自动生成 Markdown 与双语 HTML，并在 HTML 中支持打印和存储为 PDF。",
+        "en_title": "Automated HTML / Markdown reports",
+        "en_body": "Automatically generates synchronized Markdown and bilingual HTML reports from the same structured input, with print and save-as-PDF support inside HTML.",
     },
     {
         "zh_title": "多轮对话决策循环",
@@ -641,7 +641,7 @@ def build_markdown(request: dict, report: dict) -> str:
     lines = [
         f"# 贝叶斯决策报告：{report['title']}",
         "",
-        "> 本报告由 `yao-bayesian-skill` 基于同一结构化输入自动生成；JSON、Markdown、HTML、PDF、Word 版本保持同步。",
+        "> 本报告由 `yao-bayesian-skill` 基于同一结构化输入自动生成；Markdown 与 HTML 版本保持同步。",
         "",
         "## 1. 先说结论",
         f"- 结论标签：{plain['label_zh']}",
@@ -818,7 +818,7 @@ def build_markdown(request: dict, report: dict) -> str:
             "",
             "## 16. 自动生成说明",
             "- 本报告不是手写示例，而是由同一个结构化输入自动渲染出来的正式输出。",
-            "- HTML 提供中英双语一键切换，PDF 和 Word 默认采用简体中文主报告。",
+            "- HTML 提供中英双语一键切换，并支持直接打印或在浏览器打印面板里存储为 PDF。",
             f"- {plain['decision_gate_zh']}",
         ]
     )
@@ -1191,12 +1191,20 @@ def build_html(request: dict, report: dict) -> str:
         </div>
       </div>
       <nav class="menu">{nav_links}</nav>
-      <div class="lang-toggle" aria-label="Language switcher">
-        <button class="lang-button is-active" type="button" data-lang-button="zh">中文</button>
-        <button class="lang-button" type="button" data-lang-button="en">EN</button>
+      <div class="topbar-tools">
+        <div class="report-actions" aria-label="Report actions">
+          <button class="action-button" type="button" data-report-action="print">{dual_html("打印", "Print")}</button>
+          <button class="action-button action-button-primary" type="button" data-report-action="save-pdf">{dual_html("下载 PDF", "Save as PDF")}</button>
+        </div>
+        <div class="lang-toggle" aria-label="Language switcher">
+          <button class="lang-button is-active" type="button" data-lang-button="zh">中文</button>
+          <button class="lang-button" type="button" data-lang-button="en">EN</button>
+        </div>
       </div>
     </div>
   </header>
+
+  <div class="report-toast" id="report-toast" hidden></div>
 
   <main class="page">
     <section class="hero section-anchor-offset" id="summary">
@@ -1351,7 +1359,7 @@ def build_html(request: dict, report: dict) -> str:
     <section class="section pro-only section-anchor-offset" id="warnings">
       {dual_tag("h2", "风险与注意事项", "Warnings and caveats")}
       <ul class="warning-list">{warning_items}</ul>
-      <p class="footer-note">{dual_html("本 HTML 只是同一份自动化 bundle 的一个可视化视图；PDF 和 Word 与其共享同一个结构化计算结果。", "This HTML report is only one view of the same automated bundle; PDF and Word share the same structured calculation result.")}</p>
+      <p class="footer-note">{dual_html("本 HTML 与 Markdown 共享同一套结构化计算结果；如需 PDF，请使用右上角“下载 PDF”。", "This HTML report shares the same structured result as Markdown. If you need a PDF, use the save-as-PDF action in the top-right corner.")}</p>
     </section>
 
     {fold_section("workflow", "附录", "Appendix", appendix_section_html)}
@@ -1361,6 +1369,11 @@ def build_html(request: dict, report: dict) -> str:
     (function () {{
       const root = document.body;
       const buttons = Array.from(document.querySelectorAll("[data-lang-button]"));
+      const actionButtons = Array.from(document.querySelectorAll("[data-report-action]"));
+      const toast = document.getElementById("report-toast");
+      const foldSections = Array.from(document.querySelectorAll("details.fold-section"));
+      let printState = null;
+      let printRestoreTimer = null;
       function setLang(lang) {{
         root.dataset.lang = lang;
         buttons.forEach((button) => {{
@@ -1374,6 +1387,48 @@ def build_html(request: dict, report: dict) -> str:
       buttons.forEach((button) => {{
         button.addEventListener("click", () => setLang(button.dataset.langButton));
       }});
+      function showToast(message) {{
+        if (!toast) return;
+        toast.textContent = message;
+        toast.hidden = false;
+        toast.classList.add("is-visible");
+        window.clearTimeout(showToast.timerId);
+        showToast.timerId = window.setTimeout(() => {{
+          toast.classList.remove("is-visible");
+          window.setTimeout(() => {{
+            toast.hidden = true;
+          }}, 220);
+        }}, 2400);
+      }}
+      function prepareForPrint() {{
+        if (printState) return;
+        printState = foldSections.map((section) => section.open);
+        foldSections.forEach((section) => {{
+          section.open = true;
+        }});
+      }}
+      function restoreAfterPrint() {{
+        if (!printState) return;
+        foldSections.forEach((section, index) => {{
+          section.open = Boolean(printState[index]);
+        }});
+        printState = null;
+      }}
+      function triggerReportPrint(mode) {{
+        prepareForPrint();
+        if (mode === "save-pdf") {{
+          showToast(root.dataset.lang === "en" ? "Choose Save as PDF in the print dialog." : "请在打印对话框中选择“存储为 PDF”。");
+        }} else {{
+          showToast(root.dataset.lang === "en" ? "Opening the print dialog." : "正在打开打印对话框。");
+        }}
+        window.clearTimeout(printRestoreTimer);
+        printRestoreTimer = window.setTimeout(restoreAfterPrint, 1800);
+        window.setTimeout(() => window.print(), 80);
+      }}
+      actionButtons.forEach((button) => {{
+        button.addEventListener("click", () => triggerReportPrint(button.dataset.reportAction));
+      }});
+      window.addEventListener("afterprint", restoreAfterPrint);
       document.querySelectorAll('a.menu-link').forEach((link) => {{
         link.addEventListener('click', () => {{
           const href = link.getAttribute('href') || '';

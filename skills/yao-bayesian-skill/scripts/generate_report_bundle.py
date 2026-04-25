@@ -358,6 +358,24 @@ def decision_status_en(report: dict) -> str:
     return DECISION_STATUS_EN.get(code, process.get("status_en") or code or "-")
 
 
+def conversation_dual_list_items(round_payload: dict, raw_round: dict, primary_key: str, fallback_key: str | None = None) -> str:
+    zh_items = list(round_payload.get(primary_key) or [])
+    if not zh_items and fallback_key:
+        zh_items = list(round_payload.get(fallback_key) or [])
+    raw_items = list(raw_round.get(primary_key) or [])
+    if not raw_items and fallback_key:
+        raw_items = list(raw_round.get(fallback_key) or [])
+    count = max(len(zh_items), len(raw_items))
+    if count == 0:
+        return ""
+    items = []
+    for index in range(count):
+        zh_value = zh_items[index] if index < len(zh_items) else "-"
+        en_source = raw_items[index] if index < len(raw_items) else zh_value
+        items.append(f"<li>{dual_html(zh_value, request_text(en_source, 'en'))}</li>")
+    return "".join(items)
+
+
 def conversation_chart_svg(report: dict) -> str:
     process = report.get("conversation_process") or {}
     points = process.get("trajectory") or []
@@ -1037,15 +1055,11 @@ def build_html(request: dict, report: dict) -> str:
                 formula_label=dual_html("贝叶斯变化：", "Bayesian change:"),
                 formula_value=dual_html(formula.get("formula_zh") or "-", formula.get("formula_en") or "-"),
                 new_info_label=dual_html("新增信息", "New information"),
-                new_info_items="".join(
-                    f"<li>{dual_html(item['new_information'][i], request_text((raw_round.get('new_information') or [])[i] if i < len(raw_round.get('new_information') or []) else item['new_information'][i], 'en'))}</li>"
-                    for i in range(len(item.get("new_information", [])))
-                ) or f"<li>{dual_html('本轮没有新增结构化信息。', 'No new structured information was recorded for this round.')}</li>",
+                new_info_items=conversation_dual_list_items(item, raw_round, "new_information")
+                or f"<li>{dual_html('本轮没有新增结构化信息。', 'No new structured information was recorded for this round.')}</li>",
                 next_q_label=dual_html("下一步追问 / 剩余缺口", "Next questions / remaining gaps"),
-                next_q_items="".join(
-                    f"<li>{dual_html((item.get('assistant_next_questions') or item.get('missing_information') or ['-'])[i], request_text(((raw_round.get('assistant_next_questions') or raw_round.get('missing_information') or ['-'])[i]), 'en'))}</li>"
-                    for i in range(max(len(item.get('assistant_next_questions', [])), len(item.get('missing_information', []))))
-                ) or f"<li>{dual_html('本轮后已经没有剩余关键缺口。', 'There are no remaining critical gaps after this round.')}</li>",
+                next_q_items=conversation_dual_list_items(item, raw_round, "assistant_next_questions", fallback_key="missing_information")
+                or f"<li>{dual_html('本轮后已经没有剩余关键缺口。', 'There are no remaining critical gaps after this round.')}</li>",
             )
 
         conversation_section_html = f"""
@@ -1200,6 +1214,7 @@ def build_html(request: dict, report: dict) -> str:
         <span class="pill">{dual_html("自动生成", "Auto-generated")}</span>
         <span class="pill">{dual_html("中文主报告 + 英文切换", "Chinese-primary + English toggle")}</span>
         <span class="pill">{dual_html("默认简版只看结论和行动", "Simple mode shows only the conclusion and action")}</span>
+        {process_badge_html}
       </div>
       <div class="grid">
         <div class="metric-card">
@@ -1222,6 +1237,14 @@ def build_html(request: dict, report: dict) -> str:
           <div class="metric-label">{dual_html("首选行动阈值", "Top-action threshold")}</div>
           <div class="metric-value">{html_text(fmt_pct(top_threshold))}</div>
         </div>
+        <div class="metric-card">
+          <div class="metric-label">{dual_html("决策准备度", "Decision readiness")}</div>
+          <div class="metric-value">{html_text(fmt_pct(report["summary"].get("decision_readiness")))}</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">{dual_html("可决策状态", "Decision status")}</div>
+          <div class="metric-value metric-text">{dual_html(report["summary"].get("decision_status") or "未单独评估", decision_status_en(report))}</div>
+        </div>
       </div>
       <div class="meter" aria-hidden="true">
         <span style="width: {min(100.0, max(0.0, float(report['summary']['posterior_probability']) * 100.0)):.1f}%"></span>
@@ -1238,6 +1261,7 @@ def build_html(request: dict, report: dict) -> str:
         <article class="executive-card">
           <h2>{dual_html("这份建议成立的前提", "What this recommendation depends on")}</h2>
           <ul class="premise-list">{premise_items_html}</ul>
+          <p class="muted-note">{dual_html(plain["decision_gate_zh"], plain["decision_gate_en"])}</p>
         </article>
       </div>
     </section>
@@ -1258,12 +1282,15 @@ def build_html(request: dict, report: dict) -> str:
     <section class="section pro-only section-anchor-offset" id="decision">
       {dual_tag("h2", "决策问题", "Decision framing")}
       <p><strong>{dual_html("决策问题：", "Decision question:")}</strong> {dual_html(decision_zh, decision_en)}</p>
+      <p><strong>{dual_html("当前现状：", "Current state:")}</strong> {dual_html(request_text(request.get("current_state"), "zh"), request_text(request.get("current_state"), "en"))}</p>
       <p><strong>{dual_html("假设：", "Hypothesis:")}</strong> {dual_html(hypothesis_zh, hypothesis_en)}</p>
       <p><strong>{dual_html("时间范围：", "Time horizon:")}</strong> {dual_html(horizon_zh, horizon_en)}</p>
       <p><strong>{dual_html("成功标准：", "Success metric:")}</strong> {dual_html(success_zh, success_en)}</p>
       <p><strong>{dual_html("领域：", "Domain:")}</strong> {dual_html(domain_zh, domain_en)}</p>
       <p class="muted-note">{dual_html("这份报告由 skill 自动把问题、证据、行动和阈值对齐成统一决策格式。", "This report is auto-structured by the skill so the question, evidence, actions, and thresholds stay aligned.")}</p>
     </section>
+
+    {fold_section("conversation", "多轮对话过程", "Conversation process", conversation_section_html or f"<p>{dual_html('当前没有记录多轮过程；报告只展示最终结果。', 'There is no multi-turn process log for this report, so only the final result is shown.')}</p>", "默认折叠", "Collapsed by default")}
 
     {fold_section(
         "prior",
@@ -1476,6 +1503,7 @@ def make_pdf_table(rows: list[list[str]], widths: list[float]) -> Table:
 
 def build_pdf(request: dict, report: dict, output_path: Path) -> None:
     plain = plain_language_pack(request, report)
+    process = report.get("conversation_process") or {}
     title_style, heading_style, body_style, small_style = pdf_styles()
     story = []
     story.append(paragraph(f"贝叶斯决策报告：{report['title']}", title_style))
@@ -1493,6 +1521,7 @@ def build_pdf(request: dict, report: dict, output_path: Path) -> None:
     story.append(paragraph("这份建议成立的前提", heading_style))
     for item in plain["premises_zh"]:
         story.append(paragraph(f"• {item}", body_style))
+    story.append(paragraph(plain["decision_gate_zh"], small_style))
 
     story.append(paragraph("为什么不是另外两个选项", heading_style))
     if plain["alternatives"]:
@@ -1501,9 +1530,36 @@ def build_pdf(request: dict, report: dict, output_path: Path) -> None:
     else:
         story.append(paragraph("当前没有足够的备选行动用于比较。", body_style))
 
+    if process:
+        story.append(paragraph("多轮对话过程与决策准备度", heading_style))
+        story.append(paragraph(process.get("analysis") or "-", body_style))
+        process_lines = [
+            f"当前状态：{process.get('status')}",
+            f"决策准备度：{fmt_pct(process.get('final_readiness'))}",
+            f"决策阈值：{fmt_pct(process.get('decision_ready_threshold'))}",
+            f"是否可进入正式决策：{'可以' if process.get('decision_ready') else '还不可以'}",
+        ]
+        for line in process_lines:
+            story.append(paragraph(line, body_style))
+        round_rows = [["轮次", "阶段", "起点概率", "更新后概率", "准备度", "中间判断"]]
+        for item in process.get("rounds", []):
+            round_rows.append(
+                [
+                    str(item["round"]),
+                    item["stage"],
+                    fmt_pct(item.get("prior_probability_before")),
+                    fmt_pct(item.get("posterior_probability_after")),
+                    fmt_pct(item.get("decision_readiness")),
+                    item.get("interim_judgment") or "-",
+                ]
+            )
+        story.append(make_pdf_table(round_rows, [10 * mm, 24 * mm, 18 * mm, 18 * mm, 18 * mm, 74 * mm]))
+        story.append(Spacer(1, 3 * mm))
+
     story.append(paragraph("决策问题", heading_style))
     question_lines = [
         f"决策问题：{report['question']['decision_question']}",
+        f"当前现状：{request_text(request.get('current_state'), 'zh')}",
         f"假设：{report['question']['hypothesis']}",
         f"时间范围：{report['question']['time_horizon']}",
         f"决策截止时间：{report['question']['decision_deadline']}",
@@ -1609,6 +1665,7 @@ def configure_docx_font(style, font_name: str, size_pt: float) -> None:
 
 def build_docx(request: dict, report: dict, output_path: Path) -> None:
     plain = plain_language_pack(request, report)
+    process = report.get("conversation_process") or {}
     document = Document()
     configure_docx_font(document.styles["Normal"], "PingFang SC", 10.5)
     configure_docx_font(document.styles["Title"], "PingFang SC", 20)
@@ -1633,6 +1690,7 @@ def build_docx(request: dict, report: dict, output_path: Path) -> None:
     document.add_heading("这份建议成立的前提", level=1)
     for item in plain["premises_zh"]:
         document.add_paragraph(item, style="Normal")
+    document.add_paragraph(plain["decision_gate_zh"], style="Normal")
 
     document.add_heading("为什么不是另外两个选项", level=1)
     if plain["alternatives"]:
@@ -1641,9 +1699,33 @@ def build_docx(request: dict, report: dict, output_path: Path) -> None:
     else:
         document.add_paragraph("当前没有足够的备选行动用于比较。", style="Normal")
 
+    if process:
+        document.add_heading("多轮对话过程与决策准备度", level=1)
+        document.add_paragraph(process.get("analysis") or "-", style="Normal")
+        for line in [
+            f"当前状态：{process.get('status')}",
+            f"决策准备度：{fmt_pct(process.get('final_readiness'))}",
+            f"决策阈值：{fmt_pct(process.get('decision_ready_threshold'))}",
+            f"是否可进入正式决策：{'可以' if process.get('decision_ready') else '还不可以'}",
+        ]:
+            document.add_paragraph(line, style="Normal")
+        round_table = document.add_table(rows=1, cols=6)
+        round_table.style = "Table Grid"
+        for cell, header in zip(round_table.rows[0].cells, ["轮次", "阶段", "起点概率", "更新后概率", "准备度", "中间判断"]):
+            cell.text = header
+        for item in process.get("rounds", []):
+            cells = round_table.add_row().cells
+            cells[0].text = str(item["round"])
+            cells[1].text = item["stage"]
+            cells[2].text = fmt_pct(item.get("prior_probability_before"))
+            cells[3].text = fmt_pct(item.get("posterior_probability_after"))
+            cells[4].text = fmt_pct(item.get("decision_readiness"))
+            cells[5].text = item.get("interim_judgment") or "-"
+
     document.add_heading("决策问题", level=1)
     for line in [
         f"决策问题：{report['question']['decision_question']}",
+        f"当前现状：{request_text(request.get('current_state'), 'zh')}",
         f"假设：{report['question']['hypothesis']}",
         f"时间范围：{report['question']['time_horizon']}",
         f"决策截止时间：{report['question']['decision_deadline']}",

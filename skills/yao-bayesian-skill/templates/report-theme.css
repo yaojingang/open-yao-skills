@@ -250,6 +250,10 @@ h1 {
   margin-top: 24px;
 }
 
+.compact-grid {
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+}
+
 .metric-card {
   border-radius: 18px;
   padding: 18px;
@@ -560,6 +564,188 @@ th {
   margin-top: 6px;
 }
 
+.trajectory-shell {
+  margin-top: 18px;
+  padding: 18px;
+  border-radius: 18px;
+  background: #f8f7f1;
+  border: 1px solid var(--line);
+}
+
+.trajectory-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.trajectory-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.legend-dot,
+.legend-bar {
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+}
+
+.legend-dot-prior {
+  background: #d9a14e;
+}
+
+.legend-dot-posterior {
+  background: var(--accent);
+}
+
+.legend-bar {
+  width: 14px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(27, 54, 93, 0.18);
+  border: 1px solid rgba(27, 54, 93, 0.2);
+}
+
+.trajectory-chart {
+  width: 100%;
+  height: auto;
+  margin-top: 12px;
+}
+
+.chart-grid {
+  stroke: var(--line);
+  stroke-width: 1;
+}
+
+.chart-axis-label {
+  fill: var(--muted);
+  font-size: 11px;
+  font-family: "IBM Plex Sans", "PingFang SC", "Helvetica Neue", sans-serif;
+}
+
+.chart-line-prior,
+.chart-line-posterior {
+  fill: none;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.chart-line-prior {
+  stroke: #d9a14e;
+  stroke-dasharray: 6 6;
+}
+
+.chart-line-posterior {
+  stroke: var(--accent);
+}
+
+.chart-readiness-bar {
+  fill: rgba(27, 54, 93, 0.12);
+  stroke: rgba(27, 54, 93, 0.16);
+}
+
+.chart-point-prior {
+  fill: #fff8ea;
+  stroke: #d9a14e;
+  stroke-width: 2;
+}
+
+.chart-point-posterior {
+  fill: var(--accent);
+  stroke: #f8f7f1;
+  stroke-width: 2;
+}
+
+.round-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.round-card {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 18px;
+  background: #f8f7f1;
+}
+
+.round-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.round-badge {
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.round-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.metric-chip {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 10px 12px;
+  background: #fcfbf8;
+}
+
+.metric-chip strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.round-two-col {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.round-two-col h4 {
+  margin: 0 0 8px;
+  font-size: 15px;
+  color: var(--accent);
+}
+
+.round-two-col ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.process-callout {
+  margin-top: 12px;
+}
+
 .reason-card.risk {
   background: #fbf7f3;
 }
@@ -600,7 +786,8 @@ th {
   }
 
   .executive-grid,
-  .reason-grid {
+  .reason-grid,
+  .round-two-col {
     grid-template-columns: 1fr;
   }
 

@@ -138,6 +138,7 @@ yao-open-skills/
 2. [Skill 入口](skills/yao-bayesian-skill/SKILL.md)
 3. [详细案例输入](skills/yao-bayesian-skill/input/detailed_growth_case.json)
 4. [导出脚本](skills/yao-bayesian-skill/scripts/generate_report_bundle.py)
+5. [示例报告目录](skills/yao-bayesian-skill/reports/README.md)
 
 ## 工作流
 

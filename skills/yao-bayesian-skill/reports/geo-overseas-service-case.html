@@ -1,0 +1,1799 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>是否应该在 2026 年下半年启动一家面向美国客户的海外 GEO 重服务公司？ | Yao Bayesian Skill</title>
+  <style>
+:root {
+  --bg: #f5f4ed;
+  --card: #faf9f5;
+  --ink: #141413;
+  --muted: #5e5d59;
+  --line: #e8e5da;
+  --accent: #1b365d;
+  --accent-soft: #eef2f7;
+  --good: #1b365d;
+  --warn: #8a4f2d;
+  --shadow: 0 0 0 1px rgba(209, 207, 197, 0.65);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "PingFang SC", "Source Han Sans SC", "Noto Sans CJK SC", "Helvetica Neue", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at top left, #eef2f7 0%, transparent 24%),
+    linear-gradient(180deg, #f8f7f1 0%, var(--bg) 100%);
+}
+
+[data-lang="zh"] .lang-en,
+[data-lang="en"] .lang-zh {
+  display: none;
+}
+
+[data-view="simple"] .pro-only,
+[data-view="simple"] .nav-pro-only {
+  display: none !important;
+}
+
+[data-lang="zh"] .lang-zh,
+[data-lang="en"] .lang-en {
+  display: inline;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  padding: 14px 0;
+  backdrop-filter: blur(18px);
+  background: rgba(245, 244, 237, 0.92);
+  border-bottom: 1px solid var(--line);
+}
+
+.topbar-inner {
+  width: min(1120px, calc(100vw - 40px));
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 18px;
+}
+
+.brand-block {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.brand-title,
+.brand-subtitle,
+.menu-link,
+.lang-button,
+.metric-label,
+th,
+.step-index {
+  font-family: "IBM Plex Sans", "PingFang SC", "Helvetica Neue", sans-serif;
+}
+
+.brand-title {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.brand-subtitle {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+  min-width: 0;
+}
+
+.menu::-webkit-scrollbar {
+  height: 6px;
+}
+
+.menu-link {
+  white-space: nowrap;
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 13px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  transition: background 180ms ease, color 180ms ease;
+}
+
+.menu-link:hover {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.lang-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.topbar-tools {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.report-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.view-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lang-button {
+  border: 1px solid var(--line);
+  background: #f0efe8;
+  color: var(--muted);
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 180ms ease, box-shadow 180ms ease, color 180ms ease, background 180ms ease;
+}
+
+.view-button {
+  border: 1px solid var(--line);
+  background: #f0efe8;
+  color: var(--muted);
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 180ms ease, box-shadow 180ms ease, color 180ms ease, background 180ms ease;
+  font-family: "IBM Plex Sans", "PingFang SC", "Helvetica Neue", sans-serif;
+}
+
+.view-button:hover {
+  transform: translateY(-1px);
+  color: var(--accent);
+}
+
+.view-button.is-active {
+  background: var(--accent);
+  color: #faf9f5;
+  box-shadow: 0 0 0 1px #d6e1ee;
+}
+
+.lang-button:hover {
+  transform: translateY(-1px);
+  color: var(--accent);
+}
+
+.action-button {
+  border: 1px solid var(--line);
+  background: #f0efe8;
+  color: var(--muted);
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 180ms ease, box-shadow 180ms ease, color 180ms ease, background 180ms ease;
+  font-family: "IBM Plex Sans", "PingFang SC", "Helvetica Neue", sans-serif;
+}
+
+.action-button:hover {
+  transform: translateY(-1px);
+  color: var(--accent);
+}
+
+.action-button-primary {
+  background: var(--accent);
+  color: #faf9f5;
+  box-shadow: 0 0 0 1px #d6e1ee;
+}
+
+.action-button-primary:hover {
+  color: #faf9f5;
+  background: #24456f;
+}
+
+.lang-button.is-active {
+  background: var(--accent-soft);
+  color: var(--accent);
+  box-shadow: 0 0 0 1px #d6e1ee;
+}
+
+.page {
+  width: min(1040px, calc(100vw - 48px));
+  margin: 36px auto 72px;
+}
+
+.section-anchor-offset {
+  scroll-margin-top: 88px;
+}
+
+.hero,
+.section,
+.callout {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+}
+
+.hero {
+  padding: 36px;
+  margin-bottom: 28px;
+}
+
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+h1 {
+  margin: 0 0 12px;
+  font-size: clamp(32px, 4vw, 52px);
+  line-height: 1.05;
+  font-family: "Source Han Serif SC", "Songti SC", "Noto Serif CJK SC", "Georgia", serif;
+  font-weight: 500;
+}
+
+.summary-line {
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--muted);
+  max-width: 34em;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.compact-grid {
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+}
+
+.hero-grid {
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+}
+
+.process-grid {
+  margin-top: 18px;
+}
+
+.metric-card {
+  border-radius: 18px;
+  padding: 18px 18px 16px;
+  background: #f8f7f1;
+  border: 1px solid var(--line);
+}
+
+.metric-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.metric-value {
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1.1;
+  color: var(--accent);
+  font-family: "Source Han Serif SC", "Songti SC", "Noto Serif CJK SC", "Georgia", serif;
+}
+
+.metric-text {
+  font-size: 20px;
+}
+
+.section {
+  padding: 28px 30px;
+  margin-bottom: 20px;
+}
+
+h2 {
+  margin: 0 0 14px;
+  font-size: 26px;
+  font-family: "Source Han Serif SC", "Songti SC", "Noto Serif CJK SC", "Georgia", serif;
+  font-weight: 500;
+  border-left: 3px solid var(--accent);
+  padding-left: 10px;
+}
+
+h3 {
+  margin: 18px 0 10px;
+  font-size: 18px;
+  font-family: "Source Han Serif SC", "Songti SC", "Noto Serif CJK SC", "Georgia", serif;
+  font-weight: 500;
+}
+
+p,
+li {
+  font-size: 15.5px;
+  line-height: 1.55;
+}
+
+.hero p,
+.section > p,
+.fold-panel > p,
+.comparison-card p,
+.executive-card p,
+.reason-card p,
+.callout p,
+.warning-list li,
+.footer-note {
+  max-width: 70ch;
+}
+
+.section-kicker,
+.decision-banner-label,
+.reason-label {
+  font-family: "IBM Plex Sans", "PingFang SC", "Helvetica Neue", sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.table-wrap {
+  overflow-x: auto;
+  margin-top: 14px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #fcfbf8;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0;
+  font-size: 15px;
+}
+
+th,
+td {
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  padding: 10px 8px;
+  vertical-align: top;
+}
+
+th {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  background: #f3f1ea;
+}
+
+tbody tr:nth-child(even) {
+  background: #f8f7f2;
+}
+
+.pill {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.meter {
+  height: 10px;
+  background: #eee7db;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.meter > span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent) 0%, #d9a14e 100%);
+  border-radius: 999px;
+}
+
+.workflow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 14px;
+}
+
+.workflow-step,
+.capability-card {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 14px 16px;
+  background: #f8f7f1;
+}
+
+.step-text {
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.step-index {
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+
+.capability-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+}
+
+.callout {
+  padding: 20px 24px;
+  margin-top: 18px;
+  border-left: 3px solid var(--accent);
+  background: #f7f6f1;
+}
+
+.warning-list li {
+  color: var(--warn);
+}
+
+.muted-note {
+  color: var(--muted);
+}
+
+.decision-banner {
+  margin-top: 18px;
+  padding: 18px 20px;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: #f7f6f1;
+}
+
+.decision-proceed {
+  background: linear-gradient(180deg, #f7f9fc 0%, #f1f4f8 100%);
+}
+
+.decision-confirm {
+  background: linear-gradient(180deg, #f8f7f1 0%, #f3f1ea 100%);
+}
+
+.decision-hold {
+  background: linear-gradient(180deg, #f8f4f1 0%, #f4efea 100%);
+}
+
+.decision-banner-state {
+  margin-top: 6px;
+  font-size: 30px;
+  line-height: 1.1;
+  color: var(--accent);
+  font-family: "Source Han Serif SC", "Songti SC", "Noto Serif CJK SC", "Georgia", serif;
+  font-weight: 500;
+}
+
+.decision-banner-text {
+  margin: 10px 0 0;
+  max-width: 860px;
+}
+
+.executive-panel {
+  background: linear-gradient(180deg, #fcfbf8 0%, #f7f6f1 100%);
+}
+
+.executive-grid,
+.reason-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+  gap: 16px;
+}
+
+.executive-card,
+.comparison-card,
+.reason-card {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 18px 20px;
+  background: #f8f7f1;
+}
+
+.executive-primary {
+  background: linear-gradient(180deg, #f6f8fb 0%, #eef2f7 100%);
+}
+
+.action-list,
+.premise-list,
+.comparison-list {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.action-list li,
+.premise-list li,
+.comparison-list li {
+  margin-bottom: 10px;
+}
+
+.comparison-list li span {
+  display: block;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.fold-section {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+  margin-bottom: 18px;
+  overflow: hidden;
+}
+
+.fold-section > summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 22px 26px;
+  cursor: pointer;
+}
+
+.fold-section > summary::-webkit-details-marker {
+  display: none;
+}
+
+.fold-heading {
+  min-width: 0;
+}
+
+.fold-title {
+  margin-top: 8px;
+  font-size: 23px;
+  font-family: "Source Han Serif SC", "Songti SC", "Noto Serif CJK SC", "Georgia", serif;
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--ink);
+  border-left: 3px solid var(--accent);
+  padding-left: 10px;
+}
+
+.fold-indicator {
+  flex-shrink: 0;
+  font-family: "IBM Plex Sans", "PingFang SC", "Helvetica Neue", sans-serif;
+  font-size: 13px;
+  color: var(--accent);
+  background: var(--accent-soft);
+  padding: 7px 12px;
+  border-radius: 999px;
+}
+
+.fold-section[open] .fold-indicator .lang-zh::before,
+.fold-section[open] .fold-indicator .lang-en::before {
+  content: "";
+}
+
+.fold-section[open] .fold-panel {
+  border-top: 1px solid var(--line);
+}
+
+.fold-panel {
+  padding: 0 26px 28px;
+}
+
+.appendix-block + .appendix-block {
+  margin-top: 20px;
+}
+
+.reason-card h3 {
+  margin-top: 6px;
+}
+
+.trajectory-shell {
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 18px;
+  background: #f8f7f1;
+  border: 1px solid var(--line);
+}
+
+.trajectory-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.trajectory-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.legend-dot,
+.legend-bar {
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+}
+
+.legend-dot-prior {
+  background: #d9a14e;
+}
+
+.legend-dot-posterior {
+  background: var(--accent);
+}
+
+.legend-bar {
+  width: 14px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(27, 54, 93, 0.18);
+  border: 1px solid rgba(27, 54, 93, 0.2);
+}
+
+.trajectory-chart {
+  width: 100%;
+  height: auto;
+  margin-top: 12px;
+}
+
+.chart-grid {
+  stroke: var(--line);
+  stroke-width: 1;
+}
+
+.chart-axis-label {
+  fill: var(--muted);
+  font-size: 11px;
+  font-family: "IBM Plex Sans", "PingFang SC", "Helvetica Neue", sans-serif;
+}
+
+.chart-line-prior,
+.chart-line-posterior {
+  fill: none;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.chart-line-prior {
+  stroke: #d9a14e;
+  stroke-dasharray: 6 6;
+}
+
+.chart-line-posterior {
+  stroke: var(--accent);
+}
+
+.chart-readiness-bar {
+  fill: rgba(27, 54, 93, 0.12);
+  stroke: rgba(27, 54, 93, 0.16);
+}
+
+.chart-point-prior {
+  fill: #fff8ea;
+  stroke: #d9a14e;
+  stroke-width: 2;
+}
+
+.chart-point-posterior {
+  fill: var(--accent);
+  stroke: #f8f7f1;
+  stroke-width: 2;
+}
+
+.round-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.round-card {
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: 18px;
+  padding: 20px 22px;
+  background: linear-gradient(180deg, #faf9f5 0%, #f7f6f0 100%);
+}
+
+.round-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.round-badge {
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.round-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin: 16px 0 14px;
+}
+
+.metric-chip {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 10px 12px;
+  background: #fcfbf8;
+}
+
+.metric-chip strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.round-two-col {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.round-two-col h4 {
+  margin: 0 0 8px;
+  font-size: 15px;
+  color: var(--accent);
+}
+
+.round-two-col ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.process-callout {
+  margin-top: 12px;
+  margin-bottom: 0;
+  background: #f5f4ed;
+}
+
+.reason-card.risk {
+  background: #fbf7f3;
+}
+
+.footer-note {
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.report-toast {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 40;
+  max-width: min(360px, calc(100vw - 32px));
+  padding: 12px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(27, 54, 93, 0.15);
+  background: rgba(20, 20, 19, 0.9);
+  color: #faf9f5;
+  box-shadow: 0 16px 32px rgba(20, 20, 19, 0.18);
+  font-size: 14px;
+  line-height: 1.45;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.report-toast.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@page {
+  size: A4;
+  margin: 16mm 16mm 18mm 16mm;
+}
+
+@media print {
+  html,
+  body {
+    background: #f5f4ed !important;
+  }
+
+  .topbar {
+    position: static;
+    padding: 0 0 10mm;
+    background: transparent;
+    border-bottom: 0;
+    backdrop-filter: none;
+  }
+
+  .topbar-inner {
+    width: auto;
+    display: block;
+  }
+
+  .menu,
+  .lang-toggle,
+  .report-actions,
+  .hero-meta,
+  .fold-indicator,
+  .footer-note,
+  .meter,
+  .report-toast {
+    display: none !important;
+  }
+
+  .page {
+    width: auto;
+    margin: 0;
+  }
+
+  .hero,
+  .section,
+  .fold-section,
+  .callout {
+    box-shadow: none;
+    break-inside: avoid-page;
+  }
+
+  .hero,
+  .section,
+  .fold-panel,
+  .fold-section > summary {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .fold-section {
+    border: 0;
+    background: transparent;
+  }
+
+  .fold-section > summary {
+    cursor: default;
+    padding-top: 0;
+    padding-bottom: 6mm;
+  }
+
+  .fold-section[open] .fold-panel {
+    border-top: 0 !important;
+  }
+
+  .fold-panel {
+    padding-bottom: 5mm;
+  }
+
+  .trajectory-shell,
+  .round-card,
+  .table-wrap {
+    break-inside: avoid-page;
+  }
+
+  .table-wrap {
+    background: #fcfbf8;
+  }
+
+  table {
+    font-size: 12px;
+  }
+
+  .trajectory-chart {
+    max-height: 150mm;
+  }
+}
+
+@media (max-width: 640px) {
+  .topbar {
+    padding: 10px 0;
+  }
+
+  .topbar-inner {
+    width: calc(100vw - 20px);
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .menu {
+    width: 100%;
+  }
+
+  .topbar-tools {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .lang-toggle {
+    justify-content: flex-start;
+  }
+
+  .report-actions {
+    flex-wrap: wrap;
+  }
+
+  .view-toggle {
+    justify-content: flex-start;
+  }
+
+  .page {
+    width: calc(100vw - 24px);
+    margin: 12px auto 32px;
+  }
+
+  .executive-grid,
+  .reason-grid,
+  .round-two-col {
+    grid-template-columns: 1fr;
+  }
+
+  .round-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hero,
+  .section,
+  .callout {
+    padding: 20px;
+    border-radius: 18px;
+  }
+
+  .fold-section > summary,
+  .fold-panel {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+  </style>
+</head>
+<body data-lang="zh" data-view="pro">
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand-block">
+        <div class="brand-mark">YAO</div>
+        <div>
+          <div class="brand-title"><span class="lang-zh">贝叶斯决策报告</span><span class="lang-en">Bayesian Decision Report</span></div>
+        </div>
+      </div>
+      <nav class="menu"><a class="menu-link" href="#summary"><span class="lang-zh">先看结论</span><span class="lang-en">Summary</span></a><a class="menu-link" href="#action-plan"><span class="lang-zh">行动建议</span><span class="lang-en">Action</span></a><a class="menu-link nav-pro-only" href="#why"><span class="lang-zh">为什么这样判断</span><span class="lang-en">Why</span></a><a class="menu-link nav-pro-only" href="#conversation"><span class="lang-zh">对话过程</span><span class="lang-en">Conversation</span></a><a class="menu-link nav-pro-only" href="#decision"><span class="lang-zh">问题定义</span><span class="lang-en">Decision</span></a><a class="menu-link nav-pro-only" href="#evidence"><span class="lang-zh">证据</span><span class="lang-en">Evidence</span></a><a class="menu-link nav-pro-only" href="#update"><span class="lang-zh">概率判断</span><span class="lang-en">Update</span></a><a class="menu-link nav-pro-only" href="#prior"><span class="lang-zh">先验</span><span class="lang-en">Prior</span></a><a class="menu-link nav-pro-only" href="#sensitivity"><span class="lang-zh">敏感性</span><span class="lang-en">Sensitivity</span></a><a class="menu-link nav-pro-only" href="#warnings"><span class="lang-zh">注意事项</span><span class="lang-en">Warnings</span></a><a class="menu-link nav-pro-only" href="#workflow"><span class="lang-zh">附录</span><span class="lang-en">Appendix</span></a></nav>
+      <div class="topbar-tools">
+        <div class="report-actions" aria-label="Report actions">
+          <button class="action-button" type="button" data-report-action="print"><span class="lang-zh">打印</span><span class="lang-en">Print</span></button>
+          <button class="action-button action-button-primary" type="button" data-report-action="save-pdf"><span class="lang-zh">下载 PDF</span><span class="lang-en">Save as PDF</span></button>
+        </div>
+        <div class="lang-toggle" aria-label="Language switcher">
+          <button class="lang-button is-active" type="button" data-lang-button="zh">中文</button>
+          <button class="lang-button" type="button" data-lang-button="en">EN</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="report-toast" id="report-toast" hidden></div>
+
+  <main class="page">
+    <section class="hero section-anchor-offset" id="summary">
+      <div class="eyebrow"><span class="lang-zh">Yao Bayesian Skill</span><span class="lang-en">Yao Bayesian Skill</span></div>
+      <h1><span class="lang-zh">是否应该在 2026 年下半年启动一家面向美国客户的海外 GEO 重服务公司？</span><span class="lang-en">Should we launch a heavy-service GEO company for U.S. clients in the second half of 2026?</span></h1>
+      <p class="summary-line"><span class="lang-zh">当前后验概率约为 36.0%；在现有证据下，更优的行动是 先做 8-10 周验证式准备，再依据真实信号决定是否正式启动。 多轮对话后的判断是：还未达到可决策状态。</span><span class="lang-en">The current posterior probability is about 36.0%; given the available evidence, the better action is Run 8-10 weeks of validation-first preparation and decide based on real signals.</span></p>
+      <div class="decision-banner decision-confirm">
+        <div class="decision-banner-label"><span class="lang-zh">给普通用户的结论</span><span class="lang-en">Plain-language decision</span></div>
+        <div class="decision-banner-state"><span class="lang-zh">先确认，再推进</span><span class="lang-en">Confirm first</span></div>
+        <p class="decision-banner-text"><span class="lang-zh">现在不是不能做，而是还差最后一两个关键信息，先确认再推进更稳。 目前的建议属于把握偏低，而且换一组合理假设，结论大体不变。</span><span class="lang-en">This is not a no. It means one or two key inputs are still missing, so confirm them before moving forward. The current recommendation carries lower confidence, and The conclusion mostly holds under reasonable alternative assumptions.</span></p>
+      </div>
+      <div class="hero-meta">
+        <span class="pill"><span class="lang-zh">自动生成</span><span class="lang-en">Auto-generated</span></span>
+        <span class="pill"><span class="lang-zh">中文主报告 + 英文切换</span><span class="lang-en">Chinese-primary + English toggle</span></span>
+        <span class="pill"><span class="lang-zh">默认完整专业版</span><span class="lang-en">Professional view by default</span></span>
+        
+          <span class="pill"><span class="lang-zh">还需补充信息</span><span class="lang-en">Need more information</span></span>
+          <span class="pill"><span class="lang-zh">对话 2 轮</span><span class="lang-en">2 rounds</span></span>
+        
+      </div>
+      <div class="grid hero-grid">
+        <div class="metric-card">
+          <div class="metric-label"><span class="lang-zh">后验概率</span><span class="lang-en">Posterior</span></div>
+          <div class="metric-value">36.0%</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label"><span class="lang-zh">后验区间</span><span class="lang-en">Interval</span></div>
+          <div class="metric-value metric-text">21.4% - 50.4%</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label"><span class="lang-zh">推荐行动</span><span class="lang-en">Recommended action</span></div>
+          <div class="metric-value metric-text"><span class="lang-zh">先做 8-10 周验证式准备，再依据真实信号决定是否正式启动</span><span class="lang-en">Run 8-10 weeks of validation-first preparation and decide based on real signals</span></div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label"><span class="lang-zh">建议信心</span><span class="lang-en">Decision confidence</span></div>
+          <div class="metric-value metric-text"><span class="lang-zh">低</span><span class="lang-en">Low</span></div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label"><span class="lang-zh">首选行动阈值</span><span class="lang-en">Top-action threshold</span></div>
+          <div class="metric-value">31.2%</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label"><span class="lang-zh">决策准备度</span><span class="lang-en">Decision readiness</span></div>
+          <div class="metric-value">63.0%</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label"><span class="lang-zh">可决策状态</span><span class="lang-en">Decision status</span></div>
+          <div class="metric-value metric-text"><span class="lang-zh">还需补充信息</span><span class="lang-en">Need more information</span></div>
+        </div>
+      </div>
+      <div class="meter" aria-hidden="true">
+        <span style="width: 36.0%"></span>
+      </div>
+    </section>
+
+    <section class="section executive-panel section-anchor-offset" id="action-plan">
+      <div class="section-kicker"><span class="lang-zh">先做执行摘要</span><span class="lang-en">Executive summary first</span></div>
+      <div class="executive-grid">
+        <article class="executive-card executive-primary">
+          <h2><span class="lang-zh">你现在该怎么做</span><span class="lang-en">What you should do now</span></h2>
+          <ol class="action-list"><li><span class="lang-zh">先做 8-10 周验证式准备，再依据真实信号决定是否正式启动</span><span class="lang-en">Run 8-10 weeks of validation-first preparation and decide based on real signals</span></li><li><span class="lang-zh">在未来 30 天内锁定一个极窄 ICP，做 100 个美国目标账户的 founder-led outbound，至少拿到 10 个有效销售通话和 1 个付费试点或押金信号。</span><span class="lang-en">In the next 30 days, pick a very narrow ICP and run founder-led outbound to 100 qualified U.S. accounts, aiming for at least 10 real sales calls and 1 paid pilot or deposit signal.</span></li><li><span class="lang-zh">如果到 2026-07-15 前关键条件确认无误，就推进；如果确认不了，就先不要做更重的动作。</span><span class="lang-en">If the key conditions are confirmed before 2026-07-15, move ahead; if not, do not escalate to a heavier commitment yet.</span></li></ol>
+        </article>
+        <article class="executive-card">
+          <h2><span class="lang-zh">这份建议成立的前提</span><span class="lang-en">What this recommendation depends on</span></h2>
+          <ul class="premise-list"><li><span class="lang-zh">时间窗口：从现在到正式启动前 2-3 个月准备期，以及启动后 12 个月经营结果</span><span class="lang-en">Time window: The next 2-3 months of preparation plus the first 12 months after launch</span></li><li><span class="lang-zh">成立条件：在启动后 12 个月内达到至少 4 个稳定美国付费客户，单客户月费约 1 万美元，整体月营收不低于 30 万元，且团队人效不低于 10 万元/人/月。</span><span class="lang-en">Condition for acting: Within 12 months of launch, reach at least four stable paying U.S. clients at roughly $10k MRR each, with total monthly revenue of at least CNY 300k and at least CNY 100k monthly revenue per person.</span></li><li><span class="lang-zh">最晚决策时间：2026-07-15</span><span class="lang-en">Decision deadline: 2026-07-15</span></li></ul>
+          <p class="muted-note"><span class="lang-zh">多轮对话后的决策准备度约为 63.0%，还没有达到可决策状态。</span><span class="lang-en">After the multi-turn loop, decision readiness is about 63.0%, and the case has not yet reached a ready-to-decide state.</span></p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section pro-only section-anchor-offset" id="why">
+      <div class="section-kicker"><span class="lang-zh">先讲人话，再讲模型</span><span class="lang-en">Human explanation before model detail</span></div>
+      <h2><span class="lang-zh">为什么这样判断</span><span class="lang-en">Why this is the recommendation</span></h2>
+      <div class="reason-grid">
+        
+        <article class="reason-card">
+          <div class="reason-label"><span class="lang-zh">支持判断</span><span class="lang-en">Supports the call</span></div>
+          <h3><span class="lang-zh">重服务模式更容易先拿到第一批收入</span><span class="lang-en">A heavy-service model can reach first revenue faster</span></h3>
+          <p><span class="lang-zh">相较于直接做 SaaS，重服务模式更适合在资产不足时由创始人亲自销售与交付，先换取真实需求与现金流。</span><span class="lang-en">Compared with starting as SaaS, a heavy-service model is more suitable when assets are limited and the founder needs to sell and deliver directly to capture demand and cash flow.</span></p>
+        </article>
+        
+        <article class="reason-card">
+          <div class="reason-label"><span class="lang-zh">支持判断</span><span class="lang-en">Supports the call</span></div>
+          <h3><span class="lang-zh">目标营收只需要约 4 个高客单价客户</span><span class="lang-en">The revenue target needs only about four high-ticket clients</span></h3>
+          <p><span class="lang-zh">若单客户月费约 1 万美元，则月营收 30 万元左右对应约 4 个稳定客户，目标在算术上并非极端夸张。</span><span class="lang-en">At roughly $10k MRR per client, reaching about CNY 300k per month requires around four stable clients, so the arithmetic target is not extreme.</span></p>
+        </article>
+        
+        
+        <article class="reason-card risk">
+          <div class="reason-label"><span class="lang-zh">拉低判断</span><span class="lang-en">Pulls the call down</span></div>
+          <h3><span class="lang-zh">当前没有海外品牌、渠道或客户资产</span><span class="lang-en">There is no overseas brand, channel, or customer asset yet</span></h3>
+          <p><span class="lang-zh">目前没有现成的美国客户管道、品牌背书、海外案例或已验证的销售网络，这会直接拉高首单获取成本与启动摩擦。</span><span class="lang-en">There is no existing U.S. pipeline, brand proof, overseas case study, or validated sales network, which directly raises the cost and friction of getting the first deal.</span></p>
+        </article>
+        
+        <article class="reason-card risk">
+          <div class="reason-label"><span class="lang-zh">拉低判断</span><span class="lang-en">Pulls the call down</span></div>
+          <h3><span class="lang-zh">ICP 和获客路径还没有收窄</span><span class="lang-en">The ICP and acquisition path are still too broad</span></h3>
+          <p><span class="lang-zh">当前只明确了主要服务美国市场，还没有收窄到具体行业、买方角色、切入场景和最可能成交的获客路径。</span><span class="lang-en">The plan only specifies the U.S. market so far, without narrowing to a concrete industry, buyer role, wedge use case, or the acquisition path most likely to close.</span></p>
+        </article>
+        
+      </div>
+      <div class="comparison-card">
+        <h3><span class="lang-zh">为什么不是另外两个选项</span><span class="lang-en">Why not the other options</span></h3>
+        <ul class="comparison-list">
+        <li>
+          <strong><span class="lang-zh">暂缓 6 个月，继续积累案例与海外资产</span><span class="lang-en">Delay for 6 months and keep accumulating cases and overseas assets</span></strong>
+          <span><span class="lang-zh">它目前的综合收益比首选方案低 104,113.0，所以暂时排在后面。</span><span class="lang-en">It currently trails the recommended option by 104,113.0 in expected value, so it stays behind for now.</span></span>
+        </li>
+        
+        <li>
+          <strong><span class="lang-zh">现在就按正式公司路径启动，并在 7-8 月全面开售</span><span class="lang-en">Commit to a full company launch now and sell broadly in July-August</span></strong>
+          <span><span class="lang-zh">它目前的综合收益比首选方案低 126,956.4，所以暂时排在后面。</span><span class="lang-en">It currently trails the recommended option by 126,956.4 in expected value, so it stays behind for now.</span></span>
+        </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section pro-only section-anchor-offset" id="decision">
+      <h2><span class="lang-zh">决策问题</span><span class="lang-en">Decision framing</span></h2>
+      <p><strong><span class="lang-zh">决策问题：</span><span class="lang-en">Decision question:</span></strong> <span class="lang-zh">创始人是否应该从现在开始用 2-3 个月做验证式准备，并在 2026 年 7-8 月启动一家面向美国客户的海外 GEO 重服务公司，目标是在启动后 12 个月内做到月营收 30 万元以上、且人效达到 10 万元/人/月以上？</span><span class="lang-en">Should the founder spend the next 2-3 months on validation-oriented preparation and launch a heavy-service GEO company for U.S. clients in July-August 2026, targeting at least CNY 300k in monthly revenue and at least CNY 100k monthly revenue per person within 12 months of launch?</span></p>
+      <p><strong><span class="lang-zh">当前现状：</span><span class="lang-en">Current state:</span></strong> <span class="lang-zh">目前方向明确为海外 GEO 重服务，主要面向美国客户，目标客单价约为 1 万美元/月。团队暂无海外品牌、渠道或现成客户资产，手上有部分国内案例，计划后续补做海外流量与销售验证。</span><span class="lang-en">The direction is now defined as a heavy-service GEO business for U.S. clients at roughly $10k MRR per client. There is no existing overseas brand, channel, or customer asset yet. Some domestic case studies exist, and the team plans to build overseas traffic and sales validation next.</span></p>
+      <p><strong><span class="lang-zh">假设：</span><span class="lang-en">Hypothesis:</span></strong> <span class="lang-zh">如果现在启动验证式准备，并在 2026 年 7-8 月正式启动，那么这家海外 GEO 重服务公司有较大概率在启动后 12 个月内拿下至少 4 个稳定的美国付费客户，从而做到月营收 30 万元以上，并保持至少 10 万元/人/月的人效。</span><span class="lang-en">If validation work starts now and the company launches in July-August 2026, the overseas GEO service business has a meaningful chance of landing at least four stable paying U.S. clients within 12 months, reaching at least CNY 300k in monthly revenue while sustaining at least CNY 100k monthly revenue per person.</span></p>
+      <p><strong><span class="lang-zh">时间范围：</span><span class="lang-en">Time horizon:</span></strong> <span class="lang-zh">从现在到正式启动前 2-3 个月准备期，以及启动后 12 个月经营结果</span><span class="lang-en">The next 2-3 months of preparation plus the first 12 months after launch</span></p>
+      <p><strong><span class="lang-zh">成功标准：</span><span class="lang-en">Success metric:</span></strong> <span class="lang-zh">在启动后 12 个月内达到至少 4 个稳定美国付费客户，单客户月费约 1 万美元，整体月营收不低于 30 万元，且团队人效不低于 10 万元/人/月。</span><span class="lang-en">Within 12 months of launch, reach at least four stable paying U.S. clients at roughly $10k MRR each, with total monthly revenue of at least CNY 300k and at least CNY 100k monthly revenue per person.</span></p>
+      <p><strong><span class="lang-zh">领域：</span><span class="lang-en">Domain:</span></strong> <span class="lang-zh">跨境服务型创业决策</span><span class="lang-en">cross-border service business decision</span></p>
+      <p class="muted-note"><span class="lang-zh">这份报告由 skill 自动把问题、证据、行动和阈值对齐成统一决策格式。</span><span class="lang-en">This report is auto-structured by the skill so the question, evidence, actions, and thresholds stay aligned.</span></p>
+    </section>
+
+    
+    <details class="fold-section pro-only section-anchor-offset" id="conversation">
+      <summary>
+        <div class="fold-heading">
+          <div class="section-kicker"><span class="lang-zh">默认折叠</span><span class="lang-en">Collapsed by default</span></div>
+          <div class="fold-title"><span class="lang-zh">多轮对话过程</span><span class="lang-en">Conversation process</span></div>
+        </div>
+        <span class="fold-indicator"><span class="lang-zh">展开</span><span class="lang-en">Open</span></span>
+      </summary>
+      <div class="fold-panel">
+        
+          <div class="grid compact-grid">
+            <div class="metric-card">
+              <div class="metric-label"><span class="lang-zh">对话轮次</span><span class="lang-en">Rounds</span></div>
+              <div class="metric-value">2</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-label"><span class="lang-zh">决策准备度</span><span class="lang-en">Decision readiness</span></div>
+              <div class="metric-value">63.0%</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-label"><span class="lang-zh">决策阈值</span><span class="lang-en">Readiness threshold</span></div>
+              <div class="metric-value">74.0%</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-label"><span class="lang-zh">当前状态</span><span class="lang-en">Current status</span></div>
+              <div class="metric-value metric-text"><span class="lang-zh">还需补充信息</span><span class="lang-en">Need more information</span></div>
+            </div>
+          </div>
+          <p><span class="lang-zh">本次决策一共记录了 2 轮对话，判断从初始先验 22.0% 演化到了当前后验 36.0%。变化最大的轮次是第 2 轮，概率变动约为 +6.3 个百分点。 当前决策准备度约为 63.0%，阈值为 74.0%，尚未达到“可以进入决策”的状态。</span><span class="lang-en">This decision captured 2 rounds of dialogue, moving from an initial prior of 22.0% to a current posterior of 36.0%. The current readiness is 63.0% versus a threshold of 74.0%, so the session has not yet reached a ready-to-decide state.</span></p>
+          <p class="muted-note"><span class="lang-zh">多轮对话后的决策准备度约为 63.0%，还没有达到可决策状态。</span><span class="lang-en">After the multi-turn loop, decision readiness is about 63.0%, and the case has not yet reached a ready-to-decide state.</span></p>
+          <div class="trajectory-shell">
+            <div class="trajectory-head">
+              <h3><span class="lang-zh">变化图表</span><span class="lang-en">Trajectory chart</span></h3>
+              <div class="trajectory-legend">
+                <span class="legend-item"><span class="legend-dot legend-dot-prior"></span><span class="lang-zh">起点概率</span><span class="lang-en">Prior</span></span>
+                <span class="legend-item"><span class="legend-dot legend-dot-posterior"></span><span class="lang-zh">更新后概率</span><span class="lang-en">Posterior</span></span>
+                <span class="legend-item"><span class="legend-bar"></span><span class="lang-zh">决策准备度</span><span class="lang-en">Readiness</span></span>
+              </div>
+            </div>
+            
+      <svg class="trajectory-chart" viewBox="0 0 760 260" role="img" aria-label="Belief trajectory chart">
+        <rect x="0" y="0" width="760" height="260" fill="transparent"></rect>
+        <line x1="48" y1="218.0" x2="740" y2="218.0" class="chart-grid" /><text x="38" y="222.0" text-anchor="end" class="chart-axis-label">0%</text><line x1="48" y1="168.5" x2="740" y2="168.5" class="chart-grid" /><text x="38" y="172.5" text-anchor="end" class="chart-axis-label">25%</text><line x1="48" y1="119.0" x2="740" y2="119.0" class="chart-grid" /><text x="38" y="123.0" text-anchor="end" class="chart-axis-label">50%</text><line x1="48" y1="69.5" x2="740" y2="69.5" class="chart-grid" /><text x="38" y="73.5" text-anchor="end" class="chart-axis-label">75%</text><line x1="48" y1="20.0" x2="740" y2="20.0" class="chart-grid" /><text x="38" y="24.0" text-anchor="end" class="chart-axis-label">100%</text><text x="48.0" y="244.0" text-anchor="middle" class="chart-axis-label">R1</text><text x="740.0" y="244.0" text-anchor="middle" class="chart-axis-label">R2</text>
+        <rect x="30.0" y="142.8" width="36" height="75.2" class="chart-readiness-bar" rx="8" /><rect x="722.0" y="93.3" width="36" height="124.7" class="chart-readiness-bar" rx="8" />
+        <polyline points="48.0,174.4 740.0,161.9" class="chart-line-prior" />
+        <polyline points="48.0,161.9 740.0,149.3" class="chart-line-posterior" />
+        <circle cx="48.0" cy="174.4" r="5" class="chart-point-prior" /><circle cx="48.0" cy="161.9" r="5" class="chart-point-posterior" /><circle cx="740.0" cy="161.9" r="5" class="chart-point-prior" /><circle cx="740.0" cy="149.3" r="5" class="chart-point-posterior" />
+      </svg>
+    
+          </div>
+          <div class="round-grid">
+            <article class="round-card">
+              <div class="round-card-top">
+                <div>
+                  <div class="section-kicker"><span class="lang-zh">第 1 轮</span><span class="lang-en">Round 1</span></div>
+                  <h3><span class="lang-zh">初始方向与目标澄清</span><span class="lang-en">Initial direction and outcome framing</span></h3>
+                </div>
+                <div class="round-badge"><span class="lang-zh">仍需补信息</span><span class="lang-en">Need more information</span></div>
+              </div>
+              <div class="round-metrics">
+                <div class="metric-chip"><strong><span class="lang-zh">起点概率</span><span class="lang-en">Starting belief</span></strong><span>22.0%</span></div>
+                <div class="metric-chip"><strong><span class="lang-zh">更新后概率</span><span class="lang-en">Updated belief</span></strong><span>28.3%</span></div>
+                <div class="metric-chip"><strong><span class="lang-zh">概率变化</span><span class="lang-en">Change</span></strong><span>6.3%</span></div>
+                <div class="metric-chip"><strong><span class="lang-zh">准备度</span><span class="lang-en">Readiness</span></strong><span>38.0%</span></div>
+              </div>
+              <p><strong><span class="lang-zh">用户补充了什么：</span><span class="lang-en">What the user added:</span></strong> <span class="lang-zh">用户先给出想做海外 GEO 公司、准备期大约 2-3 个月、希望月营收 30 万左右且人效达到 10 万以上。</span><span class="lang-en">The user first shared the desire to build an overseas GEO company, prepare for about 2-3 months, and target around CNY 300k monthly revenue with monthly revenue per person above CNY 100k.</span></p>
+              <p><strong><span class="lang-zh">这一轮我在判断什么：</span><span class="lang-en">What the skill focused on:</span></strong> <span class="lang-zh">先确认这是一个创业决策而不是抽象想法，并用弱先验判断赛道本身是否成立。</span><span class="lang-en">First confirm that this is a startup decision rather than an abstract idea, and use a weak prior to judge whether the market itself is real.</span></p>
+              <p><strong><span class="lang-zh">中间判断：</span><span class="lang-en">Interim judgment:</span></strong> <span class="lang-zh">赛道本身可以看，但还不能直接下“正式启动公司”的结论。</span><span class="lang-en">The market is worth looking at, but not enough to commit to a formal company launch.</span></p>
+              <div class="callout process-callout">
+                <p><strong><span class="lang-zh">贝叶斯变化：</span><span class="lang-en">Bayesian change:</span></strong> <span class="lang-zh">把本轮起点概率 22.0% 转成先验 odds 0.282，再乘以校正后的证据强度，得到后验 odds 0.375，对应概率约 28.3%。</span><span class="lang-en">Convert the starting belief 22.0% into prior odds 0.282, apply the adjusted evidence strength, and you get posterior odds 0.375, which maps to about 28.3%.</span></p>
+              </div>
+              <div class="round-two-col">
+                <div>
+                  <h4><span class="lang-zh">新增信息</span><span class="lang-en">New information</span></h4>
+                  <ul><li><span class="lang-zh">明确了时间窗口和结果门槛。</span><span class="lang-en">The time window and outcome bar became explicit.</span></li></ul>
+                </div>
+                <div>
+                  <h4><span class="lang-zh">下一步追问 / 剩余缺口</span><span class="lang-en">Next questions / remaining gaps</span></h4>
+                  <ul><li><span class="lang-zh">你打算做服务、产品化服务还是 SaaS？</span><span class="lang-en">Will this be a service, productized service, or SaaS model?</span></li><li><span class="lang-zh">第一个客户市场、客单价和手上的初始资产是什么？</span><span class="lang-en">What are the first market, ticket size, and existing assets?</span></li></ul>
+                </div>
+              </div>
+            </article>
+            
+            <article class="round-card">
+              <div class="round-card-top">
+                <div>
+                  <div class="section-kicker"><span class="lang-zh">第 2 轮</span><span class="lang-en">Round 2</span></div>
+                  <h3><span class="lang-zh">模式、市场与资产补充</span><span class="lang-en">Model, market, and asset clarification</span></h3>
+                </div>
+                <div class="round-badge"><span class="lang-zh">接近可决策</span><span class="lang-en">Nearly ready</span></div>
+              </div>
+              <div class="round-metrics">
+                <div class="metric-chip"><strong><span class="lang-zh">起点概率</span><span class="lang-en">Starting belief</span></strong><span>28.3%</span></div>
+                <div class="metric-chip"><strong><span class="lang-zh">更新后概率</span><span class="lang-en">Updated belief</span></strong><span>34.7%</span></div>
+                <div class="metric-chip"><strong><span class="lang-zh">概率变化</span><span class="lang-en">Change</span></strong><span>6.3%</span></div>
+                <div class="metric-chip"><strong><span class="lang-zh">准备度</span><span class="lang-en">Readiness</span></strong><span>63.0%</span></div>
+              </div>
+              <p><strong><span class="lang-zh">用户补充了什么：</span><span class="lang-en">What the user added:</span></strong> <span class="lang-zh">用户补充了重服务模式、主要服务美国、客单价约 1 万美元/月、暂无海外资产但有部分国内案例，准备做海外流量。</span><span class="lang-en">The user added that the plan is a heavy-service model for U.S. clients at around $10k MRR, with no overseas assets yet but some domestic cases and a plan to build overseas traffic.</span></p>
+              <p><strong><span class="lang-zh">这一轮我在判断什么：</span><span class="lang-en">What the skill focused on:</span></strong> <span class="lang-zh">把正面与负面证据同时纳入，并判断当前最合理的动作是直接启动、验证式启动还是暂缓。</span><span class="lang-en">Incorporate both supporting and opposing evidence and decide whether the right move is a full launch, a validation-first start, or a delay.</span></p>
+              <p><strong><span class="lang-zh">中间判断：</span><span class="lang-en">Interim judgment:</span></strong> <span class="lang-zh">更合理的动作是先做验证式准备，而不是直接按正式公司规模下注。</span><span class="lang-en">The more rational move is validation-first preparation rather than betting immediately at full company scale.</span></p>
+              <div class="callout process-callout">
+                <p><strong><span class="lang-zh">贝叶斯变化：</span><span class="lang-en">Bayesian change:</span></strong> <span class="lang-zh">把本轮起点概率 28.3% 转成先验 odds 0.395，再乘以校正后的证据强度，得到后验 odds 0.503，对应概率约 34.7%。</span><span class="lang-en">Convert the starting belief 28.3% into prior odds 0.395, apply the adjusted evidence strength, and you get posterior odds 0.503, which maps to about 34.7%.</span></p>
+              </div>
+              <div class="round-two-col">
+                <div>
+                  <h4><span class="lang-zh">新增信息</span><span class="lang-en">New information</span></h4>
+                  <ul><li><span class="lang-zh">商业模式从模糊方向变成了重服务。</span><span class="lang-en">The operating model moved from vague to clearly heavy service.</span></li><li><span class="lang-zh">目标市场、客单价和资产缺口被明确了。</span><span class="lang-en">The target market, price point, and asset gaps became clearer.</span></li></ul>
+                </div>
+                <div>
+                  <h4><span class="lang-zh">下一步追问 / 剩余缺口</span><span class="lang-en">Next questions / remaining gaps</span></h4>
+                  <ul><li><span class="lang-zh">第一个要打的美国 ICP 是哪一类公司和哪种买方？</span><span class="lang-en">What exact type of U.S. company and buyer will be the first ICP?</span></li><li><span class="lang-zh">你打算用哪条最先成交的路径去拿首单？</span><span class="lang-en">Which path will you use to land the first deal?</span></li></ul>
+                </div>
+              </div>
+            </article>
+            </div>
+        
+      </div>
+    </details>
+    
+
+    
+    <details class="fold-section pro-only section-anchor-offset" id="prior">
+      <summary>
+        <div class="fold-heading">
+          <div class="section-kicker"><span class="lang-zh">默认折叠</span><span class="lang-en">Collapsed by default</span></div>
+          <div class="fold-title"><span class="lang-zh">先验设置</span><span class="lang-en">Prior setup</span></div>
+        </div>
+        <span class="fold-indicator"><span class="lang-zh">展开</span><span class="lang-en">Open</span></span>
+      </summary>
+      <div class="fold-panel">
+        
+          <div class="grid compact-grid process-grid">
+        <div class="metric-card">
+          <div class="metric-label"><span class="lang-zh">先验概率</span><span class="lang-en">Prior probability</span></div>
+          <div class="metric-value">22.0%</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label"><span class="lang-zh">先验分布</span><span class="lang-en">Prior distribution</span></div>
+          <div class="metric-value metric-text">Beta(4.4, 15.6)</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label"><span class="lang-zh">等效样本量</span><span class="lang-en">Equivalent sample size</span></div>
+          <div class="metric-value">20</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label"><span class="lang-zh">先验信心</span><span class="lang-en">Prior confidence</span></div>
+          <div class="metric-value metric-text"><span class="lang-zh">低</span><span class="lang-en">Low</span></div>
+        </div>
+      </div>
+      
+      <p><strong><span class="lang-zh">来源等级：</span><span class="lang-en">Source quality:</span></strong> C/D</p>
+      <p><strong><span class="lang-zh">先验区间：</span><span class="lang-en">Prior interval:</span></strong> 8.9% - 38.4%</p>
+      <ul><li><span class="lang-zh">创始人驱动的跨境服务型新业务通常可以较快验证第一批客户，但稳定做到高客单价和持续续费并不容易。</span><span class="lang-en">Founder-led cross-border service businesses can often validate early clients relatively quickly, but reaching stable high-ticket recurring revenue and renewals is difficult.</span></li><li><span class="lang-zh">海外 AI 搜索与答案引擎流量入口正在变强，但 GEO 还没有被平台官方定义成一条完全独立的新护城河。</span><span class="lang-en">AI search and answer-engine distribution is strengthening, but GEO has not yet been established by platforms as a fully independent moat.</span></li></ul>
+    
+      
+      </div>
+    </details>
+    
+
+    
+    <details class="fold-section pro-only section-anchor-offset" id="evidence">
+      <summary>
+        <div class="fold-heading">
+          <div class="section-kicker"><span class="lang-zh">默认折叠</span><span class="lang-en">Collapsed by default</span></div>
+          <div class="fold-title"><span class="lang-zh">证据摘要</span><span class="lang-en">Evidence summary</span></div>
+        </div>
+        <span class="fold-indicator"><span class="lang-zh">展开</span><span class="lang-en">Open</span></span>
+      </summary>
+      <div class="fold-panel">
+        
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th><span class="lang-zh">证据</span><span class="lang-en">Evidence</span></th>
+              <th><span class="lang-zh">等级</span><span class="lang-en">Grade</span></th>
+              <th><span class="lang-zh">方向</span><span class="lang-en">Direction</span></th>
+              <th><span class="lang-zh">似然比</span><span class="lang-en">LR</span></th>
+              <th><span class="lang-zh">依赖折扣</span><span class="lang-en">Dependency</span></th>
+              <th><span class="lang-zh">摘要</span><span class="lang-en">Summary</span></th>
+              <th><span class="lang-zh">说明</span><span class="lang-en">Notes</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            <tr>
+              <td><span class="lang-zh">AI 搜索与答案引擎流量入口继续扩张</span><span class="lang-en">AI search and answer-engine traffic surfaces keep expanding</span></td>
+              <td><span class="pill">A</span></td>
+              <td><span class="lang-zh">支持</span><span class="lang-en">Supports</span></td>
+              <td>1.5</td>
+              <td>0.8</td>
+              <td><span class="lang-zh">Google 在 2025 年明确扩大 AI Overviews 与 AI Mode，OpenAI 也持续推进 ChatGPT Search 与商家接入，说明 GEO 对应的需求场景并非伪命题。</span><span class="lang-en">Google expanded AI Overviews and AI Mode in 2025, and OpenAI kept pushing ChatGPT Search and merchant integrations, suggesting the underlying GEO demand is real.</span></td>
+              <td><span class="lang-zh">这证明市场方向存在，但并不自动证明一家新公司能获得客户。</span><span class="lang-en">This supports market existence, but it does not automatically prove a new company can win clients.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="lang-zh">重服务模式更容易先拿到第一批收入</span><span class="lang-en">A heavy-service model can reach first revenue faster</span></td>
+              <td><span class="pill">D</span></td>
+              <td><span class="lang-zh">支持</span><span class="lang-en">Supports</span></td>
+              <td>1.9</td>
+              <td>0.8</td>
+              <td><span class="lang-zh">相较于直接做 SaaS，重服务模式更适合在资产不足时由创始人亲自销售与交付，先换取真实需求与现金流。</span><span class="lang-en">Compared with starting as SaaS, a heavy-service model is more suitable when assets are limited and the founder needs to sell and deliver directly to capture demand and cash flow.</span></td>
+              <td><span class="lang-zh">这是经验性判断，不是直接观测数据。</span><span class="lang-en">This is a judgment call rather than direct observed data.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="lang-zh">目标营收只需要约 4 个高客单价客户</span><span class="lang-en">The revenue target needs only about four high-ticket clients</span></td>
+              <td><span class="pill">D</span></td>
+              <td><span class="lang-zh">支持</span><span class="lang-en">Supports</span></td>
+              <td>1.7</td>
+              <td>0.9</td>
+              <td><span class="lang-zh">若单客户月费约 1 万美元，则月营收 30 万元左右对应约 4 个稳定客户，目标在算术上并非极端夸张。</span><span class="lang-en">At roughly $10k MRR per client, reaching about CNY 300k per month requires around four stable clients, so the arithmetic target is not extreme.</span></td>
+              <td><span class="lang-zh">这是目标拆解，不等于真实销售难度已经被证明。</span><span class="lang-en">This is target decomposition, not proof that sales difficulty has been solved.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="lang-zh">已有部分国内案例可作为能力起点</span><span class="lang-en">Existing domestic cases provide a capability starting point</span></td>
+              <td><span class="pill">C</span></td>
+              <td><span class="lang-zh">支持</span><span class="lang-en">Supports</span></td>
+              <td>1.8</td>
+              <td>0.8</td>
+              <td><span class="lang-zh">虽然还不是海外案例，但已有国内案例意味着交付能力并非从零开始，至少可以沉淀方法论与部分 proof points。</span><span class="lang-en">They are not overseas cases, but existing domestic cases mean delivery capability is not starting from zero and can provide process and proof points.</span></td>
+              <td><span class="lang-zh">国内案例向美国客户转化时会有市场、语言与信任折损。</span><span class="lang-en">Domestic cases lose force when translated to U.S. buyers because of market, language, and trust gaps.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="lang-zh">当前没有海外品牌、渠道或客户资产</span><span class="lang-en">There is no overseas brand, channel, or customer asset yet</span></td>
+              <td><span class="pill">C</span></td>
+              <td><span class="lang-zh">削弱</span><span class="lang-en">Weakens</span></td>
+              <td>1.9</td>
+              <td>0.9</td>
+              <td><span class="lang-zh">目前没有现成的美国客户管道、品牌背书、海外案例或已验证的销售网络，这会直接拉高首单获取成本与启动摩擦。</span><span class="lang-en">There is no existing U.S. pipeline, brand proof, overseas case study, or validated sales network, which directly raises the cost and friction of getting the first deal.</span></td>
+              <td><span class="lang-zh">这条是当前最强的负面证据之一。</span><span class="lang-en">This is one of the strongest negative pieces of evidence right now.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="lang-zh">ICP 和获客路径还没有收窄</span><span class="lang-en">The ICP and acquisition path are still too broad</span></td>
+              <td><span class="pill">C</span></td>
+              <td><span class="lang-zh">削弱</span><span class="lang-en">Weakens</span></td>
+              <td>1.7</td>
+              <td>0.9</td>
+              <td><span class="lang-zh">当前只明确了主要服务美国市场，还没有收窄到具体行业、买方角色、切入场景和最可能成交的获客路径。</span><span class="lang-en">The plan only specifies the U.S. market so far, without narrowing to a concrete industry, buyer role, wedge use case, or the acquisition path most likely to close.</span></td>
+              <td><span class="lang-zh">如果不先收窄 ICP，海外流量和销售动作很容易被摊薄。</span><span class="lang-en">Without a narrowed ICP, overseas traffic and sales efforts are likely to get diluted.</span></td>
+            </tr>
+            
+          </tbody>
+        </table>
+      </div>
+    
+      </div>
+    </details>
+    
+
+    
+    <details class="fold-section pro-only section-anchor-offset" id="update">
+      <summary>
+        <div class="fold-heading">
+          <div class="section-kicker"><span class="lang-zh">默认折叠</span><span class="lang-en">Collapsed by default</span></div>
+          <div class="fold-title"><span class="lang-zh">概率判断</span><span class="lang-en">Probability view</span></div>
+        </div>
+        <span class="fold-indicator"><span class="lang-zh">展开</span><span class="lang-en">Open</span></span>
+      </summary>
+      <div class="fold-panel">
+        
+      <p><strong><span class="lang-zh">更新方法：</span><span class="lang-en">Method:</span></strong> odds-update</p>
+      <p><strong><span class="lang-zh">后验概率：</span><span class="lang-en">Posterior probability:</span></strong> 36.0%</p>
+      <p><strong><span class="lang-zh">后验区间：</span><span class="lang-en">Posterior interval:</span></strong> 21.4% - 50.4%</p>
+      <div class="callout">
+        <p><span class="lang-zh">在 100 个相似案例里，先验大约意味着其中 22 个会成功。加入当前证据后，估计会成功的案例约为 36 个。</span><span class="lang-en">Out of 100 similar cases, the prior suggests about 22 would succeed. After the current evidence, about 36 would succeed.</span></p>
+      </div>
+    
+      </div>
+    </details>
+    
+
+    <section class="section pro-only section-anchor-offset" id="actions">
+      <h2><span class="lang-zh">行动比较</span><span class="lang-en">Action comparison</span></h2>
+      <p><strong><span class="lang-zh">推荐行动：</span><span class="lang-en">Recommended action:</span></strong> <span class="lang-zh">先做 8-10 周验证式准备，再依据真实信号决定是否正式启动</span><span class="lang-en">Run 8-10 weeks of validation-first preparation and decide based on real signals</span></p>
+      <p><span class="lang-zh">当前基于后验概率的期望值比较，支持把这个行动作为首选。</span><span class="lang-en">Expected-value comparison based on the current posterior places this action first.</span></p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th><span class="lang-zh">行动</span><span class="lang-en">Action</span></th>
+              <th><span class="lang-zh">H 为真时效用</span><span class="lang-en">Utility if H is true</span></th>
+              <th><span class="lang-zh">H 为假时效用</span><span class="lang-en">Utility if H is false</span></th>
+              <th><span class="lang-zh">期望值</span><span class="lang-en">Expected value</span></th>
+              <th><span class="lang-zh">行动阈值</span><span class="lang-en">Action threshold</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            <tr>
+              <td><span class="lang-zh">先做 8-10 周验证式准备，再依据真实信号决定是否正式启动</span><span class="lang-en">Run 8-10 weeks of validation-first preparation and decide based on real signals</span></td>
+              <td>330,000</td>
+              <td>-150,000</td>
+              <td>22,678.9</td>
+              <td>31.2%</td>
+            </tr>
+            
+            <tr>
+              <td><span class="lang-zh">暂缓 6 个月，继续积累案例与海外资产</span><span class="lang-en">Delay for 6 months and keep accumulating cases and overseas assets</span></td>
+              <td>5,000</td>
+              <td>-130,000</td>
+              <td>-81,434.1</td>
+              <td>96.3%</td>
+            </tr>
+            
+            <tr>
+              <td><span class="lang-zh">现在就按正式公司路径启动，并在 7-8 月全面开售</span><span class="lang-en">Commit to a full company launch now and sell broadly in July-August</span></td>
+              <td>600,000</td>
+              <td>-500,000</td>
+              <td>-104,277.5</td>
+              <td>45.5%</td>
+            </tr>
+            
+          </tbody>
+        </table>
+      </div>
+      <h3><span class="lang-zh">下一步最有价值的信息</span><span class="lang-en">Most valuable next information</span></h3>
+      <p><span class="lang-zh">在未来 30 天内锁定一个极窄 ICP，做 100 个美国目标账户的 founder-led outbound，至少拿到 10 个有效销售通话和 1 个付费试点或押金信号。</span><span class="lang-en">In the next 30 days, pick a very narrow ICP and run founder-led outbound to 100 qualified U.S. accounts, aiming for at least 10 real sales calls and 1 paid pilot or deposit signal.</span></p>
+      <p class="muted-note"><span class="lang-zh">当前结果已经接近关键行动阈值，新增信息有较大概率改变建议。</span><span class="lang-en">The current result is close to an action threshold, so one more strong signal could flip the recommendation.</span></p>
+    </section>
+
+    
+    <details class="fold-section pro-only section-anchor-offset" id="sensitivity">
+      <summary>
+        <div class="fold-heading">
+          <div class="section-kicker"><span class="lang-zh">默认折叠</span><span class="lang-en">Collapsed by default</span></div>
+          <div class="fold-title"><span class="lang-zh">敏感性分析</span><span class="lang-en">Sensitivity analysis</span></div>
+        </div>
+        <span class="fold-indicator"><span class="lang-zh">展开</span><span class="lang-en">Open</span></span>
+      </summary>
+      <div class="fold-panel">
+        
+      <p><strong><span class="lang-zh">后验范围：</span><span class="lang-en">Posterior range:</span></strong> 21.4% - 50.4%</p>
+      <p><strong><span class="lang-zh">结论稳定性：</span><span class="lang-en">Conclusion stability:</span></strong> <span class="lang-zh">稳定</span><span class="lang-en">Stable</span></p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th><span class="lang-zh">先验概率</span><span class="lang-en">Prior</span></th>
+              <th><span class="lang-zh">LR 强度系数</span><span class="lang-en">LR power</span></th>
+              <th><span class="lang-zh">后验概率</span><span class="lang-en">Posterior</span></th>
+              <th><span class="lang-zh">推荐行动</span><span class="lang-en">Recommended action</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            <tr>
+              <td>14.0%</td>
+              <td>0.8</td>
+              <td>21.4%</td>
+              <td><span class="lang-zh">先做 8-10 周验证式准备，再依据真实信号决定是否正式启动</span><span class="lang-en">Run 8-10 weeks of validation-first preparation and decide based on real signals</span></td>
+            </tr>
+            
+            <tr>
+              <td>14.0%</td>
+              <td>1</td>
+              <td>24.5%</td>
+              <td><span class="lang-zh">先做 8-10 周验证式准备，再依据真实信号决定是否正式启动</span><span class="lang-en">Run 8-10 weeks of validation-first preparation and decide based on real signals</span></td>
+            </tr>
+            
+            <tr>
+              <td>14.0%</td>
+              <td>1.2</td>
+              <td>27.8%</td>
+              <td><span class="lang-zh">先做 8-10 周验证式准备，再依据真实信号决定是否正式启动</span><span class="lang-en">Run 8-10 weeks of validation-first preparation and decide based on real signals</span></td>
+            </tr>
+            
+            <tr>
+              <td>22.0%</td>
+              <td>0.8</td>
+              <td>32.1%</td>
+              <td><span class="lang-zh">先做 8-10 周验证式准备，再依据真实信号决定是否正式启动</span><span class="lang-en">Run 8-10 weeks of validation-first preparation and decide based on real signals</span></td>
+            </tr>
+            
+            <tr>
+              <td>22.0%</td>
+              <td>1</td>
+              <td>36.0%</td>
+              <td><span class="lang-zh">先做 8-10 周验证式准备，再依据真实信号决定是否正式启动</span><span class="lang-en">Run 8-10 weeks of validation-first preparation and decide based on real signals</span></td>
+            </tr>
+            
+            <tr>
+              <td>22.0%</td>
+              <td>1.2</td>
+              <td>40.0%</td>
+              <td><span class="lang-zh">先做 8-10 周验证式准备，再依据真实信号决定是否正式启动</span><span class="lang-en">Run 8-10 weeks of validation-first preparation and decide based on real signals</span></td>
+            </tr>
+            
+            <tr>
+              <td>30.0%</td>
+              <td>0.8</td>
+              <td>41.8%</td>
+              <td><span class="lang-zh">先做 8-10 周验证式准备，再依据真实信号决定是否正式启动</span><span class="lang-en">Run 8-10 weeks of validation-first preparation and decide based on real signals</span></td>
+            </tr>
+            
+            <tr>
+              <td>30.0%</td>
+              <td>1</td>
+              <td>46.1%</td>
+              <td><span class="lang-zh">先做 8-10 周验证式准备，再依据真实信号决定是否正式启动</span><span class="lang-en">Run 8-10 weeks of validation-first preparation and decide based on real signals</span></td>
+            </tr>
+            
+            <tr>
+              <td>30.0%</td>
+              <td>1.2</td>
+              <td>50.4%</td>
+              <td><span class="lang-zh">先做 8-10 周验证式准备，再依据真实信号决定是否正式启动</span><span class="lang-en">Run 8-10 weeks of validation-first preparation and decide based on real signals</span></td>
+            </tr>
+            
+          </tbody>
+        </table>
+      </div>
+    
+      </div>
+    </details>
+    
+
+    <section class="section pro-only section-anchor-offset" id="warnings">
+      <h2><span class="lang-zh">风险与注意事项</span><span class="lang-en">Warnings and caveats</span></h2>
+      <ul class="warning-list"><li><span class="lang-zh">部分证据较弱或较间接，后验判断应视为更脆弱。</span><span class="lang-en">Some evidence is weak or indirect, so the posterior judgment should be treated as more fragile.</span></li><li><span class="lang-zh">至少有一条证据因依赖关系被折扣处理，不应把这次更新理解为完全独立证据的简单叠加。</span><span class="lang-en">At least one evidence item was discounted for dependence, so this update should not be read as a simple stack of fully independent signals.</span></li><li><span class="lang-zh">这里的后验区间来自赔率更新下的敏感性包络，并非严格统计意义上的可信区间。</span><span class="lang-en">The posterior interval here is a sensitivity envelope from odds updates, not a strict statistical credible interval.</span></li><li><span class="lang-zh">多轮对话后仍有关键缺口，建议先补充剩余信息，再进入最终决策。</span><span class="lang-en">多轮对话后仍有关键缺口，建议先补充剩余信息，再进入最终决策。</span></li></ul>
+      <p class="footer-note"><span class="lang-zh">本 HTML 与 Markdown 共享同一套结构化计算结果；如需 PDF，请使用右上角“下载 PDF”。</span><span class="lang-en">This HTML report shares the same structured result as Markdown. If you need a PDF, use the save-as-PDF action in the top-right corner.</span></p>
+    </section>
+
+    
+    <details class="fold-section pro-only section-anchor-offset" id="workflow">
+      <summary>
+        <div class="fold-heading">
+          <div class="section-kicker"><span class="lang-zh">默认折叠</span><span class="lang-en">Collapsed by default</span></div>
+          <div class="fold-title"><span class="lang-zh">附录</span><span class="lang-en">Appendix</span></div>
+        </div>
+        <span class="fold-indicator"><span class="lang-zh">展开</span><span class="lang-en">Open</span></span>
+      </summary>
+      <div class="fold-panel">
+        
+      <div class="appendix-block">
+        <h3><span class="lang-zh">Skill 流程</span><span class="lang-en">Skill workflow</span></h3>
+        <div class="workflow">
+        <div class="workflow-step">
+          <div class="step-index">Step 1</div>
+          <div class="step-text"><span class="lang-zh">问题结构化</span><span class="lang-en">Structure the decision</span></div>
+        </div>
+        
+        <div class="workflow-step">
+          <div class="step-index">Step 2</div>
+          <div class="step-text"><span class="lang-zh">基于当前信息给初步先验</span><span class="lang-en">Set an initial prior from the current information</span></div>
+        </div>
+        
+        <div class="workflow-step">
+          <div class="step-index">Step 3</div>
+          <div class="step-text"><span class="lang-zh">通过多轮追问补齐关键缺口</span><span class="lang-en">Close the key gaps through iterative questioning</span></div>
+        </div>
+        
+        <div class="workflow-step">
+          <div class="step-index">Step 4</div>
+          <div class="step-text"><span class="lang-zh">检索与分级证据</span><span class="lang-en">Collect and grade evidence</span></div>
+        </div>
+        
+        <div class="workflow-step">
+          <div class="step-index">Step 5</div>
+          <div class="step-text"><span class="lang-zh">构造先验与参考类</span><span class="lang-en">Build priors and reference classes</span></div>
+        </div>
+        
+        <div class="workflow-step">
+          <div class="step-index">Step 6</div>
+          <div class="step-text"><span class="lang-zh">执行贝叶斯更新</span><span class="lang-en">Run the Bayesian update</span></div>
+        </div>
+        
+        <div class="workflow-step">
+          <div class="step-index">Step 7</div>
+          <div class="step-text"><span class="lang-zh">做敏感性与阈值分析</span><span class="lang-en">Stress-test thresholds and sensitivity</span></div>
+        </div>
+        
+        <div class="workflow-step">
+          <div class="step-index">Step 8</div>
+          <div class="step-text"><span class="lang-zh">给出行动与下一步信息建议</span><span class="lang-en">Recommend the next action and information step</span></div>
+        </div>
+        
+        <div class="workflow-step">
+          <div class="step-index">Step 9</div>
+          <div class="step-text"><span class="lang-zh">记录每轮变化并输出过程日志</span><span class="lang-en">Record each round and export a process log</span></div>
+        </div>
+        </div>
+      </div>
+      <div class="appendix-block">
+        <h3><span class="lang-zh">Skill 能力</span><span class="lang-en">Skill capabilities</span></h3>
+        <div class="capability-grid">
+        <div class="capability-card">
+          <h3><span class="lang-zh">问题定义与参考类选择</span><span class="lang-en">Problem framing and reference classes</span></h3>
+          <p><span class="lang-zh">把模糊问题压缩成可计算假设、时间范围、成功标准和行动集合，并显式选择参考类。</span><span class="lang-en">Turns a fuzzy choice into a computable hypothesis, time horizon, success metric, and action set with an explicit reference class.</span></p>
+        </div>
+        
+        <div class="capability-card">
+          <h3><span class="lang-zh">证据分级与先验构造</span><span class="lang-en">Evidence grading and prior construction</span></h3>
+          <p><span class="lang-zh">区分强证据、弱证据和类比信号，输出带来源、可信度和等效样本量的先验。</span><span class="lang-en">Separates strong evidence from weak signals and produces priors with source notes, quality, and equivalent sample size.</span></p>
+        </div>
+        
+        <div class="capability-card">
+          <h3><span class="lang-zh">赔率更新与共轭更新</span><span class="lang-en">Odds updates and conjugate updates</span></h3>
+          <p><span class="lang-zh">支持似然比赔率更新、Beta-binomial 计数更新，以及二者的组合路径。</span><span class="lang-en">Supports likelihood-ratio odds updates, Beta-binomial count updates, and the combined path when both are needed.</span></p>
+        </div>
+        
+        <div class="capability-card">
+          <h3><span class="lang-zh">行动阈值与期望值比较</span><span class="lang-en">Action thresholds and expected value</span></h3>
+          <p><span class="lang-zh">把后验概率映射到行动阈值和期望值排序，避免只停留在“概率高低”的描述。</span><span class="lang-en">Converts posterior beliefs into action thresholds and expected-value ranking instead of stopping at raw probability.</span></p>
+        </div>
+        
+        <div class="capability-card">
+          <h3><span class="lang-zh">敏感性分析与防幻觉提醒</span><span class="lang-en">Sensitivity analysis and fragility checks</span></h3>
+          <p><span class="lang-zh">用不同先验、证据强度和依赖折扣重跑结果，显式标记结论是否稳健。</span><span class="lang-en">Re-runs the decision under alternative priors, evidence strength, and dependency discounts to show whether the conclusion is robust.</span></p>
+        </div>
+        
+        <div class="capability-card">
+          <h3><span class="lang-zh">自动化 HTML / Markdown 报告</span><span class="lang-en">Automated HTML / Markdown reports</span></h3>
+          <p><span class="lang-zh">从同一个结构化输入自动生成 Markdown 与双语 HTML，并在 HTML 中支持打印和存储为 PDF。</span><span class="lang-en">Automatically generates synchronized Markdown and bilingual HTML reports from the same structured input, with print and save-as-PDF support inside HTML.</span></p>
+        </div>
+        
+        <div class="capability-card">
+          <h3><span class="lang-zh">多轮对话决策循环</span><span class="lang-en">Multi-turn decision loop</span></h3>
+          <p><span class="lang-zh">先基于当前信息给弱先验和初步判断，再通过多轮对话追问缺失信息，持续更新先验、后验和决策准备度。</span><span class="lang-en">Starts with a weak prior and an initial read, then iteratively asks for missing information and updates the prior, posterior, and decision readiness over multiple turns.</span></p>
+        </div>
+        
+        <div class="capability-card">
+          <h3><span class="lang-zh">过程日志与变化图表</span><span class="lang-en">Process log and change chart</span></h3>
+          <p><span class="lang-zh">自动记录每一轮对话里新增了什么信息、如何完成贝叶斯更新、判断为什么改变，并在报告中输出轨迹图和过程表。</span><span class="lang-en">Records what changed in each round, how the Bayesian update was applied, why the judgment moved, and renders both a trajectory chart and a process table in the report.</span></p>
+        </div>
+        </div>
+      </div>
+    
+      </div>
+    </details>
+    
+  </main>
+
+  <script>
+    (function () {
+      const root = document.body;
+      const buttons = Array.from(document.querySelectorAll("[data-lang-button]"));
+      const actionButtons = Array.from(document.querySelectorAll("[data-report-action]"));
+      const toast = document.getElementById("report-toast");
+      const foldSections = Array.from(document.querySelectorAll("details.fold-section"));
+      let printState = null;
+      let printRestoreTimer = null;
+      function setLang(lang) {
+        root.dataset.lang = lang;
+        buttons.forEach((button) => {
+          button.classList.toggle("is-active", button.dataset.langButton === lang);
+        });
+        try {
+          window.localStorage.setItem("yao-bayesian-report-lang", lang);
+        } catch (error) {
+        }
+      }
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => setLang(button.dataset.langButton));
+      });
+      function showToast(message) {
+        if (!toast) return;
+        toast.textContent = message;
+        toast.hidden = false;
+        toast.classList.add("is-visible");
+        window.clearTimeout(showToast.timerId);
+        showToast.timerId = window.setTimeout(() => {
+          toast.classList.remove("is-visible");
+          window.setTimeout(() => {
+            toast.hidden = true;
+          }, 220);
+        }, 2400);
+      }
+      function prepareForPrint() {
+        if (printState) return;
+        printState = foldSections.map((section) => section.open);
+        foldSections.forEach((section) => {
+          section.open = true;
+        });
+      }
+      function restoreAfterPrint() {
+        if (!printState) return;
+        foldSections.forEach((section, index) => {
+          section.open = Boolean(printState[index]);
+        });
+        printState = null;
+      }
+      function triggerReportPrint(mode) {
+        prepareForPrint();
+        if (mode === "save-pdf") {
+          showToast(root.dataset.lang === "en" ? "Choose Save as PDF in the print dialog." : "请在打印对话框中选择“存储为 PDF”。");
+        } else {
+          showToast(root.dataset.lang === "en" ? "Opening the print dialog." : "正在打开打印对话框。");
+        }
+        window.clearTimeout(printRestoreTimer);
+        printRestoreTimer = window.setTimeout(restoreAfterPrint, 1800);
+        window.setTimeout(() => window.print(), 80);
+      }
+      actionButtons.forEach((button) => {
+        button.addEventListener("click", () => triggerReportPrint(button.dataset.reportAction));
+      });
+      window.addEventListener("afterprint", restoreAfterPrint);
+      document.querySelectorAll('a.menu-link').forEach((link) => {
+        link.addEventListener('click', () => {
+          const href = link.getAttribute('href') || '';
+          const target = href.startsWith('#') ? document.getElementById(href.slice(1)) : null;
+          if (target && target.tagName.toLowerCase() === 'details') {
+            target.open = true;
+          }
+        });
+      });
+      try {
+        const saved = window.localStorage.getItem("yao-bayesian-report-lang");
+        if (saved === "en" || saved === "zh") {
+          setLang(saved);
+        }
+      } catch (error) {
+      }
+      if (!root.dataset.lang) {
+        setLang("zh");
+      }
+    })();
+  </script>
+</body>
+</html>

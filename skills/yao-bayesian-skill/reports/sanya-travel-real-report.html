@@ -1,0 +1,1684 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>2026年5月中下旬是否应该从北京飞三亚做一次 3 晚 4 天旅行？ | Yao Bayesian Skill</title>
+  <style>
+:root {
+  --bg: #f5f4ed;
+  --card: #faf9f5;
+  --ink: #141413;
+  --muted: #5e5d59;
+  --line: #e8e5da;
+  --accent: #1b365d;
+  --accent-soft: #eef2f7;
+  --good: #1b365d;
+  --warn: #8a4f2d;
+  --shadow: 0 0 0 1px rgba(209, 207, 197, 0.65);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "PingFang SC", "Source Han Sans SC", "Noto Sans CJK SC", "Helvetica Neue", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at top left, #eef2f7 0%, transparent 24%),
+    linear-gradient(180deg, #f8f7f1 0%, var(--bg) 100%);
+}
+
+[data-lang="zh"] .lang-en,
+[data-lang="en"] .lang-zh {
+  display: none;
+}
+
+[data-view="simple"] .pro-only,
+[data-view="simple"] .nav-pro-only {
+  display: none !important;
+}
+
+[data-lang="zh"] .lang-zh,
+[data-lang="en"] .lang-en {
+  display: inline;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  padding: 14px 0;
+  backdrop-filter: blur(18px);
+  background: rgba(245, 244, 237, 0.92);
+  border-bottom: 1px solid var(--line);
+}
+
+.topbar-inner {
+  width: min(1120px, calc(100vw - 40px));
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 18px;
+}
+
+.brand-block {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.brand-title,
+.brand-subtitle,
+.menu-link,
+.lang-button,
+.metric-label,
+th,
+.step-index {
+  font-family: "IBM Plex Sans", "PingFang SC", "Helvetica Neue", sans-serif;
+}
+
+.brand-title {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.brand-subtitle {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+  min-width: 0;
+}
+
+.menu::-webkit-scrollbar {
+  height: 6px;
+}
+
+.menu-link {
+  white-space: nowrap;
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 13px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  transition: background 180ms ease, color 180ms ease;
+}
+
+.menu-link:hover {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.lang-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.topbar-tools {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.report-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.view-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lang-button {
+  border: 1px solid var(--line);
+  background: #f0efe8;
+  color: var(--muted);
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 180ms ease, box-shadow 180ms ease, color 180ms ease, background 180ms ease;
+}
+
+.view-button {
+  border: 1px solid var(--line);
+  background: #f0efe8;
+  color: var(--muted);
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 180ms ease, box-shadow 180ms ease, color 180ms ease, background 180ms ease;
+  font-family: "IBM Plex Sans", "PingFang SC", "Helvetica Neue", sans-serif;
+}
+
+.view-button:hover {
+  transform: translateY(-1px);
+  color: var(--accent);
+}
+
+.view-button.is-active {
+  background: var(--accent);
+  color: #faf9f5;
+  box-shadow: 0 0 0 1px #d6e1ee;
+}
+
+.lang-button:hover {
+  transform: translateY(-1px);
+  color: var(--accent);
+}
+
+.action-button {
+  border: 1px solid var(--line);
+  background: #f0efe8;
+  color: var(--muted);
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 180ms ease, box-shadow 180ms ease, color 180ms ease, background 180ms ease;
+  font-family: "IBM Plex Sans", "PingFang SC", "Helvetica Neue", sans-serif;
+}
+
+.action-button:hover {
+  transform: translateY(-1px);
+  color: var(--accent);
+}
+
+.action-button-primary {
+  background: var(--accent);
+  color: #faf9f5;
+  box-shadow: 0 0 0 1px #d6e1ee;
+}
+
+.action-button-primary:hover {
+  color: #faf9f5;
+  background: #24456f;
+}
+
+.lang-button.is-active {
+  background: var(--accent-soft);
+  color: var(--accent);
+  box-shadow: 0 0 0 1px #d6e1ee;
+}
+
+.page {
+  width: min(1040px, calc(100vw - 48px));
+  margin: 36px auto 72px;
+}
+
+.section-anchor-offset {
+  scroll-margin-top: 88px;
+}
+
+.hero,
+.section,
+.callout {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+}
+
+.hero {
+  padding: 36px;
+  margin-bottom: 28px;
+}
+
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+h1 {
+  margin: 0 0 12px;
+  font-size: clamp(32px, 4vw, 52px);
+  line-height: 1.05;
+  font-family: "Source Han Serif SC", "Songti SC", "Noto Serif CJK SC", "Georgia", serif;
+  font-weight: 500;
+}
+
+.summary-line {
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--muted);
+  max-width: 34em;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.compact-grid {
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+}
+
+.hero-grid {
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+}
+
+.process-grid {
+  margin-top: 18px;
+}
+
+.metric-card {
+  border-radius: 18px;
+  padding: 18px 18px 16px;
+  background: #f8f7f1;
+  border: 1px solid var(--line);
+}
+
+.metric-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.metric-value {
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1.1;
+  color: var(--accent);
+  font-family: "Source Han Serif SC", "Songti SC", "Noto Serif CJK SC", "Georgia", serif;
+}
+
+.metric-text {
+  font-size: 20px;
+}
+
+.section {
+  padding: 28px 30px;
+  margin-bottom: 20px;
+}
+
+h2 {
+  margin: 0 0 14px;
+  font-size: 26px;
+  font-family: "Source Han Serif SC", "Songti SC", "Noto Serif CJK SC", "Georgia", serif;
+  font-weight: 500;
+  border-left: 3px solid var(--accent);
+  padding-left: 10px;
+}
+
+h3 {
+  margin: 18px 0 10px;
+  font-size: 18px;
+  font-family: "Source Han Serif SC", "Songti SC", "Noto Serif CJK SC", "Georgia", serif;
+  font-weight: 500;
+}
+
+p,
+li {
+  font-size: 15.5px;
+  line-height: 1.55;
+}
+
+.hero p,
+.section > p,
+.fold-panel > p,
+.comparison-card p,
+.executive-card p,
+.reason-card p,
+.callout p,
+.warning-list li,
+.footer-note {
+  max-width: 70ch;
+}
+
+.section-kicker,
+.decision-banner-label,
+.reason-label {
+  font-family: "IBM Plex Sans", "PingFang SC", "Helvetica Neue", sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.table-wrap {
+  overflow-x: auto;
+  margin-top: 14px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #fcfbf8;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0;
+  font-size: 15px;
+}
+
+th,
+td {
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  padding: 10px 8px;
+  vertical-align: top;
+}
+
+th {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  background: #f3f1ea;
+}
+
+tbody tr:nth-child(even) {
+  background: #f8f7f2;
+}
+
+.pill {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.meter {
+  height: 10px;
+  background: #eee7db;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.meter > span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent) 0%, #d9a14e 100%);
+  border-radius: 999px;
+}
+
+.workflow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 14px;
+}
+
+.workflow-step,
+.capability-card {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 14px 16px;
+  background: #f8f7f1;
+}
+
+.step-text {
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.step-index {
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+
+.capability-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+}
+
+.callout {
+  padding: 20px 24px;
+  margin-top: 18px;
+  border-left: 3px solid var(--accent);
+  background: #f7f6f1;
+}
+
+.warning-list li {
+  color: var(--warn);
+}
+
+.muted-note {
+  color: var(--muted);
+}
+
+.decision-banner {
+  margin-top: 18px;
+  padding: 18px 20px;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: #f7f6f1;
+}
+
+.decision-proceed {
+  background: linear-gradient(180deg, #f7f9fc 0%, #f1f4f8 100%);
+}
+
+.decision-confirm {
+  background: linear-gradient(180deg, #f8f7f1 0%, #f3f1ea 100%);
+}
+
+.decision-hold {
+  background: linear-gradient(180deg, #f8f4f1 0%, #f4efea 100%);
+}
+
+.decision-banner-state {
+  margin-top: 6px;
+  font-size: 30px;
+  line-height: 1.1;
+  color: var(--accent);
+  font-family: "Source Han Serif SC", "Songti SC", "Noto Serif CJK SC", "Georgia", serif;
+  font-weight: 500;
+}
+
+.decision-banner-text {
+  margin: 10px 0 0;
+  max-width: 860px;
+}
+
+.executive-panel {
+  background: linear-gradient(180deg, #fcfbf8 0%, #f7f6f1 100%);
+}
+
+.executive-grid,
+.reason-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+  gap: 16px;
+}
+
+.executive-card,
+.comparison-card,
+.reason-card {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 18px 20px;
+  background: #f8f7f1;
+}
+
+.executive-primary {
+  background: linear-gradient(180deg, #f6f8fb 0%, #eef2f7 100%);
+}
+
+.action-list,
+.premise-list,
+.comparison-list {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.action-list li,
+.premise-list li,
+.comparison-list li {
+  margin-bottom: 10px;
+}
+
+.comparison-list li span {
+  display: block;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.fold-section {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+  margin-bottom: 18px;
+  overflow: hidden;
+}
+
+.fold-section > summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 22px 26px;
+  cursor: pointer;
+}
+
+.fold-section > summary::-webkit-details-marker {
+  display: none;
+}
+
+.fold-heading {
+  min-width: 0;
+}
+
+.fold-title {
+  margin-top: 8px;
+  font-size: 23px;
+  font-family: "Source Han Serif SC", "Songti SC", "Noto Serif CJK SC", "Georgia", serif;
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--ink);
+  border-left: 3px solid var(--accent);
+  padding-left: 10px;
+}
+
+.fold-indicator {
+  flex-shrink: 0;
+  font-family: "IBM Plex Sans", "PingFang SC", "Helvetica Neue", sans-serif;
+  font-size: 13px;
+  color: var(--accent);
+  background: var(--accent-soft);
+  padding: 7px 12px;
+  border-radius: 999px;
+}
+
+.fold-section[open] .fold-indicator .lang-zh::before,
+.fold-section[open] .fold-indicator .lang-en::before {
+  content: "";
+}
+
+.fold-section[open] .fold-panel {
+  border-top: 1px solid var(--line);
+}
+
+.fold-panel {
+  padding: 0 26px 28px;
+}
+
+.appendix-block + .appendix-block {
+  margin-top: 20px;
+}
+
+.reason-card h3 {
+  margin-top: 6px;
+}
+
+.trajectory-shell {
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 18px;
+  background: #f8f7f1;
+  border: 1px solid var(--line);
+}
+
+.trajectory-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.trajectory-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.legend-dot,
+.legend-bar {
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+}
+
+.legend-dot-prior {
+  background: #d9a14e;
+}
+
+.legend-dot-posterior {
+  background: var(--accent);
+}
+
+.legend-bar {
+  width: 14px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(27, 54, 93, 0.18);
+  border: 1px solid rgba(27, 54, 93, 0.2);
+}
+
+.trajectory-chart {
+  width: 100%;
+  height: auto;
+  margin-top: 12px;
+}
+
+.chart-grid {
+  stroke: var(--line);
+  stroke-width: 1;
+}
+
+.chart-axis-label {
+  fill: var(--muted);
+  font-size: 11px;
+  font-family: "IBM Plex Sans", "PingFang SC", "Helvetica Neue", sans-serif;
+}
+
+.chart-line-prior,
+.chart-line-posterior {
+  fill: none;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.chart-line-prior {
+  stroke: #d9a14e;
+  stroke-dasharray: 6 6;
+}
+
+.chart-line-posterior {
+  stroke: var(--accent);
+}
+
+.chart-readiness-bar {
+  fill: rgba(27, 54, 93, 0.12);
+  stroke: rgba(27, 54, 93, 0.16);
+}
+
+.chart-point-prior {
+  fill: #fff8ea;
+  stroke: #d9a14e;
+  stroke-width: 2;
+}
+
+.chart-point-posterior {
+  fill: var(--accent);
+  stroke: #f8f7f1;
+  stroke-width: 2;
+}
+
+.round-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.round-card {
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: 18px;
+  padding: 20px 22px;
+  background: linear-gradient(180deg, #faf9f5 0%, #f7f6f0 100%);
+}
+
+.round-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.round-badge {
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.round-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin: 16px 0 14px;
+}
+
+.metric-chip {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 10px 12px;
+  background: #fcfbf8;
+}
+
+.metric-chip strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.round-two-col {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.round-two-col h4 {
+  margin: 0 0 8px;
+  font-size: 15px;
+  color: var(--accent);
+}
+
+.round-two-col ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.process-callout {
+  margin-top: 12px;
+  margin-bottom: 0;
+  background: #f5f4ed;
+}
+
+.reason-card.risk {
+  background: #fbf7f3;
+}
+
+.footer-note {
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.report-toast {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 40;
+  max-width: min(360px, calc(100vw - 32px));
+  padding: 12px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(27, 54, 93, 0.15);
+  background: rgba(20, 20, 19, 0.9);
+  color: #faf9f5;
+  box-shadow: 0 16px 32px rgba(20, 20, 19, 0.18);
+  font-size: 14px;
+  line-height: 1.45;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.report-toast.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@page {
+  size: A4;
+  margin: 16mm 16mm 18mm 16mm;
+}
+
+@media print {
+  html,
+  body {
+    background: #f5f4ed !important;
+  }
+
+  .topbar {
+    position: static;
+    padding: 0 0 10mm;
+    background: transparent;
+    border-bottom: 0;
+    backdrop-filter: none;
+  }
+
+  .topbar-inner {
+    width: auto;
+    display: block;
+  }
+
+  .menu,
+  .lang-toggle,
+  .report-actions,
+  .hero-meta,
+  .fold-indicator,
+  .footer-note,
+  .meter,
+  .report-toast {
+    display: none !important;
+  }
+
+  .page {
+    width: auto;
+    margin: 0;
+  }
+
+  .hero,
+  .section,
+  .fold-section,
+  .callout {
+    box-shadow: none;
+    break-inside: avoid-page;
+  }
+
+  .hero,
+  .section,
+  .fold-panel,
+  .fold-section > summary {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .fold-section {
+    border: 0;
+    background: transparent;
+  }
+
+  .fold-section > summary {
+    cursor: default;
+    padding-top: 0;
+    padding-bottom: 6mm;
+  }
+
+  .fold-section[open] .fold-panel {
+    border-top: 0 !important;
+  }
+
+  .fold-panel {
+    padding-bottom: 5mm;
+  }
+
+  .trajectory-shell,
+  .round-card,
+  .table-wrap {
+    break-inside: avoid-page;
+  }
+
+  .table-wrap {
+    background: #fcfbf8;
+  }
+
+  table {
+    font-size: 12px;
+  }
+
+  .trajectory-chart {
+    max-height: 150mm;
+  }
+}
+
+@media (max-width: 640px) {
+  .topbar {
+    padding: 10px 0;
+  }
+
+  .topbar-inner {
+    width: calc(100vw - 20px);
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .menu {
+    width: 100%;
+  }
+
+  .topbar-tools {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .lang-toggle {
+    justify-content: flex-start;
+  }
+
+  .report-actions {
+    flex-wrap: wrap;
+  }
+
+  .view-toggle {
+    justify-content: flex-start;
+  }
+
+  .page {
+    width: calc(100vw - 24px);
+    margin: 12px auto 32px;
+  }
+
+  .executive-grid,
+  .reason-grid,
+  .round-two-col {
+    grid-template-columns: 1fr;
+  }
+
+  .round-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hero,
+  .section,
+  .callout {
+    padding: 20px;
+    border-radius: 18px;
+  }
+
+  .fold-section > summary,
+  .fold-panel {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+  </style>
+</head>
+<body data-lang="zh" data-view="pro">
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand-block">
+        <div class="brand-mark">YAO</div>
+        <div>
+          <div class="brand-title"><span class="lang-zh">贝叶斯决策报告</span><span class="lang-en">Bayesian Decision Report</span></div>
+        </div>
+      </div>
+      <nav class="menu"><a class="menu-link" href="#summary"><span class="lang-zh">先看结论</span><span class="lang-en">Summary</span></a><a class="menu-link" href="#action-plan"><span class="lang-zh">行动建议</span><span class="lang-en">Action</span></a><a class="menu-link nav-pro-only" href="#why"><span class="lang-zh">为什么这样判断</span><span class="lang-en">Why</span></a><a class="menu-link nav-pro-only" href="#conversation"><span class="lang-zh">对话过程</span><span class="lang-en">Conversation</span></a><a class="menu-link nav-pro-only" href="#decision"><span class="lang-zh">问题定义</span><span class="lang-en">Decision</span></a><a class="menu-link nav-pro-only" href="#evidence"><span class="lang-zh">证据</span><span class="lang-en">Evidence</span></a><a class="menu-link nav-pro-only" href="#update"><span class="lang-zh">概率判断</span><span class="lang-en">Update</span></a><a class="menu-link nav-pro-only" href="#prior"><span class="lang-zh">先验</span><span class="lang-en">Prior</span></a><a class="menu-link nav-pro-only" href="#sensitivity"><span class="lang-zh">敏感性</span><span class="lang-en">Sensitivity</span></a><a class="menu-link nav-pro-only" href="#warnings"><span class="lang-zh">注意事项</span><span class="lang-en">Warnings</span></a><a class="menu-link nav-pro-only" href="#workflow"><span class="lang-zh">附录</span><span class="lang-en">Appendix</span></a></nav>
+      <div class="topbar-tools">
+        <div class="report-actions" aria-label="Report actions">
+          <button class="action-button" type="button" data-report-action="print"><span class="lang-zh">打印</span><span class="lang-en">Print</span></button>
+          <button class="action-button action-button-primary" type="button" data-report-action="save-pdf"><span class="lang-zh">下载 PDF</span><span class="lang-en">Save as PDF</span></button>
+        </div>
+        <div class="lang-toggle" aria-label="Language switcher">
+          <button class="lang-button is-active" type="button" data-lang-button="zh">中文</button>
+          <button class="lang-button" type="button" data-lang-button="en">EN</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="report-toast" id="report-toast" hidden></div>
+
+  <main class="page">
+    <section class="hero section-anchor-offset" id="summary">
+      <div class="eyebrow"><span class="lang-zh">Yao Bayesian Skill</span><span class="lang-en">Yao Bayesian Skill</span></div>
+      <h1><span class="lang-zh">2026年5月中下旬是否应该从北京飞三亚做一次 3 晚 4 天旅行？</span><span class="lang-en">Should I take a 3-night, 4-day trip from Beijing to Sanya in mid-to-late May 2026?</span></h1>
+      <p class="summary-line"><span class="lang-zh">当前后验概率约为 58.6%；在现有证据下，更优的行动是 48 小时内确认请假与预算，满足条件就尽快下单。</span><span class="lang-en">The current posterior probability is about 58.6%; given the available evidence, the better action is Confirm leave and budget within 48 hours, then book quickly if the conditions work.</span></p>
+      <div class="decision-banner decision-confirm">
+        <div class="decision-banner-label"><span class="lang-zh">给普通用户的结论</span><span class="lang-en">Plain-language decision</span></div>
+        <div class="decision-banner-state"><span class="lang-zh">先确认，再推进</span><span class="lang-en">Confirm first</span></div>
+        <p class="decision-banner-text"><span class="lang-zh">现在不是不能做，而是还差最后一两个关键信息，先确认再推进更稳。 目前的建议属于把握一般，而且换一组合理假设，结论大体不变。</span><span class="lang-en">This is not a no. It means one or two key inputs are still missing, so confirm them before moving forward. The current recommendation carries moderate confidence, and The conclusion mostly holds under reasonable alternative assumptions.</span></p>
+      </div>
+      <div class="hero-meta">
+        <span class="pill"><span class="lang-zh">自动生成</span><span class="lang-en">Auto-generated</span></span>
+        <span class="pill"><span class="lang-zh">中文主报告 + 英文切换</span><span class="lang-en">Chinese-primary + English toggle</span></span>
+        <span class="pill"><span class="lang-zh">默认完整专业版</span><span class="lang-en">Professional view by default</span></span>
+        
+      </div>
+      <div class="grid hero-grid">
+        <div class="metric-card">
+          <div class="metric-label"><span class="lang-zh">后验概率</span><span class="lang-en">Posterior</span></div>
+          <div class="metric-value">58.6%</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label"><span class="lang-zh">后验区间</span><span class="lang-en">Interval</span></div>
+          <div class="metric-value metric-text">44.1% - 72.3%</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label"><span class="lang-zh">推荐行动</span><span class="lang-en">Recommended action</span></div>
+          <div class="metric-value metric-text"><span class="lang-zh">48 小时内确认请假与预算，满足条件就尽快下单</span><span class="lang-en">Confirm leave and budget within 48 hours, then book quickly if the conditions work</span></div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label"><span class="lang-zh">建议信心</span><span class="lang-en">Decision confidence</span></div>
+          <div class="metric-value metric-text"><span class="lang-zh">中</span><span class="lang-en">Medium</span></div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label"><span class="lang-zh">首选行动阈值</span><span class="lang-en">Top-action threshold</span></div>
+          <div class="metric-value">9.3%</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label"><span class="lang-zh">决策准备度</span><span class="lang-en">Decision readiness</span></div>
+          <div class="metric-value">-</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label"><span class="lang-zh">可决策状态</span><span class="lang-en">Decision status</span></div>
+          <div class="metric-value metric-text"><span class="lang-zh">未单独评估</span><span class="lang-en">-</span></div>
+        </div>
+      </div>
+      <div class="meter" aria-hidden="true">
+        <span style="width: 58.6%"></span>
+      </div>
+    </section>
+
+    <section class="section executive-panel section-anchor-offset" id="action-plan">
+      <div class="section-kicker"><span class="lang-zh">先做执行摘要</span><span class="lang-en">Executive summary first</span></div>
+      <div class="executive-grid">
+        <article class="executive-card executive-primary">
+          <h2><span class="lang-zh">你现在该怎么做</span><span class="lang-en">What you should do now</span></h2>
+          <ol class="action-list"><li><span class="lang-zh">48 小时内确认请假与预算，满足条件就尽快下单</span><span class="lang-en">Confirm leave and budget within 48 hours, then book quickly if the conditions work</span></li><li><span class="lang-zh">先在 2026-04-25 前确认一个非五一的 3 到 5 天请假窗口，优先看 5 月中下旬。</span><span class="lang-en">Before 2026-04-25, confirm a non-holiday 3-to-5-day leave window, ideally in mid-to-late May.</span></li><li><span class="lang-zh">如果到 2026-04-30 前关键条件确认无误，就推进；如果确认不了，就先不要做更重的动作。</span><span class="lang-en">If the key conditions are confirmed before 2026-04-30, move ahead; if not, do not escalate to a heavier commitment yet.</span></li></ol>
+        </article>
+        <article class="executive-card">
+          <h2><span class="lang-zh">这份建议成立的前提</span><span class="lang-en">What this recommendation depends on</span></h2>
+          <ul class="premise-list"><li><span class="lang-zh">时间窗口：2026 年 5 月中下旬</span><span class="lang-en">Time window: mid-to-late May 2026</span></li><li><span class="lang-zh">成立条件：能请出 3 到 5 天假期，单人总预算大致控制在 3500 到 5000 元区间内，且不会明显打乱当前工作安排。</span><span class="lang-en">Condition for acting: You can secure 3 to 5 days of leave, keep the solo-trip budget roughly within RMB 3,500 to RMB 5,000, and avoid materially disrupting your current work schedule.</span></li><li><span class="lang-zh">最晚决策时间：2026-04-30</span><span class="lang-en">Decision deadline: 2026-04-30</span></li></ul>
+          <p class="muted-note"><span class="lang-zh">这份判断基于当前一次性输入，没有额外的多轮过程记录。</span><span class="lang-en">This judgment is based on the current single-pass input and does not include a multi-turn process log.</span></p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section pro-only section-anchor-offset" id="why">
+      <div class="section-kicker"><span class="lang-zh">先讲人话，再讲模型</span><span class="lang-en">Human explanation before model detail</span></div>
+      <h2><span class="lang-zh">为什么这样判断</span><span class="lang-en">Why this is the recommendation</span></h2>
+      <div class="reason-grid">
+        
+        <article class="reason-card">
+          <div class="reason-label"><span class="lang-zh">支持判断</span><span class="lang-en">Supports the call</span></div>
+          <h3><span class="lang-zh">北京到三亚直飞充足，单程飞行时间约 4 小时</span><span class="lang-en">Beijing-Sanya nonstop service is plentiful and the one-way flight is about four hours</span></h3>
+          <p><span class="lang-zh">Trip.com 抓取页显示，北京到三亚近 4 周约每周 77 班，常见直飞航程约 4 小时 1 分钟，说明从北京出发执行难度不高。</span><span class="lang-en">Trip.com&#x27;s route page shows about 77 flights per week over the past four weeks, with a typical nonstop flight time of roughly 4 hours and 1 minute, so execution from Beijing is not unusually hard.</span></p>
+        </article>
+        
+        <article class="reason-card">
+          <div class="reason-label"><span class="lang-zh">支持判断</span><span class="lang-en">Supports the call</span></div>
+          <h3><span class="lang-zh">5 月中旬仍能看到相对低位的直飞机票</span><span class="lang-en">Relatively low nonstop fares are still visible for mid-May</span></h3>
+          <p><span class="lang-zh">Trip.com 抓取页显示，2026-05-15 北京大兴到三亚的直飞票可见 US$91；三亚往返北京的直飞组合在 2026-05-23 到 2026-05-28 可见 US$190 起，说明非五一窗口仍有可接受票价。</span><span class="lang-en">Trip.com snapshots show a nonstop Beijing Daxing-to-Sanya fare of US$91 on 2026-05-15, and direct Sanya-Beijing round trips from US$190 on 2026-05-23 to 2026-05-28, which suggests acceptable post-holiday fare levels are still available.</span></p>
+        </article>
+        
+        
+        <article class="reason-card risk">
+          <div class="reason-label"><span class="lang-zh">拉低判断</span><span class="lang-en">Pulls the call down</span></div>
+          <h3><span class="lang-zh">请假窗口、预算上限和同行情况仍未确认</span><span class="lang-en">The leave window, budget ceiling, and companion plan are still unconfirmed</span></h3>
+          <p><span class="lang-zh">当前最大的真实不确定性不在航班或酒店，而在于能否顺利请出 3 到 5 天假、你愿意接受的总预算上限是多少、以及是否单人出行这一假设成立。</span><span class="lang-en">The biggest real uncertainty is not flights or hotels. It is whether you can actually secure 3 to 5 days of leave, what total budget ceiling you accept, and whether the solo-trip assumption is correct.</span></p>
+        </article>
+        
+      </div>
+      <div class="comparison-card">
+        <h3><span class="lang-zh">为什么不是另外两个选项</span><span class="lang-en">Why not the other options</span></h3>
+        <ul class="comparison-list">
+        <li>
+          <strong><span class="lang-zh">这次改到 6 月或之后</span><span class="lang-en">Push this trip to June or later</span></strong>
+          <span><span class="lang-zh">它目前的综合收益比首选方案低 3,387.4，所以暂时排在后面。</span><span class="lang-en">It currently trails the recommended option by 3,387.4 in expected value, so it stays behind for now.</span></span>
+        </li>
+        
+        <li>
+          <strong><span class="lang-zh">本周内直接下单锁定中下旬机酒</span><span class="lang-en">Book flights and hotel this week for a mid-to-late May trip</span></strong>
+          <span><span class="lang-zh">它目前的综合收益比首选方案低 3,422.6，所以暂时排在后面。</span><span class="lang-en">It currently trails the recommended option by 3,422.6 in expected value, so it stays behind for now.</span></span>
+        </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section pro-only section-anchor-offset" id="decision">
+      <h2><span class="lang-zh">决策问题</span><span class="lang-en">Decision framing</span></h2>
+      <p><strong><span class="lang-zh">决策问题：</span><span class="lang-en">Decision question:</span></strong> <span class="lang-zh">我现在在北京上班。若按单人出行、避开 2026 年 5 月 1 日到 5 日假期、优先选择 5 月中下旬窗口来规划，是否应该在 2026 年 5 月乘飞机去三亚旅行？</span><span class="lang-en">I am currently working in Beijing. Assuming a solo trip, avoiding the May 1-5 holiday window in 2026, and preferring a mid-to-late May departure, should I fly to Sanya in May 2026?</span></p>
+      <p><strong><span class="lang-zh">当前现状：</span><span class="lang-en">Current state:</span></strong> <span class="lang-zh">-</span><span class="lang-en">-</span></p>
+      <p><strong><span class="lang-zh">假设：</span><span class="lang-en">Hypothesis:</span></strong> <span class="lang-zh">在单人 3 晚 4 天、避开五一、住宿按三亚湾或大东海中档酒店估算的前提下，这次旅行的净收益会高于预算、请假和执行成本，因此值得推进到订票和订酒店阶段。</span><span class="lang-en">Under a solo 3-night, 4-day plan that avoids the Labor Day holiday and uses a mid-range Sanya Bay or Dadonghai hotel estimate, the trip&#x27;s net benefit will exceed the budget, leave, and execution cost, so it is worth moving into booking.</span></p>
+      <p><strong><span class="lang-zh">时间范围：</span><span class="lang-en">Time horizon:</span></strong> <span class="lang-zh">2026 年 5 月中下旬</span><span class="lang-en">mid-to-late May 2026</span></p>
+      <p><strong><span class="lang-zh">成功标准：</span><span class="lang-en">Success metric:</span></strong> <span class="lang-zh">能请出 3 到 5 天假期，单人总预算大致控制在 3500 到 5000 元区间内，且不会明显打乱当前工作安排。</span><span class="lang-en">You can secure 3 to 5 days of leave, keep the solo-trip budget roughly within RMB 3,500 to RMB 5,000, and avoid materially disrupting your current work schedule.</span></p>
+      <p><strong><span class="lang-zh">领域：</span><span class="lang-en">Domain:</span></strong> <span class="lang-zh">个人旅行决策</span><span class="lang-en">personal-travel</span></p>
+      <p class="muted-note"><span class="lang-zh">这份报告由 skill 自动把问题、证据、行动和阈值对齐成统一决策格式。</span><span class="lang-en">This report is auto-structured by the skill so the question, evidence, actions, and thresholds stay aligned.</span></p>
+    </section>
+
+    
+    <details class="fold-section pro-only section-anchor-offset" id="conversation">
+      <summary>
+        <div class="fold-heading">
+          <div class="section-kicker"><span class="lang-zh">默认折叠</span><span class="lang-en">Collapsed by default</span></div>
+          <div class="fold-title"><span class="lang-zh">多轮对话过程</span><span class="lang-en">Conversation process</span></div>
+        </div>
+        <span class="fold-indicator"><span class="lang-zh">展开</span><span class="lang-en">Open</span></span>
+      </summary>
+      <div class="fold-panel">
+        <p><span class="lang-zh">当前没有记录多轮过程；报告只展示最终结果。</span><span class="lang-en">There is no multi-turn process log for this report, so only the final result is shown.</span></p>
+      </div>
+    </details>
+    
+
+    
+    <details class="fold-section pro-only section-anchor-offset" id="prior">
+      <summary>
+        <div class="fold-heading">
+          <div class="section-kicker"><span class="lang-zh">默认折叠</span><span class="lang-en">Collapsed by default</span></div>
+          <div class="fold-title"><span class="lang-zh">先验设置</span><span class="lang-en">Prior setup</span></div>
+        </div>
+        <span class="fold-indicator"><span class="lang-zh">展开</span><span class="lang-en">Open</span></span>
+      </summary>
+      <div class="fold-panel">
+        
+          <div class="grid compact-grid process-grid">
+        <div class="metric-card">
+          <div class="metric-label"><span class="lang-zh">先验概率</span><span class="lang-en">Prior probability</span></div>
+          <div class="metric-value">46.0%</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label"><span class="lang-zh">先验分布</span><span class="lang-en">Prior distribution</span></div>
+          <div class="metric-value metric-text">Beta(7.36, 8.64)</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label"><span class="lang-zh">等效样本量</span><span class="lang-en">Equivalent sample size</span></div>
+          <div class="metric-value">16</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label"><span class="lang-zh">先验信心</span><span class="lang-en">Prior confidence</span></div>
+          <div class="metric-value metric-text"><span class="lang-zh">低</span><span class="lang-en">Low</span></div>
+        </div>
+      </div>
+      
+      <p><strong><span class="lang-zh">来源等级：</span><span class="lang-en">Source quality:</span></strong> C/D</p>
+      <p><strong><span class="lang-zh">先验区间：</span><span class="lang-en">Prior interval:</span></strong> 26.4% - 66.2%</p>
+      <ul><li><span class="lang-zh">把“已经明确想去、目的地已定、出行方式已定”的个人休闲旅行作为弱正向基线</span><span class="lang-en">Use a weak positive baseline for personal leisure trips where the destination and travel mode are already explicit</span></li><li><span class="lang-zh">把“仍在上班、请假和预算未确认”的现实约束计入基线，不把愿望本身当成强先验</span><span class="lang-en">Bake in the fact that you are still working and have not yet confirmed leave or budget, instead of treating desire alone as a strong prior</span></li></ul>
+    
+      
+      </div>
+    </details>
+    
+
+    
+    <details class="fold-section pro-only section-anchor-offset" id="evidence">
+      <summary>
+        <div class="fold-heading">
+          <div class="section-kicker"><span class="lang-zh">默认折叠</span><span class="lang-en">Collapsed by default</span></div>
+          <div class="fold-title"><span class="lang-zh">证据摘要</span><span class="lang-en">Evidence summary</span></div>
+        </div>
+        <span class="fold-indicator"><span class="lang-zh">展开</span><span class="lang-en">Open</span></span>
+      </summary>
+      <div class="fold-panel">
+        
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th><span class="lang-zh">证据</span><span class="lang-en">Evidence</span></th>
+              <th><span class="lang-zh">等级</span><span class="lang-en">Grade</span></th>
+              <th><span class="lang-zh">方向</span><span class="lang-en">Direction</span></th>
+              <th><span class="lang-zh">似然比</span><span class="lang-en">LR</span></th>
+              <th><span class="lang-zh">依赖折扣</span><span class="lang-en">Dependency</span></th>
+              <th><span class="lang-zh">摘要</span><span class="lang-en">Summary</span></th>
+              <th><span class="lang-zh">说明</span><span class="lang-en">Notes</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            <tr>
+              <td><span class="lang-zh">北京到三亚直飞充足，单程飞行时间约 4 小时</span><span class="lang-en">Beijing-Sanya nonstop service is plentiful and the one-way flight is about four hours</span></td>
+              <td><span class="pill">B</span></td>
+              <td><span class="lang-zh">支持</span><span class="lang-en">Supports</span></td>
+              <td>1.4</td>
+              <td>0.9</td>
+              <td><span class="lang-zh">Trip.com 抓取页显示，北京到三亚近 4 周约每周 77 班，常见直飞航程约 4 小时 1 分钟，说明从北京出发执行难度不高。</span><span class="lang-en">Trip.com&#x27;s route page shows about 77 flights per week over the past four weeks, with a typical nonstop flight time of roughly 4 hours and 1 minute, so execution from Beijing is not unusually hard.</span></td>
+              <td><span class="lang-zh">来源：Trip.com 北京-三亚航线页，抓取于 2026-04-23。</span><span class="lang-en">Source: Trip.com Beijing-to-Sanya route page, captured on 2026-04-23.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="lang-zh">5 月中旬仍能看到相对低位的直飞机票</span><span class="lang-en">Relatively low nonstop fares are still visible for mid-May</span></td>
+              <td><span class="pill">B</span></td>
+              <td><span class="lang-zh">支持</span><span class="lang-en">Supports</span></td>
+              <td>1.4</td>
+              <td>0.9</td>
+              <td><span class="lang-zh">Trip.com 抓取页显示，2026-05-15 北京大兴到三亚的直飞票可见 US$91；三亚往返北京的直飞组合在 2026-05-23 到 2026-05-28 可见 US$190 起，说明非五一窗口仍有可接受票价。</span><span class="lang-en">Trip.com snapshots show a nonstop Beijing Daxing-to-Sanya fare of US$91 on 2026-05-15, and direct Sanya-Beijing round trips from US$190 on 2026-05-23 to 2026-05-28, which suggests acceptable post-holiday fare levels are still available.</span></td>
+              <td><span class="lang-zh">来源：Trip.com 航线价格页；报价是抓取时快照，不等于最终成交价。</span><span class="lang-en">Source: Trip.com route-price pages; these are snapshot fares at capture time, not guaranteed final transaction prices.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="lang-zh">三亚住宿存在可做预算的价格带</span><span class="lang-en">Sanya lodging prices still fall into a budgetable range</span></td>
+              <td><span class="pill">B</span></td>
+              <td><span class="lang-zh">支持</span><span class="lang-en">Supports</span></td>
+              <td>1.3</td>
+              <td>0.8</td>
+              <td><span class="lang-zh">Trip.com 酒店页显示，三亚近 3 日抓取到的最低 3 星酒店价约 US$39、4 星约 US$43、5 星约 US$82；三亚湾/机场片区的平均价约 US$118，说明 3 晚 4 天的住宿可以提前设预算上限。</span><span class="lang-en">Trip.com hotel pages show recent snapshot floors around US$39 for 3-star hotels, US$43 for 4-star, and US$82 for 5-star, while the Sanya Bay/airport area averages about US$118, so a 3-night stay can be budgeted with a clear ceiling.</span></td>
+              <td><span class="lang-zh">来源：Trip.com 三亚酒店列表与海景酒店页，抓取于 2026-04-23。</span><span class="lang-en">Source: Trip.com Sanya hotel listing and beach-hotel pages, captured on 2026-04-23.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="lang-zh">5 月的三亚适合海边，但天气会明显变热变湿</span><span class="lang-en">May in Sanya is beach-friendly but noticeably hotter and more humid</span></td>
+              <td><span class="pill">B</span></td>
+              <td><span class="lang-zh">支持</span><span class="lang-en">Supports</span></td>
+              <td>1.1</td>
+              <td>0.9</td>
+              <td><span class="lang-zh">中国天气网说明三亚最热月通常在 6 月；Timeanddate 的气候均值显示 5 月平均高温约 32℃、低温约 26℃、湿度约 80%、月降水约 98.6 毫米。对海边休闲是正向，但对怕热怕闷的人是负担。</span><span class="lang-en">China Weather notes that Sanya&#x27;s hottest month is usually June, while Timeanddate&#x27;s climate averages show May around 32°C / 26°C with roughly 80% humidity and about 98.6 mm of monthly rainfall. That helps a beach trip, but it is a burden if you dislike heat and humidity.</span></td>
+              <td><span class="lang-zh">这条证据偏条件性：如果你怕热，应把它视为接近中性甚至轻微负向。</span><span class="lang-en">This signal is conditional: if you are heat-sensitive, treat it as closer to neutral or slightly negative.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="lang-zh">五一假期在 5 月 1 日到 5 日，且 5 月 9 日是调休工作日</span><span class="lang-en">The Labor Day holiday runs from May 1 to May 5, and May 9 is a make-up workday</span></td>
+              <td><span class="pill">A</span></td>
+              <td><span class="lang-zh">支持</span><span class="lang-en">Supports</span></td>
+              <td>1.2</td>
+              <td>0.9</td>
+              <td><span class="lang-zh">2026 年假期安排显示，劳动节休假为 5 月 1 日至 5 日。如果坚持“下个月就去”，最优窗口并不是月初，而是 5 月中下旬，否则拥挤和价格压力更高。</span><span class="lang-en">The 2026 holiday schedule shows Labor Day break from May 1 to May 5. If you want to go next month, the better window is mid-to-late May rather than early May, because crowding and price pressure are higher at the start of the month.</span></td>
+              <td><span class="lang-zh">来源：2026 假期安排公开日历；这条证据支持的是“换到非五一窗口后更可行”，不是“月初直接去”。</span><span class="lang-en">Source: public 2026 holiday calendar. This supports shifting into a post-holiday window, not leaving during the holiday itself.</span></td>
+            </tr>
+            
+            <tr>
+              <td><span class="lang-zh">请假窗口、预算上限和同行情况仍未确认</span><span class="lang-en">The leave window, budget ceiling, and companion plan are still unconfirmed</span></td>
+              <td><span class="pill">C</span></td>
+              <td><span class="lang-zh">削弱</span><span class="lang-en">Weakens</span></td>
+              <td>1.9</td>
+              <td>1</td>
+              <td><span class="lang-zh">当前最大的真实不确定性不在航班或酒店，而在于能否顺利请出 3 到 5 天假、你愿意接受的总预算上限是多少、以及是否单人出行这一假设成立。</span><span class="lang-en">The biggest real uncertainty is not flights or hotels. It is whether you can actually secure 3 to 5 days of leave, what total budget ceiling you accept, and whether the solo-trip assumption is correct.</span></td>
+              <td><span class="lang-zh">这是当前最可能改变决策方向的一组缺失信息。</span><span class="lang-en">This is the missing-information cluster most likely to change the recommendation.</span></td>
+            </tr>
+            
+          </tbody>
+        </table>
+      </div>
+    
+      </div>
+    </details>
+    
+
+    
+    <details class="fold-section pro-only section-anchor-offset" id="update">
+      <summary>
+        <div class="fold-heading">
+          <div class="section-kicker"><span class="lang-zh">默认折叠</span><span class="lang-en">Collapsed by default</span></div>
+          <div class="fold-title"><span class="lang-zh">概率判断</span><span class="lang-en">Probability view</span></div>
+        </div>
+        <span class="fold-indicator"><span class="lang-zh">展开</span><span class="lang-en">Open</span></span>
+      </summary>
+      <div class="fold-panel">
+        
+      <p><strong><span class="lang-zh">更新方法：</span><span class="lang-en">Method:</span></strong> odds-update</p>
+      <p><strong><span class="lang-zh">后验概率：</span><span class="lang-en">Posterior probability:</span></strong> 58.6%</p>
+      <p><strong><span class="lang-zh">后验区间：</span><span class="lang-en">Posterior interval:</span></strong> 44.1% - 72.3%</p>
+      <div class="callout">
+        <p><span class="lang-zh">在 100 个相似案例里，先验大约意味着其中 46 个会成功。加入当前证据后，估计会成功的案例约为 59 个。</span><span class="lang-en">Out of 100 similar cases, the prior suggests about 46 would succeed. After the current evidence, about 59 would succeed.</span></p>
+      </div>
+    
+      </div>
+    </details>
+    
+
+    <section class="section pro-only section-anchor-offset" id="actions">
+      <h2><span class="lang-zh">行动比较</span><span class="lang-en">Action comparison</span></h2>
+      <p><strong><span class="lang-zh">推荐行动：</span><span class="lang-en">Recommended action:</span></strong> <span class="lang-zh">48 小时内确认请假与预算，满足条件就尽快下单</span><span class="lang-en">Confirm leave and budget within 48 hours, then book quickly if the conditions work</span></p>
+      <p><span class="lang-zh">当前基于后验概率的期望值比较，支持把这个行动作为首选。</span><span class="lang-en">Expected-value comparison based on the current posterior places this action first.</span></p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th><span class="lang-zh">行动</span><span class="lang-en">Action</span></th>
+              <th><span class="lang-zh">H 为真时效用</span><span class="lang-en">Utility if H is true</span></th>
+              <th><span class="lang-zh">H 为假时效用</span><span class="lang-en">Utility if H is false</span></th>
+              <th><span class="lang-zh">期望值</span><span class="lang-en">Expected value</span></th>
+              <th><span class="lang-zh">行动阈值</span><span class="lang-en">Action threshold</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            <tr>
+              <td><span class="lang-zh">48 小时内确认请假与预算，满足条件就尽快下单</span><span class="lang-en">Confirm leave and budget within 48 hours, then book quickly if the conditions work</span></td>
+              <td>5,850</td>
+              <td>-600</td>
+              <td>3,180.4</td>
+              <td>9.3%</td>
+            </tr>
+            
+            <tr>
+              <td><span class="lang-zh">这次改到 6 月或之后</span><span class="lang-en">Push this trip to June or later</span></td>
+              <td>0</td>
+              <td>-500</td>
+              <td>-206.9</td>
+              <td>100.0%</td>
+            </tr>
+            
+            <tr>
+              <td><span class="lang-zh">本周内直接下单锁定中下旬机酒</span><span class="lang-en">Book flights and hotel this week for a mid-to-late May trip</span></td>
+              <td>3,400</td>
+              <td>-5,400</td>
+              <td>-242.2</td>
+              <td>61.4%</td>
+            </tr>
+            
+          </tbody>
+        </table>
+      </div>
+      <h3><span class="lang-zh">下一步最有价值的信息</span><span class="lang-en">Most valuable next information</span></h3>
+      <p><span class="lang-zh">先在 2026-04-25 前确认一个非五一的 3 到 5 天请假窗口，优先看 5 月中下旬。</span><span class="lang-en">Before 2026-04-25, confirm a non-holiday 3-to-5-day leave window, ideally in mid-to-late May.</span></p>
+      <p class="muted-note"><span class="lang-zh">当前结果已经接近关键行动阈值，新增信息有较大概率改变建议。</span><span class="lang-en">The current result is close to an action threshold, so one more strong signal could flip the recommendation.</span></p>
+    </section>
+
+    
+    <details class="fold-section pro-only section-anchor-offset" id="sensitivity">
+      <summary>
+        <div class="fold-heading">
+          <div class="section-kicker"><span class="lang-zh">默认折叠</span><span class="lang-en">Collapsed by default</span></div>
+          <div class="fold-title"><span class="lang-zh">敏感性分析</span><span class="lang-en">Sensitivity analysis</span></div>
+        </div>
+        <span class="fold-indicator"><span class="lang-zh">展开</span><span class="lang-en">Open</span></span>
+      </summary>
+      <div class="fold-panel">
+        
+      <p><strong><span class="lang-zh">后验范围：</span><span class="lang-en">Posterior range:</span></strong> 44.1% - 72.3%</p>
+      <p><strong><span class="lang-zh">结论稳定性：</span><span class="lang-en">Conclusion stability:</span></strong> <span class="lang-zh">稳定</span><span class="lang-en">Stable</span></p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th><span class="lang-zh">先验概率</span><span class="lang-en">Prior</span></th>
+              <th><span class="lang-zh">LR 强度系数</span><span class="lang-en">LR power</span></th>
+              <th><span class="lang-zh">后验概率</span><span class="lang-en">Posterior</span></th>
+              <th><span class="lang-zh">推荐行动</span><span class="lang-en">Recommended action</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            <tr>
+              <td>35.0%</td>
+              <td>0.8</td>
+              <td>44.1%</td>
+              <td><span class="lang-zh">48 小时内确认请假与预算，满足条件就尽快下单</span><span class="lang-en">Confirm leave and budget within 48 hours, then book quickly if the conditions work</span></td>
+            </tr>
+            
+            <tr>
+              <td>35.0%</td>
+              <td>1</td>
+              <td>47.2%</td>
+              <td><span class="lang-zh">48 小时内确认请假与预算，满足条件就尽快下单</span><span class="lang-en">Confirm leave and budget within 48 hours, then book quickly if the conditions work</span></td>
+            </tr>
+            
+            <tr>
+              <td>35.0%</td>
+              <td>1.2</td>
+              <td>50.4%</td>
+              <td><span class="lang-zh">48 小时内确认请假与预算，满足条件就尽快下单</span><span class="lang-en">Confirm leave and budget within 48 hours, then book quickly if the conditions work</span></td>
+            </tr>
+            
+            <tr>
+              <td>46.0%</td>
+              <td>0.8</td>
+              <td>55.5%</td>
+              <td><span class="lang-zh">48 小时内确认请假与预算，满足条件就尽快下单</span><span class="lang-en">Confirm leave and budget within 48 hours, then book quickly if the conditions work</span></td>
+            </tr>
+            
+            <tr>
+              <td>46.0%</td>
+              <td>1</td>
+              <td>58.6%</td>
+              <td><span class="lang-zh">48 小时内确认请假与预算，满足条件就尽快下单</span><span class="lang-en">Confirm leave and budget within 48 hours, then book quickly if the conditions work</span></td>
+            </tr>
+            
+            <tr>
+              <td>46.0%</td>
+              <td>1.2</td>
+              <td>61.7%</td>
+              <td><span class="lang-zh">48 小时内确认请假与预算，满足条件就尽快下单</span><span class="lang-en">Confirm leave and budget within 48 hours, then book quickly if the conditions work</span></td>
+            </tr>
+            
+            <tr>
+              <td>58.0%</td>
+              <td>0.8</td>
+              <td>66.9%</td>
+              <td><span class="lang-zh">48 小时内确认请假与预算，满足条件就尽快下单</span><span class="lang-en">Confirm leave and budget within 48 hours, then book quickly if the conditions work</span></td>
+            </tr>
+            
+            <tr>
+              <td>58.0%</td>
+              <td>1</td>
+              <td>69.7%</td>
+              <td><span class="lang-zh">48 小时内确认请假与预算，满足条件就尽快下单</span><span class="lang-en">Confirm leave and budget within 48 hours, then book quickly if the conditions work</span></td>
+            </tr>
+            
+            <tr>
+              <td>58.0%</td>
+              <td>1.2</td>
+              <td>72.3%</td>
+              <td><span class="lang-zh">48 小时内确认请假与预算，满足条件就尽快下单</span><span class="lang-en">Confirm leave and budget within 48 hours, then book quickly if the conditions work</span></td>
+            </tr>
+            
+          </tbody>
+        </table>
+      </div>
+    
+      </div>
+    </details>
+    
+
+    <section class="section pro-only section-anchor-offset" id="warnings">
+      <h2><span class="lang-zh">风险与注意事项</span><span class="lang-en">Warnings and caveats</span></h2>
+      <ul class="warning-list"><li><span class="lang-zh">至少有一条证据因依赖关系被折扣处理，不应把这次更新理解为完全独立证据的简单叠加。</span><span class="lang-en">At least one evidence item was discounted for dependence, so this update should not be read as a simple stack of fully independent signals.</span></li><li><span class="lang-zh">这里的后验区间来自赔率更新下的敏感性包络，并非严格统计意义上的可信区间。</span><span class="lang-en">The posterior interval here is a sensitivity envelope from odds updates, not a strict statistical credible interval.</span></li></ul>
+      <p class="footer-note"><span class="lang-zh">本 HTML 与 Markdown 共享同一套结构化计算结果；如需 PDF，请使用右上角“下载 PDF”。</span><span class="lang-en">This HTML report shares the same structured result as Markdown. If you need a PDF, use the save-as-PDF action in the top-right corner.</span></p>
+    </section>
+
+    
+    <details class="fold-section pro-only section-anchor-offset" id="workflow">
+      <summary>
+        <div class="fold-heading">
+          <div class="section-kicker"><span class="lang-zh">默认折叠</span><span class="lang-en">Collapsed by default</span></div>
+          <div class="fold-title"><span class="lang-zh">附录</span><span class="lang-en">Appendix</span></div>
+        </div>
+        <span class="fold-indicator"><span class="lang-zh">展开</span><span class="lang-en">Open</span></span>
+      </summary>
+      <div class="fold-panel">
+        
+      <div class="appendix-block">
+        <h3><span class="lang-zh">Skill 流程</span><span class="lang-en">Skill workflow</span></h3>
+        <div class="workflow">
+        <div class="workflow-step">
+          <div class="step-index">Step 1</div>
+          <div class="step-text"><span class="lang-zh">问题结构化</span><span class="lang-en">Structure the decision</span></div>
+        </div>
+        
+        <div class="workflow-step">
+          <div class="step-index">Step 2</div>
+          <div class="step-text"><span class="lang-zh">基于当前信息给初步先验</span><span class="lang-en">Set an initial prior from the current information</span></div>
+        </div>
+        
+        <div class="workflow-step">
+          <div class="step-index">Step 3</div>
+          <div class="step-text"><span class="lang-zh">通过多轮追问补齐关键缺口</span><span class="lang-en">Close the key gaps through iterative questioning</span></div>
+        </div>
+        
+        <div class="workflow-step">
+          <div class="step-index">Step 4</div>
+          <div class="step-text"><span class="lang-zh">检索与分级证据</span><span class="lang-en">Collect and grade evidence</span></div>
+        </div>
+        
+        <div class="workflow-step">
+          <div class="step-index">Step 5</div>
+          <div class="step-text"><span class="lang-zh">构造先验与参考类</span><span class="lang-en">Build priors and reference classes</span></div>
+        </div>
+        
+        <div class="workflow-step">
+          <div class="step-index">Step 6</div>
+          <div class="step-text"><span class="lang-zh">执行贝叶斯更新</span><span class="lang-en">Run the Bayesian update</span></div>
+        </div>
+        
+        <div class="workflow-step">
+          <div class="step-index">Step 7</div>
+          <div class="step-text"><span class="lang-zh">做敏感性与阈值分析</span><span class="lang-en">Stress-test thresholds and sensitivity</span></div>
+        </div>
+        
+        <div class="workflow-step">
+          <div class="step-index">Step 8</div>
+          <div class="step-text"><span class="lang-zh">给出行动与下一步信息建议</span><span class="lang-en">Recommend the next action and information step</span></div>
+        </div>
+        
+        <div class="workflow-step">
+          <div class="step-index">Step 9</div>
+          <div class="step-text"><span class="lang-zh">记录每轮变化并输出过程日志</span><span class="lang-en">Record each round and export a process log</span></div>
+        </div>
+        </div>
+      </div>
+      <div class="appendix-block">
+        <h3><span class="lang-zh">Skill 能力</span><span class="lang-en">Skill capabilities</span></h3>
+        <div class="capability-grid">
+        <div class="capability-card">
+          <h3><span class="lang-zh">问题定义与参考类选择</span><span class="lang-en">Problem framing and reference classes</span></h3>
+          <p><span class="lang-zh">把模糊问题压缩成可计算假设、时间范围、成功标准和行动集合，并显式选择参考类。</span><span class="lang-en">Turns a fuzzy choice into a computable hypothesis, time horizon, success metric, and action set with an explicit reference class.</span></p>
+        </div>
+        
+        <div class="capability-card">
+          <h3><span class="lang-zh">证据分级与先验构造</span><span class="lang-en">Evidence grading and prior construction</span></h3>
+          <p><span class="lang-zh">区分强证据、弱证据和类比信号，输出带来源、可信度和等效样本量的先验。</span><span class="lang-en">Separates strong evidence from weak signals and produces priors with source notes, quality, and equivalent sample size.</span></p>
+        </div>
+        
+        <div class="capability-card">
+          <h3><span class="lang-zh">赔率更新与共轭更新</span><span class="lang-en">Odds updates and conjugate updates</span></h3>
+          <p><span class="lang-zh">支持似然比赔率更新、Beta-binomial 计数更新，以及二者的组合路径。</span><span class="lang-en">Supports likelihood-ratio odds updates, Beta-binomial count updates, and the combined path when both are needed.</span></p>
+        </div>
+        
+        <div class="capability-card">
+          <h3><span class="lang-zh">行动阈值与期望值比较</span><span class="lang-en">Action thresholds and expected value</span></h3>
+          <p><span class="lang-zh">把后验概率映射到行动阈值和期望值排序，避免只停留在“概率高低”的描述。</span><span class="lang-en">Converts posterior beliefs into action thresholds and expected-value ranking instead of stopping at raw probability.</span></p>
+        </div>
+        
+        <div class="capability-card">
+          <h3><span class="lang-zh">敏感性分析与防幻觉提醒</span><span class="lang-en">Sensitivity analysis and fragility checks</span></h3>
+          <p><span class="lang-zh">用不同先验、证据强度和依赖折扣重跑结果，显式标记结论是否稳健。</span><span class="lang-en">Re-runs the decision under alternative priors, evidence strength, and dependency discounts to show whether the conclusion is robust.</span></p>
+        </div>
+        
+        <div class="capability-card">
+          <h3><span class="lang-zh">自动化 HTML / Markdown 报告</span><span class="lang-en">Automated HTML / Markdown reports</span></h3>
+          <p><span class="lang-zh">从同一个结构化输入自动生成 Markdown 与双语 HTML，并在 HTML 中支持打印和存储为 PDF。</span><span class="lang-en">Automatically generates synchronized Markdown and bilingual HTML reports from the same structured input, with print and save-as-PDF support inside HTML.</span></p>
+        </div>
+        
+        <div class="capability-card">
+          <h3><span class="lang-zh">多轮对话决策循环</span><span class="lang-en">Multi-turn decision loop</span></h3>
+          <p><span class="lang-zh">先基于当前信息给弱先验和初步判断，再通过多轮对话追问缺失信息，持续更新先验、后验和决策准备度。</span><span class="lang-en">Starts with a weak prior and an initial read, then iteratively asks for missing information and updates the prior, posterior, and decision readiness over multiple turns.</span></p>
+        </div>
+        
+        <div class="capability-card">
+          <h3><span class="lang-zh">过程日志与变化图表</span><span class="lang-en">Process log and change chart</span></h3>
+          <p><span class="lang-zh">自动记录每一轮对话里新增了什么信息、如何完成贝叶斯更新、判断为什么改变，并在报告中输出轨迹图和过程表。</span><span class="lang-en">Records what changed in each round, how the Bayesian update was applied, why the judgment moved, and renders both a trajectory chart and a process table in the report.</span></p>
+        </div>
+        </div>
+      </div>
+    
+      </div>
+    </details>
+    
+  </main>
+
+  <script>
+    (function () {
+      const root = document.body;
+      const buttons = Array.from(document.querySelectorAll("[data-lang-button]"));
+      const actionButtons = Array.from(document.querySelectorAll("[data-report-action]"));
+      const toast = document.getElementById("report-toast");
+      const foldSections = Array.from(document.querySelectorAll("details.fold-section"));
+      let printState = null;
+      let printRestoreTimer = null;
+      function setLang(lang) {
+        root.dataset.lang = lang;
+        buttons.forEach((button) => {
+          button.classList.toggle("is-active", button.dataset.langButton === lang);
+        });
+        try {
+          window.localStorage.setItem("yao-bayesian-report-lang", lang);
+        } catch (error) {
+        }
+      }
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => setLang(button.dataset.langButton));
+      });
+      function showToast(message) {
+        if (!toast) return;
+        toast.textContent = message;
+        toast.hidden = false;
+        toast.classList.add("is-visible");
+        window.clearTimeout(showToast.timerId);
+        showToast.timerId = window.setTimeout(() => {
+          toast.classList.remove("is-visible");
+          window.setTimeout(() => {
+            toast.hidden = true;
+          }, 220);
+        }, 2400);
+      }
+      function prepareForPrint() {
+        if (printState) return;
+        printState = foldSections.map((section) => section.open);
+        foldSections.forEach((section) => {
+          section.open = true;
+        });
+      }
+      function restoreAfterPrint() {
+        if (!printState) return;
+        foldSections.forEach((section, index) => {
+          section.open = Boolean(printState[index]);
+        });
+        printState = null;
+      }
+      function triggerReportPrint(mode) {
+        prepareForPrint();
+        if (mode === "save-pdf") {
+          showToast(root.dataset.lang === "en" ? "Choose Save as PDF in the print dialog." : "请在打印对话框中选择“存储为 PDF”。");
+        } else {
+          showToast(root.dataset.lang === "en" ? "Opening the print dialog." : "正在打开打印对话框。");
+        }
+        window.clearTimeout(printRestoreTimer);
+        printRestoreTimer = window.setTimeout(restoreAfterPrint, 1800);
+        window.setTimeout(() => window.print(), 80);
+      }
+      actionButtons.forEach((button) => {
+        button.addEventListener("click", () => triggerReportPrint(button.dataset.reportAction));
+      });
+      window.addEventListener("afterprint", restoreAfterPrint);
+      document.querySelectorAll('a.menu-link').forEach((link) => {
+        link.addEventListener('click', () => {
+          const href = link.getAttribute('href') || '';
+          const target = href.startsWith('#') ? document.getElementById(href.slice(1)) : null;
+          if (target && target.tagName.toLowerCase() === 'details') {
+            target.open = true;
+          }
+        });
+      });
+      try {
+        const saved = window.localStorage.getItem("yao-bayesian-report-lang");
+        if (saved === "en" || saved === "zh") {
+          setLang(saved);
+        }
+      } catch (error) {
+      }
+      if (!root.dataset.lang) {
+        setLang("zh");
+      }
+    })();
+  </script>
+</body>
+</html>

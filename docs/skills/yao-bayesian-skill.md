@@ -216,6 +216,28 @@ Skill 会把市场判断转成：
 - 如何从“有机会”收敛到“先确认，再推进”
 - 如何输出给普通用户看得懂的最终行动建议
 
+## 示例报告
+
+公开仓库也附带了几组已经生成好的案例报告，方便直接查看最终效果。
+
+### 产品与商业判断
+
+- [detailed-growth-case.html](../../skills/yao-bayesian-skill/reports/detailed-growth-case.html)
+- [detailed-growth-case.pdf](../../skills/yao-bayesian-skill/reports/detailed-growth-case.pdf)
+- [example-decision-report.html](../../skills/yao-bayesian-skill/reports/example-decision-report.html)
+- [example-decision-report.pdf](../../skills/yao-bayesian-skill/reports/example-decision-report.pdf)
+- [geo-overseas-service-case.html](../../skills/yao-bayesian-skill/reports/geo-overseas-service-case.html)
+- [geo-overseas-service-case.pdf](../../skills/yao-bayesian-skill/reports/geo-overseas-service-case.pdf)
+
+### 个人决策判断
+
+- [sanya-travel-case.html](../../skills/yao-bayesian-skill/reports/sanya-travel-case.html)
+- [sanya-travel-case.pdf](../../skills/yao-bayesian-skill/reports/sanya-travel-case.pdf)
+- [sanya-travel-real-report.html](../../skills/yao-bayesian-skill/reports/sanya-travel-real-report.html)
+- [sanya-travel-real-report.pdf](../../skills/yao-bayesian-skill/reports/sanya-travel-real-report.pdf)
+
+如果你想快速感受这个 Skill 的“普通用户结论 + 技术折叠区 + 可打印 HTML”风格，建议先打开 `detailed-growth-case.html`。
+
 ## 如何使用
 
 ### 1. 用自然语言触发

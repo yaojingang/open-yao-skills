@@ -1431,7 +1431,40 @@ def find_browser_binary() -> str:
     raise FileNotFoundError("No usable Chrome/Chromium binary found for experimental print-PDF export.")
 
 
-def build_browser_pdf_with_playwright(print_html_path: Path, output_pdf_path: Path) -> None:
+def python_has_module(python_bin: str, module_name: str) -> bool:
+    try:
+        result = subprocess.run(
+            [python_bin, "-c", f"import importlib.util, sys; sys.exit(0 if importlib.util.find_spec('{module_name}') else 1)"],
+            check=False,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+    except OSError:
+        return False
+    return result.returncode == 0
+
+
+def find_playwright_python() -> str:
+    candidates = [
+        os.environ.get("YAO_BAYESIAN_PRINT_PYTHON"),
+        shutil.which("python3"),
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/opt/homebrew/bin/python3",
+        sys.executable,
+    ]
+    seen: set[str] = set()
+    for candidate in candidates:
+        if not candidate or candidate in seen:
+            continue
+        seen.add(candidate)
+        if not Path(candidate).exists():
+            continue
+        if python_has_module(candidate, "playwright"):
+            return candidate
+    raise FileNotFoundError("No Python interpreter with Playwright found for browser-PDF export.")
+
+
+def build_browser_pdf_with_playwright_local(print_html_path: Path, output_pdf_path: Path) -> None:
     from playwright.sync_api import sync_playwright
 
     browser_override = os.environ.get("YAO_BAYESIAN_PRINT_BROWSER")
@@ -1453,6 +1486,41 @@ def build_browser_pdf_with_playwright(print_html_path: Path, output_pdf_path: Pa
         browser.close()
 
 
+def build_browser_pdf_with_playwright_subprocess(print_html_path: Path, output_pdf_path: Path) -> None:
+    python_bin = find_playwright_python()
+    script = """
+from playwright.sync_api import sync_playwright
+import os
+import sys
+
+html_uri = sys.argv[1]
+output_pdf = sys.argv[2]
+browser_override = os.environ.get("YAO_BAYESIAN_PRINT_BROWSER")
+launch_kwargs = {"headless": True}
+if browser_override:
+    launch_kwargs["executable_path"] = browser_override
+
+with sync_playwright() as playwright:
+    browser = playwright.chromium.launch(**launch_kwargs)
+    page = browser.new_page(locale="zh-CN")
+    page.goto(html_uri, wait_until="networkidle")
+    page.emulate_media(media="print")
+    page.pdf(
+        path=output_pdf,
+        print_background=True,
+        display_header_footer=False,
+        prefer_css_page_size=True,
+    )
+    browser.close()
+"""
+    subprocess.run(
+        [python_bin, "-c", script, print_html_path.resolve().as_uri(), str(output_pdf_path)],
+        check=True,
+        cwd=str(ROOT),
+        env=os.environ.copy(),
+    )
+
+
 def build_browser_pdf_with_cli(print_html_path: Path, output_pdf_path: Path) -> None:
     browser = find_browser_binary()
     command = [
@@ -1471,7 +1539,10 @@ def build_browser_pdf_with_cli(print_html_path: Path, output_pdf_path: Path) -> 
 
 def build_browser_pdf(print_html_path: Path, output_pdf_path: Path) -> None:
     try:
-        build_browser_pdf_with_playwright(print_html_path, output_pdf_path)
+        if importlib.util.find_spec("playwright") is not None:
+            build_browser_pdf_with_playwright_local(print_html_path, output_pdf_path)
+        else:
+            build_browser_pdf_with_playwright_subprocess(print_html_path, output_pdf_path)
     except Exception:
         build_browser_pdf_with_cli(print_html_path, output_pdf_path)
 

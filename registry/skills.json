@@ -48,7 +48,7 @@
     {
       "slug": "yao-bayesian-skill",
       "title": "Yao Bayesian Skill",
-      "summary": "Turn uncertain choices into multi-turn Bayesian decision reports with weak-prior starts, evidence grading, posterior updates, action advice, and synchronized Markdown plus bilingual HTML.",
+      "summary": "Turn uncertain choices into Bayesian decision reports with prior setup, evidence grading, posterior updates, action advice, and multi-format export.",
       "source_local_path": "/Users/laoyao/AI Coding/03-Development/Skills/yao-bayesian-skill",
       "collection_path": "skills/yao-bayesian-skill",
       "lifecycle": "active",
@@ -60,9 +60,8 @@
       "tags": [
         "bayesian",
         "decision-analysis",
-        "multi-turn",
-        "html-report",
-        "markdown-export",
+        "reporting",
+        "export",
         "workflow"
       ],
       "last_synced_at": "2026-04-25",

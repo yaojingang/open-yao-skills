@@ -29,6 +29,15 @@ description: Convert uncertain real-world choices into an auditable Bayesian evi
 6. Read `references/report-export-pipeline.md` before export. The normal output is `markdown + html`.
 7. Finalize with `references/decision-report-contract.md` and `references/sensitivity-and-safety.md`.
 
+## Iteration And Implementation Constraints
+
+Apply these constraints when extending or refining this skill itself. They govern implementation choices, not the underlying Bayesian method.
+
+- Think before coding: do not silently choose one interpretation when the decision question, prior basis, or report expectation is ambiguous. State assumptions, surface tradeoffs, and prefer a weak prior plus explicit uncertainty over hidden completion.
+- Simplicity first: implement the minimum valid Bayesian workflow that solves the request. Prefer the lightest update path, the smallest report change, and the fewest output formats needed. Do not add speculative modeling complexity, configuration layers, or export branches that the user did not ask for.
+- Surgical changes: touch only the files and logic required for the requested improvement. Match the existing structure and remove only the imports, helpers, or output paths made obsolete by your own change. Do not refactor adjacent skill behavior without a direct reason.
+- Goal-driven execution: define the success criteria for each iteration before editing. For this skill, success should be stated in user-visible checks such as whether incomplete input now yields a weak prior plus follow-up questions, whether each round is logged, whether the report explains how belief changed, and whether the HTML/Markdown outputs still render the intended decision guidance.
+
 ## Output Contract
 
 - Deliver one Bayesian decision report output, not a formula dump.

@@ -1915,7 +1915,7 @@ def main() -> None:
         "--pdf-engine",
         choices=("reportlab", "browser", "both"),
         default="reportlab",
-        help="Keep the default reportlab PDF, or also generate an experimental browser-print PDF from print HTML.",
+        help="Keep the default reportlab PDF, or also generate an experimental Playwright/browser-print PDF from print HTML.",
     )
     args = parser.parse_args()
 

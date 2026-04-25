@@ -92,6 +92,11 @@ The exporter may optionally generate:
 
 Use this branch when you want to compare the default programmatic PDF against a browser-print PDF that stays closer to the HTML layout.
 
+Preferred implementation:
+
+- use Playwright PDF export first so the output can honor print CSS while suppressing browser-added page headers and footers
+- keep direct Chrome CLI printing only as a fallback when Playwright is unavailable
+
 ## Automation Rule
 
 The rendered reports are not hand-written examples. They should be generated automatically from the same input request so the bundle stays reproducible.

@@ -51,6 +51,8 @@ Each human-facing format should include:
 - a plain-language conclusion that a non-technical user can read first
 - a clear action recommendation and the next 1 to 3 steps
 - a short explanation of why the recommendation beats the other options
+- when a multi-turn session exists, a process section that explains how the judgment changed across rounds
+- when a multi-turn session exists, a round-by-round log of what new information was added and how the Bayesian update changed
 - one-sentence conclusion
 - decision question
 - prior setup
@@ -74,6 +76,7 @@ The HTML report should also include:
 - an executive-summary style top section that ordinary users can understand without reading the full Bayesian details
 - a `简版 / 专业版` display toggle with `简版` as the default
 - collapsible advanced sections so evidence, prior, sensitivity, and appendix stay closed until requested
+- a conversation-process section with a change chart when the input includes multi-turn dialogue rounds
 - the same workflow and capability summary as the PDF and Word versions
 
 ## Automation Rule

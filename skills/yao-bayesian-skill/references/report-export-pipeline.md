@@ -2,19 +2,14 @@
 
 ## Default Artifact Set
 
-The recommended final bundle is:
+The recommended final output is:
 
-- `json`
 - `markdown`
 - `html`
-- `pdf`
-- `docx`
-
-`json` is the canonical structured result. The other formats are renderings of the same decision output.
 
 Language default:
 
-- `markdown`, `pdf`, and `docx` should default to Simplified Chinese
+- `markdown` should default to Simplified Chinese
 - `html` should be bilingual and allow one-click switching between Chinese and English
 
 ## Why This Exists
@@ -22,13 +17,12 @@ Language default:
 Different review contexts need different report shapes:
 
 - `html` for visual review and internal sharing
-- `pdf` for fixed-layout circulation
-- `docx` for editable executive or client-facing workflows
+- `markdown` for readable source, copy, versioning, and lightweight collaboration
 - bilingual `html` for mixed-language teams that want the same calculation result in two display languages
 
 ## Export Rule
 
-Prefer one command that generates the full bundle from the same request input.
+Prefer one command that generates the HTML + Markdown pair from the same request input.
 
 Use:
 
@@ -38,11 +32,9 @@ python3 scripts/generate_report_bundle.py input_file.json output_dir
 
 The exporter should:
 
-1. build the canonical decision JSON
+1. build the canonical decision result in memory
 2. render the readable markdown report in Simplified Chinese
 3. render the visual HTML report with bilingual Chinese/English switching
-4. generate the PDF report in Simplified Chinese
-5. generate the Word report in Simplified Chinese
 
 ## Required Sections In Rendered Reports
 
@@ -64,7 +56,7 @@ Each human-facing format should include:
 - warnings and caveats
 - skill workflow
 - skill capabilities
-- an explicit note that the bundle was generated automatically from the same structured input
+- an explicit note that the reports were generated automatically from the same structured input
 
 ## HTML-Specific UX Rule
 
@@ -73,30 +65,22 @@ The HTML report should also include:
 - a sticky top navigation bar that remains visible while scrolling
 - section anchor links for the main report sections
 - a one-click Chinese / English language toggle
+- top-right actions for `Print` and `Save as PDF`
 - an executive-summary style top section that ordinary users can understand without reading the full Bayesian details
 - the professional view as the default presentation
 - collapsible advanced sections so evidence, prior, sensitivity, and appendix stay closed until requested
 - a conversation-process section with a change chart when the input includes multi-turn dialogue rounds
-- the same workflow and capability summary as the PDF and Word versions
+- automatic expansion of collapsible sections before the user prints or saves the page as PDF
+- the same workflow and capability summary as the Markdown version
 
-## PDF Table Rule
+## HTML Print Rule
 
-Long Chinese or mixed Chinese-English text inside PDF tables must wrap within the cell width. Do not allow the text to run past the right edge of the page.
+The HTML report should be printable as-is. When the user clicks `Print` or `Save as PDF`:
 
-## Experimental Paged-CSS Branch
-
-The exporter may optionally generate:
-
-- `print.html`
-- `browser.pdf`
-
-Use this branch when you want to compare the default programmatic PDF against a browser-print PDF that stays closer to the HTML layout.
-
-Preferred implementation:
-
-- use Playwright PDF export first so the output can honor print CSS while suppressing browser-added page headers and footers
-- keep direct Chrome CLI printing only as a fallback when Playwright is unavailable
+- folded sections should open automatically before the print dialog appears
+- the print layout should hide sticky navigation and interactive controls
+- the user should be able to use the browser print dialog to save the page as PDF without needing a separately generated PDF file
 
 ## Automation Rule
 
-The rendered reports are not hand-written examples. They should be generated automatically from the same input request so the bundle stays reproducible.
+The rendered reports are not hand-written examples. They should be generated automatically from the same input request so the output stays reproducible.

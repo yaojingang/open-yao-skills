@@ -1997,55 +1997,44 @@ def build_docx(request: dict, report: dict, output_path: Path) -> None:
     document.save(str(output_path))
 
 
-def generate_bundle(input_path: Path, output_dir: Path, basename: str | None, pdf_engine: str = "reportlab") -> dict[str, str]:
+def generate_bundle(input_path: Path, output_dir: Path, basename: str | None) -> dict[str, str]:
     request = load_request(input_path)
     report = build_report(request)
     output_dir.mkdir(parents=True, exist_ok=True)
     stem = basename or input_path.stem.replace("_", "-")
 
-    json_path = output_dir / f"{stem}.json"
     md_path = output_dir / f"{stem}.md"
     html_path = output_dir / f"{stem}.html"
-    pdf_path = output_dir / f"{stem}.pdf"
-    docx_path = output_dir / f"{stem}.docx"
 
-    json_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     md_path.write_text(build_markdown(request, report), encoding="utf-8")
     html_path.write_text(build_html(request, report), encoding="utf-8")
-    build_pdf(request, report, pdf_path)
-    build_docx(request, report, docx_path)
+
+    stale_paths = [
+        output_dir / f"{stem}.json",
+        output_dir / f"{stem}.pdf",
+        output_dir / f"{stem}.docx",
+        output_dir / f"{stem}.print.html",
+        output_dir / f"{stem}.browser.pdf",
+    ]
+    for stale_path in stale_paths:
+        if stale_path.exists():
+            stale_path.unlink()
 
     generated = {
-        "json": str(json_path),
         "md": str(md_path),
         "html": str(html_path),
-        "pdf": str(pdf_path),
-        "docx": str(docx_path),
     }
-    if pdf_engine in {"browser", "both"}:
-        print_html_path = output_dir / f"{stem}.print.html"
-        browser_pdf_path = output_dir / f"{stem}.browser.pdf"
-        print_html_path.write_text(build_print_html(request, report), encoding="utf-8")
-        build_browser_pdf(print_html_path, browser_pdf_path)
-        generated["print_html"] = str(print_html_path)
-        generated["browser_pdf"] = str(browser_pdf_path)
     return generated
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Generate a synchronized Bayesian decision report bundle.")
+    parser = argparse.ArgumentParser(description="Generate a synchronized Bayesian decision report in Markdown and HTML.")
     parser.add_argument("input_json", help="Path to the structured decision request JSON file.")
-    parser.add_argument("output_dir", help="Directory where the report bundle should be written.")
+    parser.add_argument("output_dir", help="Directory where the report files should be written.")
     parser.add_argument("--basename", help="Optional basename for output files. Defaults to the input filename stem.")
-    parser.add_argument(
-        "--pdf-engine",
-        choices=("reportlab", "browser", "both"),
-        default="reportlab",
-        help="Keep the default reportlab PDF, or also generate an experimental Playwright/browser-print PDF from print HTML.",
-    )
     args = parser.parse_args()
 
-    generated = generate_bundle(Path(args.input_json), Path(args.output_dir), args.basename, pdf_engine=args.pdf_engine)
+    generated = generate_bundle(Path(args.input_json), Path(args.output_dir), args.basename)
     print(json.dumps({"ok": True, "generated": generated}, ensure_ascii=False, indent=2))
 
 

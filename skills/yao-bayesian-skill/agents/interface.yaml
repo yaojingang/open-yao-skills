@@ -1,7 +1,7 @@
 interface:
   display_name: "Yao Bayesian Skill"
-  short_description: "Turn uncertain choices into multi-turn Bayesian decision reports with Chinese-first export and bilingual HTML"
-  default_prompt: "Use $yao-bayesian-skill to turn this uncertain decision into a multi-turn Bayesian evidence-to-action report: start with a weak prior if input is incomplete, iteratively ask for missing information, record each round, then export a Chinese-first bundle with bilingual HTML."
+  short_description: "Turn uncertain choices into multi-turn Bayesian decision reports with Chinese-first Markdown and bilingual HTML"
+  default_prompt: "Use $yao-bayesian-skill to turn this uncertain decision into a multi-turn Bayesian evidence-to-action report: start with a weak prior if input is incomplete, iteratively ask for missing information, record each round, then export synchronized Markdown and bilingual HTML."
 compatibility:
   canonical_format: "agent-skills"
   adapter_targets:

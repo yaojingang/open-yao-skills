@@ -57,7 +57,7 @@ body {
   width: min(1120px, calc(100vw - 40px));
   margin: 0 auto;
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
   gap: 18px;
 }
@@ -137,6 +137,19 @@ th,
   gap: 8px;
 }
 
+.topbar-tools {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.report-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .view-toggle {
   display: flex;
   align-items: center;
@@ -182,6 +195,35 @@ th,
 .lang-button:hover {
   transform: translateY(-1px);
   color: var(--accent);
+}
+
+.action-button {
+  border: 1px solid var(--line);
+  background: #f0efe8;
+  color: var(--muted);
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 180ms ease, box-shadow 180ms ease, color 180ms ease, background 180ms ease;
+  font-family: "IBM Plex Sans", "PingFang SC", "Helvetica Neue", sans-serif;
+}
+
+.action-button:hover {
+  transform: translateY(-1px);
+  color: var(--accent);
+}
+
+.action-button-primary {
+  background: var(--accent);
+  color: #faf9f5;
+  box-shadow: 0 0 0 1px #d6e1ee;
+}
+
+.action-button-primary:hover {
+  color: #faf9f5;
+  background: #24456f;
 }
 
 .lang-button.is-active {
@@ -791,6 +833,124 @@ tbody tr:nth-child(even) {
   font-size: 14px;
 }
 
+.report-toast {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 40;
+  max-width: min(360px, calc(100vw - 32px));
+  padding: 12px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(27, 54, 93, 0.15);
+  background: rgba(20, 20, 19, 0.9);
+  color: #faf9f5;
+  box-shadow: 0 16px 32px rgba(20, 20, 19, 0.18);
+  font-size: 14px;
+  line-height: 1.45;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.report-toast.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@page {
+  size: A4;
+  margin: 16mm 16mm 18mm 16mm;
+}
+
+@media print {
+  html,
+  body {
+    background: #f5f4ed !important;
+  }
+
+  .topbar {
+    position: static;
+    padding: 0 0 10mm;
+    background: transparent;
+    border-bottom: 0;
+    backdrop-filter: none;
+  }
+
+  .topbar-inner {
+    width: auto;
+    display: block;
+  }
+
+  .menu,
+  .lang-toggle,
+  .report-actions,
+  .hero-meta,
+  .fold-indicator,
+  .footer-note,
+  .meter,
+  .report-toast {
+    display: none !important;
+  }
+
+  .page {
+    width: auto;
+    margin: 0;
+  }
+
+  .hero,
+  .section,
+  .fold-section,
+  .callout {
+    box-shadow: none;
+    break-inside: avoid-page;
+  }
+
+  .hero,
+  .section,
+  .fold-panel,
+  .fold-section > summary {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .fold-section {
+    border: 0;
+    background: transparent;
+  }
+
+  .fold-section > summary {
+    cursor: default;
+    padding-top: 0;
+    padding-bottom: 6mm;
+  }
+
+  .fold-section[open] .fold-panel {
+    border-top: 0 !important;
+  }
+
+  .fold-panel {
+    padding-bottom: 5mm;
+  }
+
+  .trajectory-shell,
+  .round-card,
+  .table-wrap {
+    break-inside: avoid-page;
+  }
+
+  .table-wrap {
+    background: #fcfbf8;
+  }
+
+  table {
+    font-size: 12px;
+  }
+
+  .trajectory-chart {
+    max-height: 150mm;
+  }
+}
+
 @media (max-width: 640px) {
   .topbar {
     padding: 10px 0;
@@ -806,8 +966,17 @@ tbody tr:nth-child(even) {
     width: 100%;
   }
 
+  .topbar-tools {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
   .lang-toggle {
     justify-content: flex-start;
+  }
+
+  .report-actions {
+    flex-wrap: wrap;
   }
 
   .view-toggle {

@@ -20,11 +20,10 @@ Every report should follow this structure.
 
 When export is enabled, the same report should be rendered consistently to:
 
-- `json` as the canonical machine-readable source
 - `markdown` as the readable source draft
 - `html` as the visual report
-- `pdf` as the shareable fixed-layout artifact
-- `docx` as the editable document artifact
+
+If the user needs PDF, the HTML version should be printable and saveable as PDF from the browser.
 
 ## Mandatory Distinctions
 

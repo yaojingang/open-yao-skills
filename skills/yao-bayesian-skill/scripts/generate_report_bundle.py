@@ -1400,6 +1400,34 @@ def build_html(request: dict, report: dict) -> str:
     return html
 
 
+def build_print_html(request: dict, report: dict) -> str:
+    html = build_html(request, report)
+    print_css = PRINT_CSS_PATH.read_text(encoding="utf-8")
+    html = html.replace("</style>", f"\n{print_css}\n  </style>", 1)
+    html = html.replace('<body data-lang="zh" data-view="pro">', '<body data-lang="zh" data-view="pro" data-print-engine="pagedjs">', 1)
+    html = html.replace("<details class=", "<details open class=")
+    script_start = html.rfind("<script>")
+    if script_start != -1:
+        html = html[:script_start] + "</body>\n</html>\n"
+    return html
+
+
+def build_pagedjs_pdf(print_html_path: Path, output_pdf_path: Path) -> None:
+    command = [
+        "npx",
+        "-y",
+        "pagedjs-cli",
+        str(print_html_path),
+        "-o",
+        str(output_pdf_path),
+        "-s",
+        "A4",
+        "-t",
+        "120000",
+    ]
+    subprocess.run(command, check=True, cwd=str(ROOT))
+
+
 def register_pdf_fonts() -> None:
     try:
         pdfmetrics.getFont("STSong-Light")
@@ -1795,7 +1823,7 @@ def build_docx(request: dict, report: dict, output_path: Path) -> None:
     document.save(str(output_path))
 
 
-def generate_bundle(input_path: Path, output_dir: Path, basename: str | None) -> dict[str, str]:
+def generate_bundle(input_path: Path, output_dir: Path, basename: str | None, pdf_engine: str = "reportlab") -> dict[str, str]:
     request = load_request(input_path)
     report = build_report(request)
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -1813,13 +1841,21 @@ def generate_bundle(input_path: Path, output_dir: Path, basename: str | None) ->
     build_pdf(request, report, pdf_path)
     build_docx(request, report, docx_path)
 
-    return {
+    generated = {
         "json": str(json_path),
         "md": str(md_path),
         "html": str(html_path),
         "pdf": str(pdf_path),
         "docx": str(docx_path),
     }
+    if pdf_engine in {"pagedjs", "both"}:
+        print_html_path = output_dir / f"{stem}.print.html"
+        pagedjs_pdf_path = output_dir / f"{stem}.pagedjs.pdf"
+        print_html_path.write_text(build_print_html(request, report), encoding="utf-8")
+        build_pagedjs_pdf(print_html_path, pagedjs_pdf_path)
+        generated["print_html"] = str(print_html_path)
+        generated["pagedjs_pdf"] = str(pagedjs_pdf_path)
+    return generated
 
 
 def main() -> None:
@@ -1827,9 +1863,15 @@ def main() -> None:
     parser.add_argument("input_json", help="Path to the structured decision request JSON file.")
     parser.add_argument("output_dir", help="Directory where the report bundle should be written.")
     parser.add_argument("--basename", help="Optional basename for output files. Defaults to the input filename stem.")
+    parser.add_argument(
+        "--pdf-engine",
+        choices=("reportlab", "pagedjs", "both"),
+        default="reportlab",
+        help="Keep the default reportlab PDF, or also generate an experimental Paged.js PDF from print HTML.",
+    )
     args = parser.parse_args()
 
-    generated = generate_bundle(Path(args.input_json), Path(args.output_dir), args.basename)
+    generated = generate_bundle(Path(args.input_json), Path(args.output_dir), args.basename, pdf_engine=args.pdf_engine)
     print(json.dumps({"ok": True, "generated": generated}, ensure_ascii=False, indent=2))
 
 

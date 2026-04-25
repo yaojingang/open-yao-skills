@@ -1,0 +1,90 @@
+@page {
+  size: A4;
+  margin: 16mm 16mm 18mm 16mm;
+}
+
+html,
+body {
+  background: #f5f4ed !important;
+}
+
+body[data-print-engine="vivliostyle"] {
+  color: #141413;
+}
+
+body[data-print-engine="vivliostyle"] .topbar {
+  position: static;
+  padding: 0 0 10mm;
+  background: transparent;
+  border-bottom: 0;
+  backdrop-filter: none;
+}
+
+body[data-print-engine="vivliostyle"] .topbar-inner {
+  width: auto;
+  display: block;
+}
+
+body[data-print-engine="vivliostyle"] .menu,
+body[data-print-engine="vivliostyle"] .lang-toggle,
+body[data-print-engine="vivliostyle"] .hero-meta,
+body[data-print-engine="vivliostyle"] .fold-indicator,
+body[data-print-engine="vivliostyle"] .footer-note,
+body[data-print-engine="vivliostyle"] .meter {
+  display: none !important;
+}
+
+body[data-print-engine="vivliostyle"] .page {
+  width: auto;
+  margin: 0;
+}
+
+body[data-print-engine="vivliostyle"] .hero,
+body[data-print-engine="vivliostyle"] .section,
+body[data-print-engine="vivliostyle"] .fold-section,
+body[data-print-engine="vivliostyle"] .callout {
+  box-shadow: none;
+  break-inside: avoid-page;
+}
+
+body[data-print-engine="vivliostyle"] .hero,
+body[data-print-engine="vivliostyle"] .section,
+body[data-print-engine="vivliostyle"] .fold-panel,
+body[data-print-engine="vivliostyle"] .fold-section > summary {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+body[data-print-engine="vivliostyle"] .fold-section {
+  border: 0;
+  background: transparent;
+}
+
+body[data-print-engine="vivliostyle"] .fold-section > summary {
+  cursor: default;
+  padding-top: 0;
+  padding-bottom: 6mm;
+}
+
+body[data-print-engine="vivliostyle"] .fold-panel {
+  border-top: 0 !important;
+  padding-bottom: 5mm;
+}
+
+body[data-print-engine="vivliostyle"] .trajectory-shell,
+body[data-print-engine="vivliostyle"] .round-card,
+body[data-print-engine="vivliostyle"] .table-wrap {
+  break-inside: avoid-page;
+}
+
+body[data-print-engine="vivliostyle"] .table-wrap {
+  background: #fcfbf8;
+}
+
+body[data-print-engine="vivliostyle"] table {
+  font-size: 12px;
+}
+
+body[data-print-engine="vivliostyle"] .trajectory-chart {
+  max-height: 150mm;
+}

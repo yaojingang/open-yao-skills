@@ -45,6 +45,24 @@
         "confidence": {
           "type": "string"
         },
+        "decision_ready": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "decision_readiness": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "decision_status": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "one_sentence": {
           "type": "string"
         }
@@ -85,6 +103,12 @@
       "items": {
         "type": "object"
       }
+    },
+    "conversation_process": {
+      "type": [
+        "object",
+        "null"
+      ]
     }
   }
 }

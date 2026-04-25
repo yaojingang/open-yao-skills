@@ -793,12 +793,21 @@ def build_report(request: dict) -> dict:
         posterior_probability,
         localize_list((request.get("next_information") or {}).get("candidates", []), "zh"),
     )
+    conversation_process = build_conversation_process(
+        request,
+        float(prior_payload["probability"]),
+        posterior_probability,
+        recommendation,
+    )
     confidence_code = recommendation_confidence(warnings, sensitivity["conclusion_stability_code"], evidence)
     confidence = confidence_label_zh(confidence_code)
 
-    summary_sentence = (
-        f"当前后验概率约为 {posterior_probability:.1%}；在现有证据下，更优的行动是 {recommendation}。"
-    )
+    summary_sentence = f"当前后验概率约为 {posterior_probability:.1%}；在现有证据下，更优的行动是 {recommendation}。"
+    if conversation_process:
+        status_text = "已经达到可决策状态" if conversation_process["decision_ready"] else "还未达到可决策状态"
+        summary_sentence = f"{summary_sentence} 多轮对话后的判断是：{status_text}。"
+        if not conversation_process["decision_ready"]:
+            warnings.append("多轮对话后仍有关键缺口，建议先补充剩余信息，再进入最终决策。")
 
     return {
         "title": localize_text(request["title"], "zh"),
@@ -809,6 +818,9 @@ def build_report(request: dict) -> dict:
             "recommendation": recommendation,
             "confidence": confidence,
             "confidence_code": confidence_code,
+            "decision_ready": conversation_process["decision_ready"] if conversation_process else None,
+            "decision_readiness": conversation_process["final_readiness"] if conversation_process else None,
+            "decision_status": conversation_process["status"] if conversation_process else None,
             "one_sentence": summary_sentence,
         },
         "question": {
@@ -855,6 +867,10 @@ def build_report(request: dict) -> dict:
         "decision": {
             "recommended_action": recommendation,
             "expected_value_ranking": evaluated_actions,
+            "decision_ready": conversation_process["decision_ready"] if conversation_process else None,
+            "decision_readiness": conversation_process["final_readiness"] if conversation_process else None,
+            "decision_status": conversation_process["status"] if conversation_process else None,
+            "remaining_open_questions": conversation_process["open_questions"] if conversation_process else [],
             "reason": (
                 "当前基于后验概率的期望值比较，支持把这个行动作为首选。"
                 if evaluated_actions
@@ -865,6 +881,7 @@ def build_report(request: dict) -> dict:
         "natural_frequency": natural_frequency(prior_payload["probability"], posterior_probability),
         "next_information": next_info,
         "warnings": warnings,
+        "conversation_process": conversation_process,
         "calculation_log": calculation_log,
     }
 

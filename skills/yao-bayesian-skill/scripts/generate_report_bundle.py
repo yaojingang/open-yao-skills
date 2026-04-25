@@ -1405,7 +1405,11 @@ def build_print_html(request: dict, report: dict) -> str:
     html = build_html(request, report)
     print_css = PRINT_CSS_PATH.read_text(encoding="utf-8")
     html = html.replace("</style>", f"\n{print_css}\n  </style>", 1)
-    html = html.replace('<body data-lang="zh" data-view="pro">', '<body data-lang="zh" data-view="pro" data-print-engine="pagedjs">', 1)
+    html = html.replace(
+        '<body data-lang="zh" data-view="pro">',
+        '<body data-lang="zh" data-view="pro" data-print-engine="browser-print">',
+        1,
+    )
     html = html.replace("<details class=", "<details open class=")
     script_start = html.rfind("<script>")
     if script_start != -1:
@@ -1427,19 +1431,49 @@ def find_browser_binary() -> str:
     raise FileNotFoundError("No usable Chrome/Chromium binary found for experimental print-PDF export.")
 
 
-def build_browser_pdf(print_html_path: Path, output_pdf_path: Path) -> None:
+def build_browser_pdf_with_playwright(print_html_path: Path, output_pdf_path: Path) -> None:
+    from playwright.sync_api import sync_playwright
+
+    browser_override = os.environ.get("YAO_BAYESIAN_PRINT_BROWSER")
+    launch_kwargs: dict[str, Any] = {"headless": True}
+    if browser_override:
+        launch_kwargs["executable_path"] = browser_override
+
+    with sync_playwright() as playwright:
+        browser = playwright.chromium.launch(**launch_kwargs)
+        page = browser.new_page(locale="zh-CN")
+        page.goto(print_html_path.resolve().as_uri(), wait_until="networkidle")
+        page.emulate_media(media="print")
+        page.pdf(
+            path=str(output_pdf_path),
+            print_background=True,
+            display_header_footer=False,
+            prefer_css_page_size=True,
+        )
+        browser.close()
+
+
+def build_browser_pdf_with_cli(print_html_path: Path, output_pdf_path: Path) -> None:
     browser = find_browser_binary()
     command = [
         browser,
         "--headless=new",
         "--disable-gpu",
         "--no-sandbox",
+        "--print-to-pdf-no-header",
         "--run-all-compositor-stages-before-draw",
         "--virtual-time-budget=15000",
         f"--print-to-pdf={output_pdf_path}",
         print_html_path.resolve().as_uri(),
     ]
     subprocess.run(command, check=True, cwd=str(ROOT))
+
+
+def build_browser_pdf(print_html_path: Path, output_pdf_path: Path) -> None:
+    try:
+        build_browser_pdf_with_playwright(print_html_path, output_pdf_path)
+    except Exception:
+        build_browser_pdf_with_cli(print_html_path, output_pdf_path)
 
 
 def register_pdf_fonts() -> None:

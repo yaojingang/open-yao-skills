@@ -45,7 +45,7 @@ description: Convert uncertain real-world choices into an auditable Bayesian evi
 - HTML should default to the full professional view while keeping advanced sections collapsible.
 - HTML should also show a conversation-process section with a change chart when a multi-turn log is present.
 - PDF tables must wrap long CJK or mixed Chinese-English text inside the cell width and must not overflow beyond the right margin.
-- When needed, the exporter may also generate an experimental `print.html + pagedjs.pdf` branch so HTML and PDF can share a closer paged-CSS layout.
+- When needed, the exporter may also generate an experimental `print.html + browser.pdf` branch so HTML and PDF can share a closer paged-CSS layout.
 
 ## Reference Map
 

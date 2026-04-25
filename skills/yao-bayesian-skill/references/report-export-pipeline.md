@@ -88,9 +88,9 @@ Long Chinese or mixed Chinese-English text inside PDF tables must wrap within th
 The exporter may optionally generate:
 
 - `print.html`
-- `pagedjs.pdf`
+- `browser.pdf`
 
-Use this branch when you want to compare the default programmatic PDF against a paged-CSS PDF that stays closer to the HTML layout.
+Use this branch when you want to compare the default programmatic PDF against a browser-print PDF that stays closer to the HTML layout.
 
 ## Automation Rule
 

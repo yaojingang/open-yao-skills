@@ -8,11 +8,11 @@ body {
   background: #f5f4ed !important;
 }
 
-body[data-print-engine="vivliostyle"] {
+body[data-print-engine="pagedjs"] {
   color: #141413;
 }
 
-body[data-print-engine="vivliostyle"] .topbar {
+body[data-print-engine="pagedjs"] .topbar {
   position: static;
   padding: 0 0 10mm;
   background: transparent;
@@ -20,71 +20,71 @@ body[data-print-engine="vivliostyle"] .topbar {
   backdrop-filter: none;
 }
 
-body[data-print-engine="vivliostyle"] .topbar-inner {
+body[data-print-engine="pagedjs"] .topbar-inner {
   width: auto;
   display: block;
 }
 
-body[data-print-engine="vivliostyle"] .menu,
-body[data-print-engine="vivliostyle"] .lang-toggle,
-body[data-print-engine="vivliostyle"] .hero-meta,
-body[data-print-engine="vivliostyle"] .fold-indicator,
-body[data-print-engine="vivliostyle"] .footer-note,
-body[data-print-engine="vivliostyle"] .meter {
+body[data-print-engine="pagedjs"] .menu,
+body[data-print-engine="pagedjs"] .lang-toggle,
+body[data-print-engine="pagedjs"] .hero-meta,
+body[data-print-engine="pagedjs"] .fold-indicator,
+body[data-print-engine="pagedjs"] .footer-note,
+body[data-print-engine="pagedjs"] .meter {
   display: none !important;
 }
 
-body[data-print-engine="vivliostyle"] .page {
+body[data-print-engine="pagedjs"] .page {
   width: auto;
   margin: 0;
 }
 
-body[data-print-engine="vivliostyle"] .hero,
-body[data-print-engine="vivliostyle"] .section,
-body[data-print-engine="vivliostyle"] .fold-section,
-body[data-print-engine="vivliostyle"] .callout {
+body[data-print-engine="pagedjs"] .hero,
+body[data-print-engine="pagedjs"] .section,
+body[data-print-engine="pagedjs"] .fold-section,
+body[data-print-engine="pagedjs"] .callout {
   box-shadow: none;
   break-inside: avoid-page;
 }
 
-body[data-print-engine="vivliostyle"] .hero,
-body[data-print-engine="vivliostyle"] .section,
-body[data-print-engine="vivliostyle"] .fold-panel,
-body[data-print-engine="vivliostyle"] .fold-section > summary {
+body[data-print-engine="pagedjs"] .hero,
+body[data-print-engine="pagedjs"] .section,
+body[data-print-engine="pagedjs"] .fold-panel,
+body[data-print-engine="pagedjs"] .fold-section > summary {
   padding-left: 0;
   padding-right: 0;
 }
 
-body[data-print-engine="vivliostyle"] .fold-section {
+body[data-print-engine="pagedjs"] .fold-section {
   border: 0;
   background: transparent;
 }
 
-body[data-print-engine="vivliostyle"] .fold-section > summary {
+body[data-print-engine="pagedjs"] .fold-section > summary {
   cursor: default;
   padding-top: 0;
   padding-bottom: 6mm;
 }
 
-body[data-print-engine="vivliostyle"] .fold-panel {
+body[data-print-engine="pagedjs"] .fold-panel {
   border-top: 0 !important;
   padding-bottom: 5mm;
 }
 
-body[data-print-engine="vivliostyle"] .trajectory-shell,
-body[data-print-engine="vivliostyle"] .round-card,
-body[data-print-engine="vivliostyle"] .table-wrap {
+body[data-print-engine="pagedjs"] .trajectory-shell,
+body[data-print-engine="pagedjs"] .round-card,
+body[data-print-engine="pagedjs"] .table-wrap {
   break-inside: avoid-page;
 }
 
-body[data-print-engine="vivliostyle"] .table-wrap {
+body[data-print-engine="pagedjs"] .table-wrap {
   background: #fcfbf8;
 }
 
-body[data-print-engine="vivliostyle"] table {
+body[data-print-engine="pagedjs"] table {
   font-size: 12px;
 }
 
-body[data-print-engine="vivliostyle"] .trajectory-chart {
+body[data-print-engine="pagedjs"] .trajectory-chart {
   max-height: 150mm;
 }

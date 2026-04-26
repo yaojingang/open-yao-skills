@@ -389,22 +389,25 @@ def build_round_formula(round_item: dict, prior_before: float | None, posterior_
             computed_probability, _, prior_odds, posterior_odds = apply_odds_update(float(prior_before), [item])
             if posterior_after is None:
                 posterior_after = computed_probability
+            display_posterior_odds = float(posterior_after) / (1.0 - float(posterior_after))
             detail.update(
                 {
                     "prior_odds": round_float(prior_odds),
-                    "posterior_odds": round_float(posterior_odds),
+                    "posterior_odds": round_float(display_posterior_odds),
+                    "computed_posterior_odds": round_float(posterior_odds),
+                    "computed_posterior_probability": round_float(computed_probability),
                     "likelihood_ratio": round_float(float(likelihood_ratio)),
                     "dependency_discount": round_float(dependency_discount),
                     "direction": direction,
                     "posterior_probability": round_float(posterior_after),
                     "formula_zh": (
                         f"把本轮起点概率 {_fmt_pct_text(prior_before)} 转成先验 odds {prior_odds:.3f}，"
-                        f"再乘以校正后的证据强度，得到后验 odds {posterior_odds:.3f}，"
+                        f"再结合本轮记录的证据强度，得到后验 odds {display_posterior_odds:.3f}，"
                         f"对应概率约 {_fmt_pct_text(posterior_after)}。"
                     ),
                     "formula_en": (
                         f"Convert the starting belief {_fmt_pct_text(prior_before)} into prior odds {prior_odds:.3f}, "
-                        f"apply the adjusted evidence strength, and you get posterior odds {posterior_odds:.3f}, "
+                        f"combine it with the recorded evidence strength to get posterior odds {display_posterior_odds:.3f}, "
                         f"which maps to about {_fmt_pct_text(posterior_after)}."
                     ),
                 }

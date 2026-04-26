@@ -5,18 +5,20 @@ Every report should follow this structure.
 ## Required Sections
 
 1. One-sentence conclusion
-2. If available, multi-turn dialogue process and decision readiness
-3. Decision question
-4. Prior setup
-5. New evidence table
-6. Bayesian update
-7. Natural-frequency explanation
-8. Action thresholds
-9. Expected value comparison
-10. Sensitivity analysis
-11. Next information to collect
-12. Caveats and risks
-13. Appendix or calculation note
+2. Plain-language action recommendation
+3. Prior hygiene checks triggered by the case
+4. If available, multi-turn dialogue process and decision readiness
+5. Decision question
+6. Prior setup
+7. New evidence table
+8. Bayesian update
+9. Natural-frequency explanation
+10. Action thresholds
+11. Expected value comparison
+12. Sensitivity analysis
+13. Next information to collect
+14. Caveats and risks
+15. Appendix or calculation note
 
 When export is enabled, the same report should be rendered consistently to:
 
@@ -55,6 +57,7 @@ At minimum, fill:
 - `evidence`
 - `posterior`
 - `decision`
+- `prior_hygiene`
 - `sensitivity`
 - `natural_frequency`
 - `warnings`

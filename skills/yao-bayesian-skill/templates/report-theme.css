@@ -536,11 +536,43 @@ tbody tr:nth-child(even) {
 
 .executive-card,
 .comparison-card,
-.reason-card {
+.reason-card,
+.principle-card {
   border: 1px solid var(--line);
   border-radius: 18px;
   padding: 18px 20px;
   background: #f8f7f1;
+}
+
+.principle-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.principle-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.principle-score {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 54px;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.principle-core {
+  color: var(--accent);
+  font-weight: 700;
 }
 
 .executive-primary {

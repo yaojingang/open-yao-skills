@@ -1,6 +1,6 @@
 {
   "repo_name": "yao-open-skills",
-  "updated_at": "2026-04-25",
+  "updated_at": "2026-04-26",
   "skills": [
     {
       "slug": "learning-builder",
@@ -64,8 +64,8 @@
         "export",
         "workflow"
       ],
-      "last_synced_at": "2026-04-25",
-      "updated_at": "2026-04-25"
+      "last_synced_at": "2026-04-26",
+      "updated_at": "2026-04-26"
     },
     {
       "slug": "yao-business-skill",

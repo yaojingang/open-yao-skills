@@ -1,0 +1,62 @@
+{
+  "case_type": "multi-opportunity-allocation",
+  "objective": "long-term growth with capped drawdown",
+  "capital_base": 100000,
+  "constraints": {
+    "total_exposure_cap": 0.25,
+    "min_cash_reserve_ratio": 0.5,
+    "fractional_kelly_mode": "auto"
+  },
+  "opportunities": [
+    {
+      "name": "Event A",
+      "win_probability": 0.57,
+      "odds": {
+        "format": "decimal",
+        "value": 2.0
+      },
+      "confidence_level": "medium",
+      "max_fraction_cap": 0.15,
+      "dependence": "independent"
+    },
+    {
+      "name": "Pilot B",
+      "scenario_returns": [
+        {
+          "name": "best",
+          "probability": 0.25,
+          "return_multiple": 1.4
+        },
+        {
+          "name": "base",
+          "probability": 0.5,
+          "return_multiple": 0.3
+        },
+        {
+          "name": "bear",
+          "probability": 0.25,
+          "return_multiple": -0.5
+        }
+      ],
+      "confidence_level": "low",
+      "max_fraction_cap": 0.12,
+      "dependence": "unknown"
+    }
+  ],
+  "round_log": [
+    {
+      "round": 1,
+      "stage": "初始目标识别",
+      "summary": "用户希望在两个候选机会之间做资金分配，同时要求保留一半现金。",
+      "readiness": 0.58,
+      "next_question": "补齐每个机会的概率、回报结构和相关性。"
+    },
+    {
+      "round": 2,
+      "stage": "收益模型补齐",
+      "summary": "用户补充 Event A 的二元赔率，以及 Pilot B 的 best/base/bear 场景。",
+      "readiness": 0.95,
+      "stop_reason": "达到 readiness 阈值，且剩余摩擦项不会改变动作级别。"
+    }
+  ]
+}

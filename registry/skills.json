@@ -92,6 +92,29 @@
       "updated_at": "2026-04-23"
     },
     {
+      "slug": "yao-kelly-skill",
+      "title": "Yao Kelly Skill",
+      "summary": "Turn uncertain investment, betting, and resource-allocation decisions into conservative Kelly sizing reports with readiness thresholds, fractional Kelly, HTML output, and iteration logs.",
+      "source_local_path": "/Users/laoyao/AI Coding/03-Development/Skills/yao-kelly-skill",
+      "collection_path": "skills/yao-kelly-skill",
+      "lifecycle": "active",
+      "sync_status": "published",
+      "github_repo": "yao-open-skills",
+      "github_url": "https://github.com/yaojingang/yao-open-skills/tree/main/skills/yao-kelly-skill",
+      "guide_path": "docs/skills/yao-kelly-skill.md",
+      "license": "MIT",
+      "tags": [
+        "kelly",
+        "allocation",
+        "decision-analysis",
+        "investment",
+        "reporting",
+        "html"
+      ],
+      "last_synced_at": "2026-04-26",
+      "updated_at": "2026-04-26"
+    },
+    {
       "slug": "yao-open-skills-sync",
       "title": "Yao Open Skills Sync",
       "summary": "Manage intake, registration, sync state, and README updates for the yao-open-skills public collection.",

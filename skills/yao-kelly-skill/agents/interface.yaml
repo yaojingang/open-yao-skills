@@ -1,0 +1,24 @@
+interface:
+  display_name: "Yao Kelly Skill"
+  short_description: "Multi-turn conservative Kelly sizing for betting, investment, and resource allocation"
+  default_prompt: "Use $yao-kelly-skill to turn this uncertain allocation question into a conservative Kelly application report: classify the case, ask only the highest-leverage missing questions, stop when decision_readiness reaches the threshold or the action class is already stable, compute full Kelly plus conservative Kelly, and log every round."
+compatibility:
+  canonical_format: "agent-skills"
+  adapter_targets:
+    - "openai"
+    - "claude"
+    - "generic"
+  activation:
+    mode: "manual"
+    paths: []
+  execution:
+    context: "inline"
+    shell: "bash"
+  trust:
+    source_tier: "local"
+    remote_inline_execution: "forbid"
+    remote_metadata_policy: "allow-metadata-only"
+  degradation:
+    openai: "metadata-adapter"
+    claude: "neutral-source-plus-adapter"
+    generic: "neutral-source"

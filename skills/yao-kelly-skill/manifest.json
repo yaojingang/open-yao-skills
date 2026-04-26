@@ -1,0 +1,31 @@
+{
+  "name": "yao-kelly-skill",
+  "version": "0.1.0",
+  "owner": "Yao Team",
+  "updated_at": "2026-04-26",
+  "status": "active",
+  "maturity_tier": "production",
+  "lifecycle_stage": "production",
+  "context_budget_tier": "production",
+  "review_cadence": "monthly",
+  "skill_archetype": "production",
+  "category": "allocation-decision",
+  "complexity_tier": "complex",
+  "target_platforms": [
+    "openai",
+    "claude",
+    "generic",
+    "agent-skills-compatible"
+  ],
+  "factory_components": [
+    "references",
+    "scripts",
+    "reports",
+    "history",
+    "logs"
+  ],
+  "report_outputs": [
+    "json",
+    "html"
+  ]
+}

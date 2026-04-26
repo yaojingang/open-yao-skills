@@ -875,6 +875,36 @@ def build_html(request: dict, report: dict) -> str:
     ) or """
         <li><span class="lang-zh">当前没有足够的备选动作可比较。</span><span class="lang-en">There are not enough alternate actions to compare right now.</span></li>
     """
+    hygiene = report.get("prior_hygiene") or {}
+    hygiene_cards_html = "".join(
+        """
+        <article class="principle-card">
+          <div class="principle-top">
+            <span class="principle-score">{score}</span>
+            <span class="reason-label">{label}</span>
+          </div>
+          <h3>{title}</h3>
+          <p class="principle-core">{core}</p>
+          <p><strong>{trigger_label}</strong> {trigger}</p>
+          <p><strong>{decision_label}</strong> {decision_use}</p>
+        </article>
+        """.format(
+            score=html_text(f"{item.get('score', '-')}/25"),
+            label=dual_html("本次触发", "Triggered"),
+            title=dual_html(item.get("principle") or "-", item.get("principle_en") or "-"),
+            core=dual_html(item.get("core_sentence") or "-", item.get("core_sentence_en") or "-"),
+            trigger_label=dual_html("触发原因：", "Why it matters:"),
+            trigger=dual_html(item.get("trigger") or "-", item.get("trigger_en") or "-"),
+            decision_label=dual_html("对决策的影响：", "Decision effect:"),
+            decision_use=dual_html(item.get("decision_use") or "-", item.get("decision_use_en") or "-"),
+        )
+        for item in hygiene.get("checks", [])
+    ) or f"""
+        <article class="principle-card">
+          <h3>{dual_html("没有单独触发的先验检查", "No dedicated prior checks triggered")}</h3>
+          <p>{dual_html("当前报告没有识别出需要单独展示的贝叶斯先验原则。", "The report did not identify prior hygiene checks that need a dedicated callout.")}</p>
+        </article>
+    """
     action_steps_html = "".join(
         f"<li>{dual_html(plain['action_steps_zh'][index], plain['action_steps_en'][index])}</li>"
         for index in range(len(plain["action_steps_zh"]))
@@ -1257,6 +1287,15 @@ def build_html(request: dict, report: dict) -> str:
       <div class="comparison-card">
         <h3>{dual_html("为什么不是另外两个选项", "Why not the other options")}</h3>
         <ul class="comparison-list">{alternative_cards_html}</ul>
+      </div>
+    </section>
+
+    <section class="section pro-only section-anchor-offset" id="hygiene">
+      <div class="section-kicker">{dual_html("判断卫生检查", "Prior hygiene check")}</div>
+      <h2>{dual_html("本次触发的贝叶斯先验原则", "Bayesian priors triggered here")}</h2>
+      <p class="muted-note">{dual_html(hygiene.get("selection_rule") or "从 20 条生活贝叶斯先验中选择本次最相关的项目。", hygiene.get("selection_rule_en") or "From 20 everyday Bayesian priors, show only the checks most relevant to this decision.")}</p>
+      <div class="principle-grid">
+        {hygiene_cards_html}
       </div>
     </section>
 

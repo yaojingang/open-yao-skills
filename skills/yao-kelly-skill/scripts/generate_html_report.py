@@ -24,10 +24,15 @@ def pct(value: Any) -> str:
     return f"{float(value) * 100:.1f}%"
 
 
-def money(value: Any) -> str:
+def amount(value: Any, resource_unit: str = "currency") -> str:
     if value is None:
         return "-"
-    return f"{float(value):,.0f}"
+    normalized = (resource_unit or "currency").lower()
+    if normalized in ("cny", "rmb", "yuan", "¥"):
+        return f"¥{float(value):,.0f}"
+    if normalized == "currency":
+        return f"{float(value):,.0f}"
+    return f"{float(value):,.1f} {resource_unit}"
 
 
 def action_label(value: str) -> str:
@@ -94,8 +99,13 @@ def render_scenarios(opportunity: dict[str, Any]) -> str:
     """
 
 
-def render_opportunities(opportunities: list[dict[str, Any]]) -> str:
+def render_opportunities(opportunities: list[dict[str, Any]], resource_unit: str) -> str:
     blocks = []
+    amount_hint = (
+        "基于资金口径"
+        if resource_unit.lower() in ("currency", "cny", "rmb", "yuan", "¥")
+        else "基于资源口径"
+    )
     for item in opportunities:
         recommended = float(item.get("recommended_fraction") or 0.0)
         full = float(item.get("full_kelly_fraction") or 0.0)
@@ -115,7 +125,7 @@ def render_opportunities(opportunities: list[dict[str, Any]]) -> str:
                 {render_bar("Conservative Kelly", recommended, "safe")}
               </div>
               <div class="mini-grid">
-                {render_metric("建议金额", money(item.get("recommended_amount")), "基于资金口径")}
+                {render_metric("建议投入", amount(item.get("recommended_amount"), resource_unit), amount_hint)}
                 {render_metric("期望收益/单位", pct(item.get("expected_return_per_unit")), "未扣除所有现实摩擦")}
                 {render_metric("折扣系数", f"{float(item.get('fractional_multiplier') or 0):.2f}x", "置信度折扣")}
                 {render_metric("相关性折扣", f"{float(item.get('dependence_multiplier') or 0):.2f}x", esc(item.get("dependence")))}
@@ -161,6 +171,8 @@ def render_html(payload: dict[str, Any]) -> str:
     summary = report.get("summary", {})
     readiness = summary.get("decision_readiness", {})
     opportunities = report.get("opportunities", [])
+    resource_unit = str(report.get("resource_unit", "currency"))
+    capital_label = "资金口径" if resource_unit.lower() in ("currency", "cny", "rmb", "yuan", "¥") else "资源口径"
     primary_action = pick_primary_action(opportunities)
     missing_questions = readiness.get("missing_questions", [])
     stop_reasons = readiness.get("stop_reasons", [])
@@ -456,8 +468,8 @@ def render_html(payload: dict[str, Any]) -> str:
         <h1>建议采用 {esc(action_label(primary_action))}，总投入 {pct(summary.get("recommended_total_fraction"))}</h1>
         <p>目标：{esc(report.get("objective"))}。本报告使用保守版 Kelly，将原始 Kelly、置信度折扣、相关性折扣和总暴露上限分开呈现。</p>
         <div class="metrics">
-          {render_metric("资金口径", money(report.get("capital_base")), "capital base")}
-          {render_metric("建议总金额", money(summary.get("recommended_total_amount")), "recommended")}
+          {render_metric(capital_label, amount(report.get("capital_base"), resource_unit), "capital base")}
+          {render_metric("建议总投入", amount(summary.get("recommended_total_amount"), resource_unit), "recommended")}
           {render_metric("决策成熟度", pct(readiness.get("score")), esc(readiness.get("band")))}
           {render_metric("总暴露上限", pct(summary.get("total_exposure_cap")), "cap")}
         </div>
@@ -478,7 +490,7 @@ def render_html(payload: dict[str, Any]) -> str:
 
     <section class="section" id="opportunities">
       <h2>机会分配</h2>
-      {render_opportunities(opportunities)}
+      {render_opportunities(opportunities, resource_unit)}
     </section>
 
     <section class="section split" id="readiness">

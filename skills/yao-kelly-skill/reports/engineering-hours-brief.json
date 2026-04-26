@@ -1,0 +1,75 @@
+{
+  "case_type": "multi-opportunity-allocation",
+  "objective": "Allocate monthly engineering capacity between a retention automation project and an experimental AI triage assistant.",
+  "capital_base": 120,
+  "resource_unit": "engineering-hours",
+  "constraints": {
+    "total_exposure_cap": 0.4,
+    "min_cash_reserve_ratio": 0.5,
+    "fractional_kelly_mode": "auto"
+  },
+  "opportunities": [
+    {
+      "name": "Retention Automation",
+      "scenario_returns": [
+        {
+          "name": "best",
+          "probability": 0.3,
+          "return_multiple": 1.2
+        },
+        {
+          "name": "base",
+          "probability": 0.5,
+          "return_multiple": 0.45
+        },
+        {
+          "name": "bear",
+          "probability": 0.2,
+          "return_multiple": -0.2
+        }
+      ],
+      "confidence_level": "medium",
+      "max_fraction_cap": 0.25,
+      "dependence": "low"
+    },
+    {
+      "name": "AI Triage Assistant",
+      "scenario_returns": [
+        {
+          "name": "best",
+          "probability": 0.2,
+          "return_multiple": 2.4
+        },
+        {
+          "name": "base",
+          "probability": 0.3,
+          "return_multiple": 0.3
+        },
+        {
+          "name": "bear",
+          "probability": 0.5,
+          "return_multiple": -0.6
+        }
+      ],
+      "confidence_level": "low",
+      "max_fraction_cap": 0.18,
+      "dependence": "unknown"
+    }
+  ],
+  "round_log": [
+    {
+      "round": 1,
+      "stage": "资源池确认",
+      "summary": "用户给出本月可分配工程容量为 120 小时，希望保留至少一半机动容量。",
+      "readiness": 0.57,
+      "next_question": "补齐两个项目的场景收益、失败损耗和互相依赖关系。"
+    },
+    {
+      "round": 2,
+      "stage": "项目收益模型补齐",
+      "summary": "用户补充了两个项目的 best/base/bear 情况，并标记 AI 项目的不确定性较高。",
+      "readiness": 0.95,
+      "stop_reason": "达到 readiness 阈值，且保守折扣后动作级别已经稳定。"
+    }
+  ]
+}

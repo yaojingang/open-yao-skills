@@ -1,0 +1,77 @@
+{
+  "case_type": "multi-opportunity-allocation",
+  "objective": "Allocate a quarterly customer-acquisition budget between proven search ads and a riskier KOL campaign while preserving downside control.",
+  "capital_base": 300000,
+  "resource_unit": "CNY",
+  "constraints": {
+    "total_exposure_cap": 0.35,
+    "min_cash_reserve_ratio": 0.5,
+    "fractional_kelly_mode": "auto"
+  },
+  "opportunities": [
+    {
+      "name": "Search Retargeting",
+      "scenario_returns": [
+        {
+          "name": "best",
+          "probability": 0.25,
+          "return_multiple": 0.9
+        },
+        {
+          "name": "base",
+          "probability": 0.5,
+          "return_multiple": 0.35
+        },
+        {
+          "name": "bear",
+          "probability": 0.25,
+          "return_multiple": -0.25
+        }
+      ],
+      "fees_fraction": 0.03,
+      "confidence_level": "high",
+      "max_fraction_cap": 0.2,
+      "dependence": "low"
+    },
+    {
+      "name": "KOL Seeding Campaign",
+      "scenario_returns": [
+        {
+          "name": "best",
+          "probability": 0.2,
+          "return_multiple": 1.8
+        },
+        {
+          "name": "base",
+          "probability": 0.45,
+          "return_multiple": 0.25
+        },
+        {
+          "name": "bear",
+          "probability": 0.35,
+          "return_multiple": -0.7
+        }
+      ],
+      "fees_fraction": 0.05,
+      "confidence_level": "low",
+      "max_fraction_cap": 0.15,
+      "dependence": "medium"
+    }
+  ],
+  "round_log": [
+    {
+      "round": 1,
+      "stage": "预算目标识别",
+      "summary": "用户希望把季度获客预算分到两个渠道，并保留至少一半现金缓冲。",
+      "readiness": 0.54,
+      "next_question": "补齐各渠道的 best/base/bear 回报、概率、费用和渠道相关性。"
+    },
+    {
+      "round": 2,
+      "stage": "渠道收益模型补齐",
+      "summary": "用户补充了搜索重定向和 KOL 种草的场景收益、置信度和相关性。",
+      "readiness": 0.95,
+      "stop_reason": "达到 readiness 阈值，且剩余执行细节不会改变动作级别。"
+    }
+  ]
+}

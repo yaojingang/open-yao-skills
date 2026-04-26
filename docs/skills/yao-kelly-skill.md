@@ -45,6 +45,8 @@ The public version includes:
 - `reports/example-brief.json`: sample structured input
 - `reports/example-output.json`: sample calculation output
 - `reports/example-html-report.html`: sample HTML report with print/save-PDF support
+- `reports/marketing-budget-report.html`: quarterly customer-acquisition budget allocation example
+- `reports/engineering-hours-report.html`: non-financial engineering-capacity allocation example
 - `history/CHANGELOG.md`: append-only iteration log
 
 ## HTML Report
@@ -59,6 +61,34 @@ The HTML report is designed as an operational decision artifact. The first viewp
 - total exposure cap
 
 Each opportunity then shows raw full Kelly next to conservative Kelly so the haircut is visible. Scenario tables remain available for auditability.
+
+## Example Reports
+
+### Customer-acquisition budget
+
+This case allocates a quarterly budget between proven search retargeting and a riskier KOL seeding campaign.
+
+The sample conclusion is:
+
+- total recommended exposure: `9.5%`
+- total recommended budget: `¥28,425`
+- search retargeting: `¥25,500`
+- KOL seeding campaign: `¥2,925`
+
+The point of this example is to show how the skill handles paid growth allocation where one channel is more proven and another has higher upside but weaker confidence.
+
+### Engineering capacity allocation
+
+This case allocates `120` monthly engineering hours between retention automation and an experimental AI triage assistant.
+
+The sample conclusion is:
+
+- total recommended exposure: `6.2%`
+- total recommended capacity: `7.5 engineering-hours`
+- retention automation: `6.4 engineering-hours`
+- AI triage assistant: `1.1 engineering-hours`
+
+The point of this example is to show that the same Kelly sizing logic can support non-currency resources when the user can define payoff scenarios and downside.
 
 ## Iteration And Publishing Rule
 

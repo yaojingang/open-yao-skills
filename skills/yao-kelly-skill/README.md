@@ -29,6 +29,8 @@
 - `reports/example-brief.json`: sample calculation input
 - `reports/example-output.json`: sample calculation output
 - `reports/example-html-report.html`: sample HTML report
+- `reports/marketing-budget-report.html`: customer-acquisition budget allocation example
+- `reports/engineering-hours-report.html`: non-financial engineering-capacity allocation example
 - `history/CHANGELOG.md`: package iteration log
 - `logs/`: session log location
 

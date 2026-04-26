@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kelly Allocation Report</title>
+  <style>
+    :root {
+      --ink: #1e2722;
+      --muted: #63706a;
+      --line: #d7ded6;
+      --paper: #fbfaf6;
+      --panel: #ffffff;
+      --green: #1e7f5c;
+      --blue: #225d8f;
+      --rust: #a54f2b;
+      --gold: #c29b2e;
+      --shadow: 0 16px 40px rgba(22, 31, 26, 0.10);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, rgba(30,127,92,0.08), transparent 320px),
+        var(--paper);
+      font-family: "Avenir Next", "Helvetica Neue", "PingFang SC", sans-serif;
+      line-height: 1.55;
+    }
+    header {
+      border-bottom: 1px solid var(--line);
+      background: rgba(251, 250, 246, 0.92);
+      backdrop-filter: blur(14px);
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+    .nav {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 14px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+    }
+    .brand-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      background: conic-gradient(from 220deg, var(--green), var(--blue), var(--gold), var(--green));
+    }
+    button {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--ink);
+      border-radius: 7px;
+      padding: 8px 12px;
+      font: inherit;
+      cursor: pointer;
+    }
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px 22px 60px;
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+      gap: 22px;
+      align-items: stretch;
+      margin-bottom: 24px;
+    }
+    .summary-panel, .decision-panel, .opportunity, .section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+    .summary-panel {
+      padding: 28px;
+    }
+    h1 {
+      margin: 0 0 12px;
+      font-size: 38px;
+      line-height: 1.12;
+      letter-spacing: 0;
+    }
+    h2, h3 { letter-spacing: 0; }
+    p { color: var(--muted); margin: 0; }
+    .decision-panel {
+      padding: 22px;
+      display: grid;
+      gap: 16px;
+    }
+    .action {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 16px;
+    }
+    .action strong {
+      font-size: 30px;
+      color: var(--green);
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 30px;
+      border: 1px solid rgba(30, 127, 92, 0.24);
+      background: rgba(30, 127, 92, 0.10);
+      color: var(--green);
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: #fffefa;
+      min-width: 0;
+    }
+    .metric span, .metric small {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .metric strong {
+      display: block;
+      margin: 4px 0;
+      font-size: 22px;
+      overflow-wrap: anywhere;
+    }
+    .section {
+      padding: 22px;
+      margin-top: 18px;
+    }
+    .section h2, .opportunity h3 {
+      margin: 0 0 10px;
+    }
+    .opportunity {
+      padding: 20px;
+      margin-top: 14px;
+    }
+    .opportunity-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .opportunity-head p {
+      font-size: 13px;
+    }
+    .allocation-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .bar-row { display: grid; gap: 8px; }
+    .bar-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .bar-label strong { color: var(--ink); }
+    .bar-track {
+      height: 14px;
+      background: #e9eee8;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      background: var(--green);
+    }
+    .bar-fill.raw { background: var(--rust); }
+    .bar-fill.safe { background: var(--green); }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+      font-size: 13px;
+    }
+    th, td {
+      text-align: left;
+      padding: 9px 8px;
+      border-bottom: 1px solid var(--line);
+    }
+    th {
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+    ul, ol { padding-left: 20px; }
+    li { margin: 8px 0; }
+    .notes {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 0;
+    }
+    .timeline {
+      list-style: none;
+      padding-left: 0;
+      display: grid;
+      gap: 12px;
+    }
+    .timeline li {
+      border-left: 3px solid var(--blue);
+      padding-left: 14px;
+      margin: 0;
+      display: grid;
+      gap: 3px;
+    }
+    .timeline span, .timeline small, .timeline em {
+      color: var(--muted);
+      font-style: normal;
+    }
+    footer {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 22px 34px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    @media (max-width: 860px) {
+      .hero, .split, .allocation-grid, .metrics, .mini-grid {
+        grid-template-columns: 1fr;
+      }
+      h1 { font-size: 30px; }
+      .nav { align-items: flex-start; }
+      .action { align-items: flex-start; flex-direction: column; }
+    }
+    @media print {
+      header button { display: none; }
+      body { background: white; }
+      header { position: static; }
+      .summary-panel, .decision-panel, .opportunity, .section {
+        box-shadow: none;
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <div class="brand"><span class="brand-mark"></span><span>Kelly Allocation Report</span></div>
+      <button onclick="window.print()">Print / Save PDF</button>
+    </div>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="summary-panel">
+        <h1>建议采用 小仓位，总投入 6.2%</h1>
+        <p>目标：Allocate monthly engineering capacity between a retention automation project and an experimental AI triage assistant.。本报告使用保守版 Kelly，将原始 Kelly、置信度折扣、相关性折扣和总暴露上限分开呈现。</p>
+        <div class="metrics">
+          
+      <div class="metric">
+        <span>资源口径</span>
+        <strong>120.0 engineering-hours</strong>
+        <small>capital base</small>
+      </div>
+    
+          
+      <div class="metric">
+        <span>建议总投入</span>
+        <strong>7.5 engineering-hours</strong>
+        <small>recommended</small>
+      </div>
+    
+          
+      <div class="metric">
+        <span>决策成熟度</span>
+        <strong>95.0%</strong>
+        <small>ready</small>
+      </div>
+    
+          
+      <div class="metric">
+        <span>总暴露上限</span>
+        <strong>40.0%</strong>
+        <small>cap</small>
+      </div>
+    
+        </div>
+      </div>
+      <aside class="decision-panel">
+        <div class="action">
+          <div>
+            <p>Action Class</p>
+            <strong>小仓位</strong>
+          </div>
+          <span class="pill">multi-opportunity-allocation</span>
+        </div>
+        
+      <div class="bar-row">
+        <div class="bar-label"><span>Recommended Exposure</span><strong>6.2%</strong></div>
+        <div class="bar-track"><div class="bar-fill safe" style="width:6.21%"></div></div>
+      </div>
+    
+        
+      <div class="bar-row">
+        <div class="bar-label"><span>Cash Reserve</span><strong>50.0%</strong></div>
+        <div class="bar-track"><div class="bar-fill raw" style="width:50.00%"></div></div>
+      </div>
+    
+        <p>生成时间：2026-04-26T10:15:24.230204+00:00</p>
+      </aside>
+    </section>
+
+    <section class="section" id="opportunities">
+      <h2>机会分配</h2>
+      
+            <article class="opportunity">
+              <div class="opportunity-head">
+                <div>
+                  <h3>Retention Automation</h3>
+                  <p>scenario-log-growth-grid-search</p>
+                </div>
+                <span class="pill">小仓位</span>
+              </div>
+              <div class="allocation-grid">
+                
+      <div class="bar-row">
+        <div class="bar-label"><span>Full Kelly</span><strong>25.0%</strong></div>
+        <div class="bar-track"><div class="bar-fill raw" style="width:25.00%"></div></div>
+      </div>
+    
+                
+      <div class="bar-row">
+        <div class="bar-label"><span>Conservative Kelly</span><strong>5.3%</strong></div>
+        <div class="bar-track"><div class="bar-fill safe" style="width:5.31%"></div></div>
+      </div>
+    
+              </div>
+              <div class="mini-grid">
+                
+      <div class="metric">
+        <span>建议投入</span>
+        <strong>6.4 engineering-hours</strong>
+        <small>基于资源口径</small>
+      </div>
+    
+                
+      <div class="metric">
+        <span>期望收益/单位</span>
+        <strong>54.5%</strong>
+        <small>未扣除所有现实摩擦</small>
+      </div>
+    
+                
+      <div class="metric">
+        <span>折扣系数</span>
+        <strong>0.25x</strong>
+        <small>置信度折扣</small>
+      </div>
+    
+                
+      <div class="metric">
+        <span>相关性折扣</span>
+        <strong>0.85x</strong>
+        <small>low</small>
+      </div>
+    
+              </div>
+              
+      <table>
+        <thead>
+          <tr><th>场景</th><th>概率</th><th>每 1 单位净回报</th><th>来源</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td>best</td>
+              <td>30.0%</td>
+              <td>120.0%</td>
+              <td>estimated</td>
+            </tr>
+            
+            <tr>
+              <td>base</td>
+              <td>50.0%</td>
+              <td>45.0%</td>
+              <td>estimated</td>
+            </tr>
+            
+            <tr>
+              <td>bear</td>
+              <td>20.0%</td>
+              <td>-20.0%</td>
+              <td>estimated</td>
+            </tr>
+            </tbody>
+      </table>
+    
+              <ul class="notes"><li>Used auto fractional Kelly multiplier 0.25 from confidence_level=medium.</li><li>Applied dependence multiplier 0.85 for dependence=low.</li></ul>
+            </article>
+            
+            <article class="opportunity">
+              <div class="opportunity-head">
+                <div>
+                  <h3>AI Triage Assistant</h3>
+                  <p>scenario-log-growth-grid-search</p>
+                </div>
+                <span class="pill">观察或极小试探</span>
+              </div>
+              <div class="allocation-grid">
+                
+      <div class="bar-row">
+        <div class="bar-label"><span>Full Kelly</span><strong>18.0%</strong></div>
+        <div class="bar-track"><div class="bar-fill raw" style="width:18.00%"></div></div>
+      </div>
+    
+                
+      <div class="bar-row">
+        <div class="bar-label"><span>Conservative Kelly</span><strong>0.9%</strong></div>
+        <div class="bar-track"><div class="bar-fill safe" style="width:0.90%"></div></div>
+      </div>
+    
+              </div>
+              <div class="mini-grid">
+                
+      <div class="metric">
+        <span>建议投入</span>
+        <strong>1.1 engineering-hours</strong>
+        <small>基于资源口径</small>
+      </div>
+    
+                
+      <div class="metric">
+        <span>期望收益/单位</span>
+        <strong>27.0%</strong>
+        <small>未扣除所有现实摩擦</small>
+      </div>
+    
+                
+      <div class="metric">
+        <span>折扣系数</span>
+        <strong>0.10x</strong>
+        <small>置信度折扣</small>
+      </div>
+    
+                
+      <div class="metric">
+        <span>相关性折扣</span>
+        <strong>0.50x</strong>
+        <small>unknown</small>
+      </div>
+    
+              </div>
+              
+      <table>
+        <thead>
+          <tr><th>场景</th><th>概率</th><th>每 1 单位净回报</th><th>来源</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td>best</td>
+              <td>20.0%</td>
+              <td>240.0%</td>
+              <td>estimated</td>
+            </tr>
+            
+            <tr>
+              <td>base</td>
+              <td>30.0%</td>
+              <td>30.0%</td>
+              <td>estimated</td>
+            </tr>
+            
+            <tr>
+              <td>bear</td>
+              <td>50.0%</td>
+              <td>-60.0%</td>
+              <td>estimated</td>
+            </tr>
+            </tbody>
+      </table>
+    
+              <ul class="notes"><li>Used auto fractional Kelly multiplier 0.10 from confidence_level=low.</li><li>Applied dependence multiplier 0.50 for dependence=unknown.</li></ul>
+            </article>
+            
+    </section>
+
+    <section class="section split" id="readiness">
+      <div>
+        <h2>为什么停止追问</h2>
+        <ul><li>decision_readiness reached the default threshold</li></ul>
+      </div>
+      <div>
+        <h2>剩余高影响问题</h2>
+        <ul><li>有没有手续费、滑点、锁定期、最小下注额或流动性限制？</li></ul>
+      </div>
+    </section>
+
+    <section class="section" id="log">
+      <h2>轮次日志</h2>
+      <ol class="timeline">
+            <li>
+              <strong>Round 1: 资源池确认</strong>
+              <span>用户给出本月可分配工程容量为 120 小时，希望保留至少一半机动容量。</span>
+              <em>Readiness: 57.0%</em>
+              <small>补齐两个项目的场景收益、失败损耗和互相依赖关系。</small>
+            </li>
+            
+            <li>
+              <strong>Round 2: 项目收益模型补齐</strong>
+              <span>用户补充了两个项目的 best/base/bear 情况，并标记 AI 项目的不确定性较高。</span>
+              <em>Readiness: 95.0%</em>
+              <small>达到 readiness 阈值，且保守折扣后动作级别已经稳定。</small>
+            </li>
+            </ol>
+    </section>
+  </main>
+  <footer>
+    Kelly sizing is a decision-sizing framework, not licensed investment, legal, or tax advice. Treat assumption-heavy inputs as provisional.
+  </footer>
+</body>
+</html>

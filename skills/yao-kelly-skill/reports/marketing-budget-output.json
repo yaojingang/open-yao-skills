@@ -1,0 +1,142 @@
+{
+  "ok": true,
+  "report": {
+    "generated_at": "2026-04-26T10:15:23.842813+00:00",
+    "case_type": "multi-opportunity-allocation",
+    "objective": "Allocate a quarterly customer-acquisition budget between proven search ads and a riskier KOL campaign while preserving downside control.",
+    "capital_base": 300000.0,
+    "resource_unit": "CNY",
+    "summary": {
+      "decision_readiness": {
+        "case_type": "multi-opportunity-allocation",
+        "score": 1.0,
+        "threshold": 0.78,
+        "band": "ready",
+        "stop_asking": true,
+        "stop_reasons": [
+          "decision_readiness reached the default threshold",
+          "no high-impact information gaps remain"
+        ],
+        "missing_questions": []
+      },
+      "total_exposure_cap": 0.35,
+      "min_cash_reserve_ratio": 0.5,
+      "preliminary_total_fraction": 0.09475,
+      "recommended_total_fraction": 0.09475,
+      "recommended_total_amount": 28425.0
+    },
+    "opportunities": [
+      {
+        "name": "Search Retargeting",
+        "formula_path": "scenario-log-growth-grid-search",
+        "expected_return_per_unit": 0.3075,
+        "full_kelly_fraction": 0.2,
+        "closed_form_fraction": null,
+        "fractional_multiplier": 0.5,
+        "dependence_multiplier": 0.85,
+        "preliminary_fraction": 0.085,
+        "max_fraction_bound": 0.2,
+        "best_expected_log_growth": 0.056715,
+        "confidence_level": "high",
+        "dependence": "low",
+        "action_class": "small",
+        "scenarios": [
+          {
+            "name": "best",
+            "probability": 0.25,
+            "return_multiple": 0.87,
+            "source": "estimated"
+          },
+          {
+            "name": "base",
+            "probability": 0.5,
+            "return_multiple": 0.31999999999999995,
+            "source": "estimated"
+          },
+          {
+            "name": "bear",
+            "probability": 0.25,
+            "return_multiple": -0.28,
+            "source": "estimated"
+          }
+        ],
+        "notes": [
+          "Subtracted fees_fraction=0.0300 from all scenario returns.",
+          "Used auto fractional Kelly multiplier 0.50 from confidence_level=high.",
+          "Applied dependence multiplier 0.85 for dependence=low."
+        ],
+        "has_model": true,
+        "probability_complete": true,
+        "confidence_explicit": true,
+        "dependence_explicit": true,
+        "friction_explicit": true,
+        "recommended_fraction": 0.085,
+        "recommended_amount": 25500.0
+      },
+      {
+        "name": "KOL Seeding Campaign",
+        "formula_path": "scenario-log-growth-grid-search",
+        "expected_return_per_unit": 0.1775,
+        "full_kelly_fraction": 0.15,
+        "closed_form_fraction": null,
+        "fractional_multiplier": 0.1,
+        "dependence_multiplier": 0.65,
+        "preliminary_fraction": 0.00975,
+        "max_fraction_bound": 0.15,
+        "best_expected_log_growth": 0.018149,
+        "confidence_level": "low",
+        "dependence": "medium",
+        "action_class": "observe-or-tiny-test",
+        "scenarios": [
+          {
+            "name": "best",
+            "probability": 0.2,
+            "return_multiple": 1.75,
+            "source": "estimated"
+          },
+          {
+            "name": "base",
+            "probability": 0.45,
+            "return_multiple": 0.2,
+            "source": "estimated"
+          },
+          {
+            "name": "bear",
+            "probability": 0.35,
+            "return_multiple": -0.75,
+            "source": "estimated"
+          }
+        ],
+        "notes": [
+          "Subtracted fees_fraction=0.0500 from all scenario returns.",
+          "Used auto fractional Kelly multiplier 0.10 from confidence_level=low.",
+          "Applied dependence multiplier 0.65 for dependence=medium."
+        ],
+        "has_model": true,
+        "probability_complete": true,
+        "confidence_explicit": true,
+        "dependence_explicit": true,
+        "friction_explicit": true,
+        "recommended_fraction": 0.00975,
+        "recommended_amount": 2925.0
+      }
+    ],
+    "notes": [],
+    "round_log": [
+      {
+        "round": 1,
+        "stage": "预算目标识别",
+        "summary": "用户希望把季度获客预算分到两个渠道，并保留至少一半现金缓冲。",
+        "readiness": 0.54,
+        "next_question": "补齐各渠道的 best/base/bear 回报、概率、费用和渠道相关性。"
+      },
+      {
+        "round": 2,
+        "stage": "渠道收益模型补齐",
+        "summary": "用户补充了搜索重定向和 KOL 种草的场景收益、置信度和相关性。",
+        "readiness": 0.95,
+        "stop_reason": "达到 readiness 阈值，且剩余执行细节不会改变动作级别。"
+      }
+    ]
+  }
+}

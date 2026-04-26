@@ -48,7 +48,7 @@
     {
       "slug": "yao-bayesian-skill",
       "title": "Yao Bayesian Skill",
-      "summary": "Turn uncertain choices into Bayesian decision reports with prior setup, evidence grading, posterior updates, action advice, and multi-format export.",
+      "summary": "Turn uncertain choices into Bayesian decision reports with prior setup, evidence grading, prior-hygiene checks, posterior updates, action advice, and HTML/Markdown export.",
       "source_local_path": "/Users/laoyao/AI Coding/03-Development/Skills/yao-bayesian-skill",
       "collection_path": "skills/yao-bayesian-skill",
       "lifecycle": "active",
@@ -60,6 +60,7 @@
       "tags": [
         "bayesian",
         "decision-analysis",
+        "prior-hygiene",
         "reporting",
         "export",
         "workflow"

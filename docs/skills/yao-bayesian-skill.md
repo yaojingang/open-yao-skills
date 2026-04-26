@@ -8,6 +8,7 @@
 - 用当前信息先给一个弱先验和初步判断
 - 通过多轮对话持续补信息
 - 记录每一轮判断如何变化
+- 用 20 条生活贝叶斯先验做判断卫生检查
 - 把概率更新落实到行动建议
 - 最后产出一份普通用户也能看懂的报告
 
@@ -79,7 +80,22 @@ Skill 不只是输出最后一个结论，它还会记录过程。
 
 也就是说，它是从“证据到行动”的报告器，而不是一个公式计算器。
 
-### 4. 报告对普通用户更友好
+### 4. 内置贝叶斯先验检查
+
+这次版本加入了 `prior hygiene` 判断层。它不会把生活原则直接当成数学参数，而是从 20 条可更新的贝叶斯主义先验里，自动挑出本次最相关的 3 到 5 条，帮助用户看懂这个判断为什么不能过度自信。
+
+常见触发项包括：
+
+- 我可能错：报告必须保留不确定性和更新条件
+- 基础率优先：先看参考类，再看个别故事
+- 证据有等级：弱证据可以用，但更新幅度要小
+- 强结论需要强证据：重投入需要更高证据门槛
+- 避免毁灭性风险：即使概率高，也要先看失败代价
+- 保留可逆选项：不确定时优先试点、分阶段验证
+
+报告里会把这些原则写成普通人能看懂的解释：本次为什么触发，以及它如何影响行动建议。
+
+### 5. 报告对普通用户更友好
 
 HTML 报告现在做了这几层处理：
 
@@ -98,17 +114,18 @@ HTML 报告现在做了这几层处理：
 2. 明确假设、时间范围、行动选项、成功标准
 3. 根据已有信息给一个初步先验
 4. 对证据做分级
-5. 用赔率更新或 Beta-binomial 更新后验
-6. 做敏感性分析，检查结论是否稳健
-7. 把后验概率转成行动建议
-8. 给出下一步最值得收集的信息
-9. 输出 Markdown 和 HTML 报告
+5. 运行贝叶斯先验检查，约束证据权重和行动强度
+6. 用赔率更新或 Beta-binomial 更新后验
+7. 做敏感性分析，检查结论是否稳健
+8. 把后验概率转成行动建议
+9. 给出下一步最值得收集的信息
+10. 输出 Markdown 和 HTML 报告
 
 如果用户是多轮对话输入，还会额外做：
 
-10. 记录每一轮变化
-11. 计算决策准备度
-12. 判断当前是否已经“可以进入正式决策”
+11. 记录每一轮变化
+12. 计算决策准备度
+13. 判断当前是否已经“可以进入正式决策”
 
 ## 证据和先验怎么处理
 
@@ -135,6 +152,7 @@ HTML 报告现在做了这几层处理：
 - 你现在该怎么做
 - 这份建议成立的前提
 - 为什么不是另外两个选项
+- 本次触发的贝叶斯先验原则
 - 多轮对话过程与决策准备度
 - 决策问题
 - 先验设置
@@ -223,17 +241,22 @@ Skill 会把市场判断转成：
 ### 产品与商业判断
 
 - [detailed-growth-case.html](../../skills/yao-bayesian-skill/reports/detailed-growth-case.html)
+- [detailed-growth-case.md](../../skills/yao-bayesian-skill/reports/detailed-growth-case.md)
 - [detailed-growth-case.pdf](../../skills/yao-bayesian-skill/reports/detailed-growth-case.pdf)
 - [example-decision-report.html](../../skills/yao-bayesian-skill/reports/example-decision-report.html)
+- [example-decision-report.md](../../skills/yao-bayesian-skill/reports/example-decision-report.md)
 - [example-decision-report.pdf](../../skills/yao-bayesian-skill/reports/example-decision-report.pdf)
 - [geo-overseas-service-case.html](../../skills/yao-bayesian-skill/reports/geo-overseas-service-case.html)
+- [geo-overseas-service-case.md](../../skills/yao-bayesian-skill/reports/geo-overseas-service-case.md)
 - [geo-overseas-service-case.pdf](../../skills/yao-bayesian-skill/reports/geo-overseas-service-case.pdf)
 
 ### 个人决策判断
 
 - [sanya-travel-case.html](../../skills/yao-bayesian-skill/reports/sanya-travel-case.html)
+- [sanya-travel-case.md](../../skills/yao-bayesian-skill/reports/sanya-travel-case.md)
 - [sanya-travel-case.pdf](../../skills/yao-bayesian-skill/reports/sanya-travel-case.pdf)
 - [sanya-travel-real-report.html](../../skills/yao-bayesian-skill/reports/sanya-travel-real-report.html)
+- [sanya-travel-real-report.md](../../skills/yao-bayesian-skill/reports/sanya-travel-real-report.md)
 - [sanya-travel-real-report.pdf](../../skills/yao-bayesian-skill/reports/sanya-travel-real-report.pdf)
 
 如果你想快速感受这个 Skill 的“普通用户结论 + 技术折叠区 + 可打印 HTML”风格，建议先打开 `detailed-growth-case.html`。

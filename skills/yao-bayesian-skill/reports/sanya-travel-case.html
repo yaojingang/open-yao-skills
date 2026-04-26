@@ -543,11 +543,43 @@ tbody tr:nth-child(even) {
 
 .executive-card,
 .comparison-card,
-.reason-card {
+.reason-card,
+.principle-card {
   border: 1px solid var(--line);
   border-radius: 18px;
   padding: 18px 20px;
   background: #f8f7f1;
+}
+
+.principle-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.principle-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.principle-score {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 54px;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.principle-core {
+  color: var(--accent);
+  font-weight: 700;
 }
 
 .executive-primary {
@@ -1030,7 +1062,7 @@ tbody tr:nth-child(even) {
           <div class="brand-title"><span class="lang-zh">贝叶斯决策报告</span><span class="lang-en">Bayesian Decision Report</span></div>
         </div>
       </div>
-      <nav class="menu"><a class="menu-link" href="#summary"><span class="lang-zh">先看结论</span><span class="lang-en">Summary</span></a><a class="menu-link" href="#action-plan"><span class="lang-zh">行动建议</span><span class="lang-en">Action</span></a><a class="menu-link nav-pro-only" href="#why"><span class="lang-zh">为什么这样判断</span><span class="lang-en">Why</span></a><a class="menu-link nav-pro-only" href="#conversation"><span class="lang-zh">对话过程</span><span class="lang-en">Conversation</span></a><a class="menu-link nav-pro-only" href="#decision"><span class="lang-zh">问题定义</span><span class="lang-en">Decision</span></a><a class="menu-link nav-pro-only" href="#evidence"><span class="lang-zh">证据</span><span class="lang-en">Evidence</span></a><a class="menu-link nav-pro-only" href="#update"><span class="lang-zh">概率判断</span><span class="lang-en">Update</span></a><a class="menu-link nav-pro-only" href="#prior"><span class="lang-zh">先验</span><span class="lang-en">Prior</span></a><a class="menu-link nav-pro-only" href="#sensitivity"><span class="lang-zh">敏感性</span><span class="lang-en">Sensitivity</span></a><a class="menu-link nav-pro-only" href="#warnings"><span class="lang-zh">注意事项</span><span class="lang-en">Warnings</span></a><a class="menu-link nav-pro-only" href="#workflow"><span class="lang-zh">附录</span><span class="lang-en">Appendix</span></a></nav>
+      <nav class="menu"><a class="menu-link" href="#summary"><span class="lang-zh">先看结论</span><span class="lang-en">Summary</span></a><a class="menu-link" href="#action-plan"><span class="lang-zh">行动建议</span><span class="lang-en">Action</span></a><a class="menu-link nav-pro-only" href="#why"><span class="lang-zh">为什么这样判断</span><span class="lang-en">Why</span></a><a class="menu-link nav-pro-only" href="#hygiene"><span class="lang-zh">先验检查</span><span class="lang-en">Prior checks</span></a><a class="menu-link nav-pro-only" href="#conversation"><span class="lang-zh">对话过程</span><span class="lang-en">Conversation</span></a><a class="menu-link nav-pro-only" href="#decision"><span class="lang-zh">问题定义</span><span class="lang-en">Decision</span></a><a class="menu-link nav-pro-only" href="#evidence"><span class="lang-zh">证据</span><span class="lang-en">Evidence</span></a><a class="menu-link nav-pro-only" href="#update"><span class="lang-zh">概率判断</span><span class="lang-en">Update</span></a><a class="menu-link nav-pro-only" href="#prior"><span class="lang-zh">先验</span><span class="lang-en">Prior</span></a><a class="menu-link nav-pro-only" href="#sensitivity"><span class="lang-zh">敏感性</span><span class="lang-en">Sensitivity</span></a><a class="menu-link nav-pro-only" href="#warnings"><span class="lang-zh">注意事项</span><span class="lang-en">Warnings</span></a><a class="menu-link nav-pro-only" href="#workflow"><span class="lang-zh">附录</span><span class="lang-en">Appendix</span></a></nav>
       <div class="topbar-tools">
         <div class="report-actions" aria-label="Report actions">
           <button class="action-button" type="button" data-report-action="print"><span class="lang-zh">打印</span><span class="lang-en">Print</span></button>
@@ -1156,6 +1188,70 @@ tbody tr:nth-child(even) {
           <span><span class="lang-zh">它目前的综合收益比首选方案低 4,843.6，所以暂时排在后面。</span><span class="lang-en">It currently trails the recommended option by 4,843.6 in expected value, so it stays behind for now.</span></span>
         </li>
         </ul>
+      </div>
+    </section>
+
+    <section class="section pro-only section-anchor-offset" id="hygiene">
+      <div class="section-kicker"><span class="lang-zh">判断卫生检查</span><span class="lang-en">Prior hygiene check</span></div>
+      <h2><span class="lang-zh">本次触发的贝叶斯先验原则</span><span class="lang-en">Bayesian priors triggered here</span></h2>
+      <p class="muted-note"><span class="lang-zh">从 20 条生活贝叶斯先验中，只展示本次最相关的 5 条。</span><span class="lang-en">From 20 everyday Bayesian priors, show only the 5 most relevant checks for this decision.</span></p>
+      <div class="principle-grid">
+        
+        <article class="principle-card">
+          <div class="principle-top">
+            <span class="principle-score">25/25</span>
+            <span class="reason-label"><span class="lang-zh">本次触发</span><span class="lang-en">Triggered</span></span>
+          </div>
+          <h3><span class="lang-zh">我可能错</span><span class="lang-en">I may be wrong</span></h3>
+          <p class="principle-core"><span class="lang-zh">任何判断先给自己留一条退路。</span><span class="lang-en">Leave room for every judgment to be wrong.</span></p>
+          <p><strong><span class="lang-zh">触发原因：</span><span class="lang-en">Why it matters:</span></strong> <span class="lang-zh">当前报告存在后验区间、敏感性结果和警示项，需要保留可更新余地。</span><span class="lang-en">The report has an interval, sensitivity results, and warnings, so the judgment should remain updateable.</span></p>
+          <p><strong><span class="lang-zh">对决策的影响：</span><span class="lang-en">Decision effect:</span></strong> <span class="lang-zh">在结论里保留置信度、剩余缺口和触发重新判断的条件。</span><span class="lang-en">Keep confidence, remaining gaps, and update triggers visible in the conclusion.</span></p>
+        </article>
+        
+        <article class="principle-card">
+          <div class="principle-top">
+            <span class="principle-score">25/25</span>
+            <span class="reason-label"><span class="lang-zh">本次触发</span><span class="lang-en">Triggered</span></span>
+          </div>
+          <h3><span class="lang-zh">基础率优先</span><span class="lang-en">Base rates first</span></h3>
+          <p class="principle-core"><span class="lang-zh">先看一般规律，再看个别故事。</span><span class="lang-en">Start with the general pattern before the individual story.</span></p>
+          <p><strong><span class="lang-zh">触发原因：</span><span class="lang-en">Why it matters:</span></strong> <span class="lang-zh">先验来自 D 等级来源，当前判断需要先从参考类出发。</span><span class="lang-en">The prior uses D quality sources, so the judgment should start from the reference class.</span></p>
+          <p><strong><span class="lang-zh">对决策的影响：</span><span class="lang-en">Decision effect:</span></strong> <span class="lang-zh">先把参考类作为起点，再用当前个案证据上调或下调。</span><span class="lang-en">Use the reference class as the starting point, then update with case-specific evidence.</span></p>
+        </article>
+        
+        <article class="principle-card">
+          <div class="principle-top">
+            <span class="principle-score">25/25</span>
+            <span class="reason-label"><span class="lang-zh">本次触发</span><span class="lang-en">Triggered</span></span>
+          </div>
+          <h3><span class="lang-zh">证据有等级</span><span class="lang-en">Evidence has grades</span></h3>
+          <p class="principle-core"><span class="lang-zh">独立、重复、可验证的证据更强。</span><span class="lang-en">Independent, repeatable, verifiable evidence is stronger.</span></p>
+          <p><strong><span class="lang-zh">触发原因：</span><span class="lang-en">Why it matters:</span></strong> <span class="lang-zh">本次使用了 4 条证据，其中 4 条属于 C/D/E 或更弱等级。</span><span class="lang-en">This report uses 4 evidence items; 4 are C/D/E or weaker signals.</span></p>
+          <p><strong><span class="lang-zh">对决策的影响：</span><span class="lang-en">Decision effect:</span></strong> <span class="lang-zh">弱证据可以影响方向，但更新幅度要小，并在敏感性分析里重跑。</span><span class="lang-en">Weak evidence may guide direction, but it should update less and be stress-tested.</span></p>
+        </article>
+        
+        <article class="principle-card">
+          <div class="principle-top">
+            <span class="principle-score">24/25</span>
+            <span class="reason-label"><span class="lang-zh">本次触发</span><span class="lang-en">Triggered</span></span>
+          </div>
+          <h3><span class="lang-zh">强结论需要强证据</span><span class="lang-en">Strong claims need strong evidence</span></h3>
+          <p class="principle-core"><span class="lang-zh">越惊人的说法，证据门槛越高。</span><span class="lang-en">The stronger the claim, the stronger the evidence should be.</span></p>
+          <p><strong><span class="lang-zh">触发原因：</span><span class="lang-en">Why it matters:</span></strong> <span class="lang-zh">当前结论仍受证据强度、依赖折扣或敏感性变化影响。</span><span class="lang-en">The conclusion is still affected by evidence strength, dependency discounts, or sensitivity changes.</span></p>
+          <p><strong><span class="lang-zh">对决策的影响：</span><span class="lang-en">Decision effect:</span></strong> <span class="lang-zh">重投入或强承诺需要更强证据；现阶段优先用低成本验证补证据。</span><span class="lang-en">Heavy commitment needs stronger evidence; use a low-cost validation step first.</span></p>
+        </article>
+        
+        <article class="principle-card">
+          <div class="principle-top">
+            <span class="principle-score">23/25</span>
+            <span class="reason-label"><span class="lang-zh">本次触发</span><span class="lang-en">Triggered</span></span>
+          </div>
+          <h3><span class="lang-zh">相关不等于因果</span><span class="lang-en">Correlation is not causation</span></h3>
+          <p class="principle-core"><span class="lang-zh">两件事一起发生，不代表一件导致另一件。</span><span class="lang-en">Two things moving together does not prove one caused the other.</span></p>
+          <p><strong><span class="lang-zh">触发原因：</span><span class="lang-en">Why it matters:</span></strong> <span class="lang-zh">4 条证据存在依赖折扣，说明这些信号不能完全独立相乘。</span><span class="lang-en">4 evidence items received dependency discounts, so these signals should not be multiplied as fully independent.</span></p>
+          <p><strong><span class="lang-zh">对决策的影响：</span><span class="lang-en">Decision effect:</span></strong> <span class="lang-zh">把相关信号当作线索，继续寻找更接近因果或行为结果的证据。</span><span class="lang-en">Treat correlated signals as clues and seek more causal or behavioral evidence.</span></p>
+        </article>
+        
       </div>
     </section>
 

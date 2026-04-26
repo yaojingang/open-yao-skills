@@ -18,6 +18,7 @@ TOP_NAV = [
     ("summary", "先看结论", "Summary"),
     ("action-plan", "行动建议", "Action"),
     ("why", "为什么这样判断", "Why"),
+    ("hygiene", "先验检查", "Prior checks"),
     ("conversation", "对话过程", "Conversation"),
     ("decision", "问题定义", "Decision"),
     ("evidence", "证据", "Evidence"),

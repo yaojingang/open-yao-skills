@@ -524,6 +524,7 @@ def build_report(brief: dict[str, Any]) -> dict[str, Any]:
         "objective": brief.get("objective"),
         "capital_base": capital_base,
         "resource_unit": brief.get("resource_unit", "currency"),
+        "context": brief.get("context", {}),
         "summary": {
             "decision_readiness": readiness,
             "total_exposure_cap": round(total_exposure_cap, 6),

@@ -1,11 +1,17 @@
 {
   "ok": true,
   "report": {
-    "generated_at": "2026-04-26T10:15:23.842813+00:00",
+    "generated_at": "2026-04-27T06:55:58.764824+00:00",
     "case_type": "multi-opportunity-allocation",
     "objective": "Allocate a quarterly customer-acquisition budget between proven search ads and a riskier KOL campaign while preserving downside control.",
     "capital_base": 300000.0,
     "resource_unit": "CNY",
+    "context": {
+      "background": "团队这个季度手里有 30 万获客预算。搜索重定向过去表现比较稳定，能带来持续转化；KOL 种草看起来更有爆发力，但结果波动很大，容易出现声量有了、成交没跟上的情况。",
+      "tension": "矛盾点在于：如果只投搜索重定向，增长可能比较稳但上限有限；如果加大 KOL 投放，可能打开新客来源，也可能快速烧掉预算。",
+      "question": "用户真正想知道的是：这两个渠道都不是完全没机会，那到底该怎么分预算，既参与增长机会，又不把季度预算过早押在不确定渠道上？",
+      "solution": "先把两个渠道拆成 best/base/bear 三种结果，估算每投入 1 元可能带来的净回报，再用 Kelly 得到理论投入比例，最后用置信度和渠道相关性把它压成保守预算上限。"
+    },
     "summary": {
       "decision_readiness": {
         "case_type": "multi-opportunity-allocation",

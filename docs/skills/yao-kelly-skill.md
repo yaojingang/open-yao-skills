@@ -69,6 +69,15 @@ The latest report format also includes a `普通人版结论` section before the
 - why the raw Kelly number was reduced
 - when the user should recalculate instead of continuing with the old allocation
 
+Reports now also open with a narrative framing section:
+
+- background: what is happening
+- tension: why the choice is hard
+- user question: what the user is really unsure about
+- solution path: how the report will turn the situation into a conservative allocation
+
+After that, the report introduces the Kelly principle in plain language before showing the detailed scenario tables and sizing calculations.
+
 ## Example Reports
 
 ### Customer-acquisition budget

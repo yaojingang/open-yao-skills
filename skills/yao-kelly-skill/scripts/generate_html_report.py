@@ -68,6 +68,69 @@ def action_guidance(value: str) -> str:
     return guidance.get(value, "按保守建议执行，并在关键假设变化时重新计算。")
 
 
+def report_context(report: dict[str, Any]) -> dict[str, str]:
+    context = report.get("context") or {}
+    objective = report.get("objective") or "当前决策"
+    return {
+        "background": context.get(
+            "background",
+            f"这份报告处理的是一个典型的投入决策：{objective}。用户面对的不是单纯要不要做，而是在机会、风险和资源保留之间找到一个可执行比例。",
+        ),
+        "tension": context.get(
+            "tension",
+            "真正的矛盾在于：机会看起来有收益，但收益并不确定；如果投入太少，可能错过增长，如果投入太多，又可能在判断错误时消耗过多资源。",
+        ),
+        "question": context.get(
+            "question",
+            "用户的核心疑问是：在当前信息还不完美的情况下，到底应该投入多少，才既能参与机会，又不会因为过度自信而承担不必要的损失？",
+        ),
+        "solution": context.get(
+            "solution",
+            "解决方案不是拍脑袋定预算，而是先估计每个机会的收益和失败损失，再用 Kelly 思路得到理论投入比例，最后根据置信度、相关性和保留资源要求把它压成保守执行上限。",
+        ),
+    }
+
+
+def render_story(report: dict[str, Any], primary_action: str) -> str:
+    context = report_context(report)
+    return f"""
+      <section class="section story-section" id="story">
+        <h2>背景、矛盾和问题</h2>
+        <div class="story-grid">
+          <article>
+            <span>背景</span>
+            <p>{esc(context["background"])}</p>
+          </article>
+          <article>
+            <span>矛盾点</span>
+            <p>{esc(context["tension"])}</p>
+          </article>
+          <article>
+            <span>用户疑惑</span>
+            <p>{esc(context["question"])}</p>
+          </article>
+          <article>
+            <span>建议方案</span>
+            <p>{esc(context["solution"])} 当前动作判断是：{esc(action_headline(primary_action))}。</p>
+          </article>
+        </div>
+      </section>
+    """
+
+
+def render_kelly_principle() -> str:
+    return """
+      <section class="section principle-section" id="principle">
+        <h2>凯利公式在这里解决什么</h2>
+        <div class="principle-copy">
+          <p>凯利公式的核心不是让人冒险，而是回答一个更具体的问题：当一个机会长期看起来有优势时，投入多少比例才不会因为一次判断错误而伤到整体资源。</p>
+          <p>它会把“胜率或场景概率”“赚的时候赚多少”“亏的时候亏多少”放在一起看。理论 Kelly 给出的是增长最大化比例，但现实里概率常常不准、机会之间会相关、执行还有摩擦，所以报告会把理论值再压成保守建议。</p>
+          <p>因此，这份报告里的保守 Kelly 更像一个执行上限：可以低于它，通常不应该高于它。真正的重点是先控制长期生存，再追求增长。</p>
+        </div>
+      </section>
+    """
+
+
 def plain_reason(item: dict[str, Any]) -> str:
     full = float(item.get("full_kelly_fraction") or 0.0)
     recommended = float(item.get("recommended_fraction") or 0.0)
@@ -420,6 +483,29 @@ def render_html(payload: dict[str, Any]) -> str:
       padding: 22px;
       margin-top: 18px;
     }}
+    .story-section {{
+      border-top: 5px solid var(--blue);
+    }}
+    .story-grid {{
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }}
+    .story-grid article {{
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 15px;
+      background: #fffefa;
+    }}
+    .story-grid span {{
+      display: inline-block;
+      margin-bottom: 8px;
+      color: var(--blue);
+      font-weight: 700;
+    }}
+    .story-grid p {{
+      color: var(--muted);
+    }}
     .plain-summary {{
       border-top: 5px solid var(--green);
     }}
@@ -466,6 +552,14 @@ def render_html(payload: dict[str, Any]) -> str:
     }}
     .plain-note {{
       margin-bottom: 14px;
+    }}
+    .principle-section {{
+      border-top: 5px solid var(--gold);
+    }}
+    .principle-copy {{
+      display: grid;
+      gap: 12px;
+      max-width: 920px;
     }}
     .section h2, .opportunity h3 {{
       margin: 0 0 10px;
@@ -562,7 +656,7 @@ def render_html(payload: dict[str, Any]) -> str:
       font-size: 12px;
     }}
     @media (max-width: 860px) {{
-      .hero, .split, .allocation-grid, .metrics, .mini-grid {{
+      .hero, .split, .allocation-grid, .metrics, .mini-grid, .story-grid {{
         grid-template-columns: 1fr;
       }}
       h1 {{ font-size: 30px; }}
@@ -613,10 +707,14 @@ def render_html(payload: dict[str, Any]) -> str:
       </aside>
     </section>
 
+    {render_story(report, primary_action)}
+
     {render_action_plan(report, opportunities, resource_unit, primary_action)}
 
+    {render_kelly_principle()}
+
     <section class="section" id="opportunities">
-      <h2>机会分配</h2>
+      <h2>具体方法和解释</h2>
       {render_opportunities(opportunities, resource_unit)}
     </section>
 

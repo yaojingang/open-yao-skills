@@ -1,6 +1,12 @@
 {
   "case_type": "multi-opportunity-allocation",
   "objective": "Allocate monthly engineering capacity between a retention automation project and an experimental AI triage assistant.",
+  "context": {
+    "background": "团队本月只有 120 个可灵活调配的工程小时。留存自动化能改善现有用户体验，收益相对可预期；AI 分诊助手更有想象力，但需求、效果和上线后的维护成本都不稳定。",
+    "tension": "矛盾点在于：如果工程时间都投向稳项目，可能错过 AI 能力带来的效率突破；如果过早投入 AI 试验，又可能挤占本来能稳定改善留存的工程产能。",
+    "question": "用户真正疑惑的是：在工程容量有限且两件事都值得做的情况下，应该先给每个方向多少小时，才不会被新机会的想象空间带偏？",
+    "solution": "先把两个项目都当成有收益和亏损的资源投入机会，估算不同结果下每投入 1 小时带来的净回报，再用保守 Kelly 把 120 小时拆成一个小规模试探方案。"
+  },
   "capital_base": 120,
   "resource_unit": "engineering-hours",
   "constraints": {

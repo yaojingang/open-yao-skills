@@ -7,6 +7,10 @@ Return one Kelly application report that lets the user act immediately. The pref
 
 ## Required sections
 
+0. `背景、矛盾和问题`
+   - explain the situation in story form
+   - name the user's real confusion
+   - state the tension between opportunity and downside
 1. `建议动作`
    - one sentence first
    - include `skip / observe-or-tiny-test / small / medium / large`
@@ -30,6 +34,11 @@ Return one Kelly application report that lets the user act immediately. The pref
 ## HTML report UI rules
 
 - first viewport must show action class, total recommended exposure, capital base, recommended amount, readiness, and exposure cap
+- before the calculation details, include a narrative background section that explains:
+  - what is happening
+  - what the conflict or tension is
+  - what the user is unsure about
+  - what solution path the report recommends
 - immediately after the first viewport, include a `普通人版结论` section with:
   - what to do now
   - how much to commit
@@ -37,6 +46,7 @@ Return one Kelly application report that lets the user act immediately. The pref
   - when to recalculate
 - repeated opportunities can use cards, but do not put nested cards inside them
 - label full Kelly as theory and conservative Kelly as the execution ceiling so non-technical readers do not over-use the raw number
+- introduce the Kelly principle in plain language before the detailed method and scenario tables
 - keep tables for scenario probabilities and return multiples
 - include a sticky top bar with `Print / Save PDF`
 - make the page responsive and printable

@@ -46,6 +46,44 @@ def action_label(value: str) -> str:
     return labels.get(value, value)
 
 
+def action_headline(value: str) -> str:
+    headlines = {
+        "skip": "先不投入，把机会放进观察名单",
+        "observe-or-tiny-test": "只做极小试探，不要正式加码",
+        "small": "先小规模试，不要大规模加码",
+        "medium": "可以中等投入，但必须守住上限",
+        "large": "优势较强，也要按上限分批执行",
+    }
+    return headlines.get(value, "先按保守方案执行")
+
+
+def action_guidance(value: str) -> str:
+    guidance = {
+        "skip": "当前信息下，最理性的动作是先不投入。继续收集证据，等胜率、回报或下行损失更清楚后再重新计算。",
+        "observe-or-tiny-test": "可以用很小的试验验证判断，但不要把它当成正式投入。这个级别更像买信息，而不是追求收益。",
+        "small": "可以小规模开始，重点是验证假设。先按建议上限执行，后续只有在真实数据变好时再加码。",
+        "medium": "可以作为一个正式投入项，但不要超过报告里的总暴露上限，并保留足够现金或机动资源。",
+        "large": "模型显示优势较强，但仍然要分批执行。Kelly 的意义是控制长期风险，不是鼓励一次性压满。",
+    }
+    return guidance.get(value, "按保守建议执行，并在关键假设变化时重新计算。")
+
+
+def plain_reason(item: dict[str, Any]) -> str:
+    full = float(item.get("full_kelly_fraction") or 0.0)
+    recommended = float(item.get("recommended_fraction") or 0.0)
+    confidence = str(item.get("confidence_level", "unknown"))
+    dependence = str(item.get("dependence", "unknown"))
+    if recommended <= 0:
+        return "模型没有给出正向投入比例，所以当前不值得配置。"
+    haircut = 1 - (recommended / full) if full > 0 else 0
+    return (
+        f"理论 Kelly 是 {pct(full)}，但因为置信度是 {confidence}、相关性是 {dependence}，"
+        f"执行建议被压到 {pct(recommended)}。这表示可以试，但不应该按理论值直接加满。"
+        if haircut > 0.2
+        else f"理论 Kelly 和执行建议差距不大，说明当前折扣较轻，但仍需遵守暴露上限。"
+    )
+
+
 def pick_primary_action(opportunities: list[dict[str, Any]]) -> str:
     order = ["large", "medium", "small", "observe-or-tiny-test", "skip"]
     for action in order:
@@ -99,6 +137,42 @@ def render_scenarios(opportunity: dict[str, Any]) -> str:
     """
 
 
+def render_action_plan(
+    report: dict[str, Any],
+    opportunities: list[dict[str, Any]],
+    resource_unit: str,
+    primary_action: str,
+) -> str:
+    summary = report.get("summary", {})
+    recommended_total = amount(summary.get("recommended_total_amount"), resource_unit)
+    total_fraction = pct(summary.get("recommended_total_fraction"))
+    rows = []
+    for item in opportunities:
+        rows.append(
+            f"""
+            <li>
+              <strong>{esc(item.get("name"))}: {amount(item.get("recommended_amount"), resource_unit)} ({pct(item.get("recommended_fraction"))})</strong>
+              <span>{esc(action_guidance(item.get("action_class", "skip")))}</span>
+              <small>{esc(plain_reason(item))}</small>
+            </li>
+            """
+        )
+    return f"""
+      <section class="section plain-summary" id="plain-summary">
+        <h2>普通人版结论</h2>
+        <div class="plain-lead">
+          <strong>{esc(action_headline(primary_action))}</strong>
+          <span>本次建议总投入 {esc(recommended_total)}，约占可用资源的 {esc(total_fraction)}。剩下的资源先保留，不要因为单次机会看起来不错就提前用掉。</span>
+        </div>
+        <ol class="action-list">{''.join(rows)}</ol>
+        <div class="watch-box">
+          <strong>什么时候重新计算</strong>
+          <span>如果实际转化、成本、成功率、最差情况损失或机会之间的相关性明显变化，就不要沿用这份比例，重新跑一次。</span>
+        </div>
+      </section>
+    """
+
+
 def render_opportunities(opportunities: list[dict[str, Any]], resource_unit: str) -> str:
     blocks = []
     amount_hint = (
@@ -120,9 +194,13 @@ def render_opportunities(opportunities: list[dict[str, Any]], resource_unit: str
                 </div>
                 <span class="pill">{esc(action_label(item.get("action_class", "skip")))}</span>
               </div>
+              <div class="plain-note">
+                <strong>怎么做</strong>
+                <span>{esc(action_guidance(item.get("action_class", "skip")))}</span>
+              </div>
               <div class="allocation-grid">
-                {render_bar("Full Kelly", full, "raw")}
-                {render_bar("Conservative Kelly", recommended, "safe")}
+                {render_bar("理论 Kelly，不建议直接照做", full, "raw")}
+                {render_bar("保守建议，可作为执行上限", recommended, "safe")}
               </div>
               <div class="mini-grid">
                 {render_metric("建议投入", amount(item.get("recommended_amount"), resource_unit), amount_hint)}
@@ -342,6 +420,53 @@ def render_html(payload: dict[str, Any]) -> str:
       padding: 22px;
       margin-top: 18px;
     }}
+    .plain-summary {{
+      border-top: 5px solid var(--green);
+    }}
+    .plain-lead {{
+      display: grid;
+      gap: 8px;
+      padding: 16px;
+      border: 1px solid rgba(30, 127, 92, 0.24);
+      border-radius: 8px;
+      background: rgba(30, 127, 92, 0.08);
+      margin-bottom: 14px;
+    }}
+    .plain-lead strong {{
+      font-size: 22px;
+    }}
+    .plain-lead span {{
+      color: var(--muted);
+    }}
+    .action-list {{
+      display: grid;
+      gap: 12px;
+      padding-left: 0;
+      list-style: none;
+    }}
+    .action-list li {{
+      display: grid;
+      gap: 5px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line);
+    }}
+    .action-list span, .action-list small {{
+      color: var(--muted);
+    }}
+    .watch-box, .plain-note {{
+      display: grid;
+      gap: 5px;
+      border-left: 3px solid var(--gold);
+      padding: 10px 12px;
+      background: #fffdf2;
+      color: var(--muted);
+    }}
+    .watch-box strong, .plain-note strong {{
+      color: var(--ink);
+    }}
+    .plain-note {{
+      margin-bottom: 14px;
+    }}
     .section h2, .opportunity h3 {{
       margin: 0 0 10px;
     }}
@@ -465,8 +590,8 @@ def render_html(payload: dict[str, Any]) -> str:
   <main>
     <section class="hero">
       <div class="summary-panel">
-        <h1>建议采用 {esc(action_label(primary_action))}，总投入 {pct(summary.get("recommended_total_fraction"))}</h1>
-        <p>目标：{esc(report.get("objective"))}。本报告使用保守版 Kelly，将原始 Kelly、置信度折扣、相关性折扣和总暴露上限分开呈现。</p>
+        <h1>{esc(action_headline(primary_action))}：总投入 {pct(summary.get("recommended_total_fraction"))}</h1>
+        <p>目标：{esc(report.get("objective"))}。先看行动建议，再看计算依据；Full Kelly 是理论值，真正执行看保守建议。</p>
         <div class="metrics">
           {render_metric(capital_label, amount(report.get("capital_base"), resource_unit), "capital base")}
           {render_metric("建议总投入", amount(summary.get("recommended_total_amount"), resource_unit), "recommended")}
@@ -487,6 +612,8 @@ def render_html(payload: dict[str, Any]) -> str:
         <p>生成时间：{esc(generated_at)}</p>
       </aside>
     </section>
+
+    {render_action_plan(report, opportunities, resource_unit, primary_action)}
 
     <section class="section" id="opportunities">
       <h2>机会分配</h2>

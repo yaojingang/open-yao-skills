@@ -158,6 +158,53 @@
       padding: 22px;
       margin-top: 18px;
     }
+    .plain-summary {
+      border-top: 5px solid var(--green);
+    }
+    .plain-lead {
+      display: grid;
+      gap: 8px;
+      padding: 16px;
+      border: 1px solid rgba(30, 127, 92, 0.24);
+      border-radius: 8px;
+      background: rgba(30, 127, 92, 0.08);
+      margin-bottom: 14px;
+    }
+    .plain-lead strong {
+      font-size: 22px;
+    }
+    .plain-lead span {
+      color: var(--muted);
+    }
+    .action-list {
+      display: grid;
+      gap: 12px;
+      padding-left: 0;
+      list-style: none;
+    }
+    .action-list li {
+      display: grid;
+      gap: 5px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .action-list span, .action-list small {
+      color: var(--muted);
+    }
+    .watch-box, .plain-note {
+      display: grid;
+      gap: 5px;
+      border-left: 3px solid var(--gold);
+      padding: 10px 12px;
+      background: #fffdf2;
+      color: var(--muted);
+    }
+    .watch-box strong, .plain-note strong {
+      color: var(--ink);
+    }
+    .plain-note {
+      margin-bottom: 14px;
+    }
     .section h2, .opportunity h3 {
       margin: 0 0 10px;
     }
@@ -281,8 +328,8 @@
   <main>
     <section class="hero">
       <div class="summary-panel">
-        <h1>建议采用 小仓位，总投入 6.2%</h1>
-        <p>目标：Allocate monthly engineering capacity between a retention automation project and an experimental AI triage assistant.。本报告使用保守版 Kelly，将原始 Kelly、置信度折扣、相关性折扣和总暴露上限分开呈现。</p>
+        <h1>先小规模试，不要大规模加码：总投入 6.2%</h1>
+        <p>目标：Allocate monthly engineering capacity between a retention automation project and an experimental AI triage assistant.。先看行动建议，再看计算依据；Full Kelly 是理论值，真正执行看保守建议。</p>
         <div class="metrics">
           
       <div class="metric">
@@ -338,6 +385,33 @@
       </aside>
     </section>
 
+    
+      <section class="section plain-summary" id="plain-summary">
+        <h2>普通人版结论</h2>
+        <div class="plain-lead">
+          <strong>先小规模试，不要大规模加码</strong>
+          <span>本次建议总投入 7.5 engineering-hours，约占可用资源的 6.2%。剩下的资源先保留，不要因为单次机会看起来不错就提前用掉。</span>
+        </div>
+        <ol class="action-list">
+            <li>
+              <strong>Retention Automation: 6.4 engineering-hours (5.3%)</strong>
+              <span>可以小规模开始，重点是验证假设。先按建议上限执行，后续只有在真实数据变好时再加码。</span>
+              <small>理论 Kelly 是 25.0%，但因为置信度是 medium、相关性是 low，执行建议被压到 5.3%。这表示可以试，但不应该按理论值直接加满。</small>
+            </li>
+            
+            <li>
+              <strong>AI Triage Assistant: 1.1 engineering-hours (0.9%)</strong>
+              <span>可以用很小的试验验证判断，但不要把它当成正式投入。这个级别更像买信息，而不是追求收益。</span>
+              <small>理论 Kelly 是 18.0%，但因为置信度是 low、相关性是 unknown，执行建议被压到 0.9%。这表示可以试，但不应该按理论值直接加满。</small>
+            </li>
+            </ol>
+        <div class="watch-box">
+          <strong>什么时候重新计算</strong>
+          <span>如果实际转化、成本、成功率、最差情况损失或机会之间的相关性明显变化，就不要沿用这份比例，重新跑一次。</span>
+        </div>
+      </section>
+    
+
     <section class="section" id="opportunities">
       <h2>机会分配</h2>
       
@@ -349,16 +423,20 @@
                 </div>
                 <span class="pill">小仓位</span>
               </div>
+              <div class="plain-note">
+                <strong>怎么做</strong>
+                <span>可以小规模开始，重点是验证假设。先按建议上限执行，后续只有在真实数据变好时再加码。</span>
+              </div>
               <div class="allocation-grid">
                 
       <div class="bar-row">
-        <div class="bar-label"><span>Full Kelly</span><strong>25.0%</strong></div>
+        <div class="bar-label"><span>理论 Kelly，不建议直接照做</span><strong>25.0%</strong></div>
         <div class="bar-track"><div class="bar-fill raw" style="width:25.00%"></div></div>
       </div>
     
                 
       <div class="bar-row">
-        <div class="bar-label"><span>Conservative Kelly</span><strong>5.3%</strong></div>
+        <div class="bar-label"><span>保守建议，可作为执行上限</span><strong>5.3%</strong></div>
         <div class="bar-track"><div class="bar-fill safe" style="width:5.31%"></div></div>
       </div>
     
@@ -433,16 +511,20 @@
                 </div>
                 <span class="pill">观察或极小试探</span>
               </div>
+              <div class="plain-note">
+                <strong>怎么做</strong>
+                <span>可以用很小的试验验证判断，但不要把它当成正式投入。这个级别更像买信息，而不是追求收益。</span>
+              </div>
               <div class="allocation-grid">
                 
       <div class="bar-row">
-        <div class="bar-label"><span>Full Kelly</span><strong>18.0%</strong></div>
+        <div class="bar-label"><span>理论 Kelly，不建议直接照做</span><strong>18.0%</strong></div>
         <div class="bar-track"><div class="bar-fill raw" style="width:18.00%"></div></div>
       </div>
     
                 
       <div class="bar-row">
-        <div class="bar-label"><span>Conservative Kelly</span><strong>0.9%</strong></div>
+        <div class="bar-label"><span>保守建议，可作为执行上限</span><strong>0.9%</strong></div>
         <div class="bar-track"><div class="bar-fill safe" style="width:0.90%"></div></div>
       </div>
     

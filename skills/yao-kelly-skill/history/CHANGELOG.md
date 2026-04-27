@@ -33,3 +33,11 @@ Append only. Log every package-level change.
 - Assumptions: `Resource allocation reports should support non-currency units such as engineering-hours while preserving the same Kelly sizing logic.`
 - Checks: `python3 scripts/kelly_allocation_report.py --input reports/marketing-budget-brief.json --output reports/marketing-budget-output.json`, `python3 scripts/kelly_allocation_report.py --input reports/engineering-hours-brief.json --output reports/engineering-hours-output.json`, `python3 scripts/generate_html_report.py --input reports/marketing-budget-output.json --output reports/marketing-budget-report.html`, `python3 scripts/generate_html_report.py --input reports/engineering-hours-output.json --output reports/engineering-hours-report.html`, `python3 /Users/laoyao/AI Coding/03-Development/Skills/yao-meta-skill/scripts/validate_skill.py /Users/laoyao/AI Coding/03-Development/Skills/yao-kelly-skill`
 - Next steps: `Add a brief gallery section if more example reports are added.`
+
+## 2026-04-27T14:48:43+08:00
+- Summary: Made HTML reports easier for non-technical readers with plain-language conclusions and action guidance.
+- Reason: The user said the two example reports were still hard to understand and asked for clearer action guidance.
+- Files: `scripts/generate_html_report.py`, `references/output-contract.md`, `reports/example-html-report.html`, `reports/marketing-budget-report.html`, `reports/engineering-hours-report.html`, `history/CHANGELOG.md`
+- Assumptions: `The Kelly math should stay stable while the HTML report explains what to do before showing technical details.`
+- Checks: `python3 scripts/generate_html_report.py --input reports/marketing-budget-output.json --output reports/marketing-budget-report.html`, `python3 scripts/generate_html_report.py --input reports/engineering-hours-output.json --output reports/engineering-hours-report.html`, `python3 scripts/generate_html_report.py --input reports/example-output.json --output reports/example-html-report.html`, `python3 /Users/laoyao/AI Coding/03-Development/Skills/yao-meta-skill/scripts/validate_skill.py /Users/laoyao/AI Coding/03-Development/Skills/yao-kelly-skill`
+- Next steps: `Consider replacing technical scenario-return wording with domain-specific labels in future examples.`

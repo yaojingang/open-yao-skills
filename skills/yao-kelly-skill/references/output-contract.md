@@ -10,6 +10,7 @@ Return one Kelly application report that lets the user act immediately. The pref
 1. `建议动作`
    - one sentence first
    - include `skip / observe-or-tiny-test / small / medium / large`
+   - explain the action in plain language before showing formulas
 2. `建议投入`
    - conservative Kelly fraction
    - translated amount from the stated capital base
@@ -29,8 +30,13 @@ Return one Kelly application report that lets the user act immediately. The pref
 ## HTML report UI rules
 
 - first viewport must show action class, total recommended exposure, capital base, recommended amount, readiness, and exposure cap
+- immediately after the first viewport, include a `普通人版结论` section with:
+  - what to do now
+  - how much to commit
+  - why the recommendation is conservative
+  - when to recalculate
 - repeated opportunities can use cards, but do not put nested cards inside them
-- show full Kelly and conservative Kelly as separate bars so the haircut is visually obvious
+- label full Kelly as theory and conservative Kelly as the execution ceiling so non-technical readers do not over-use the raw number
 - keep tables for scenario probabilities and return multiples
 - include a sticky top bar with `Print / Save PDF`
 - make the page responsive and printable

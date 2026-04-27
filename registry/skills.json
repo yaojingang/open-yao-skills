@@ -1,6 +1,6 @@
 {
   "repo_name": "yao-open-skills",
-  "updated_at": "2026-04-26",
+  "updated_at": "2026-04-27",
   "skills": [
     {
       "slug": "learning-builder",
@@ -94,7 +94,7 @@
     {
       "slug": "yao-kelly-skill",
       "title": "Yao Kelly Skill",
-      "summary": "Turn uncertain investment, betting, and resource-allocation decisions into conservative Kelly sizing reports with readiness thresholds, fractional Kelly, HTML output, and iteration logs.",
+      "summary": "Turn uncertain investment, betting, and resource-allocation decisions into conservative Kelly sizing reports with readiness thresholds, fractional Kelly, plain-language HTML output, and iteration logs.",
       "source_local_path": "/Users/laoyao/AI Coding/03-Development/Skills/yao-kelly-skill",
       "collection_path": "skills/yao-kelly-skill",
       "lifecycle": "active",
@@ -111,8 +111,8 @@
         "reporting",
         "html"
       ],
-      "last_synced_at": "2026-04-26",
-      "updated_at": "2026-04-26"
+      "last_synced_at": "2026-04-27",
+      "updated_at": "2026-04-27"
     },
     {
       "slug": "yao-open-skills-sync",

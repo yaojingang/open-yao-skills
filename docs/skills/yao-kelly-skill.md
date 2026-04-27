@@ -62,6 +62,13 @@ The HTML report is designed as an operational decision artifact. The first viewp
 
 Each opportunity then shows raw full Kelly next to conservative Kelly so the haircut is visible. Scenario tables remain available for auditability.
 
+The latest report format also includes a `普通人版结论` section before the technical details. It explains:
+
+- what to do now
+- how much to commit
+- why the raw Kelly number was reduced
+- when the user should recalculate instead of continuing with the old allocation
+
 ## Example Reports
 
 ### Customer-acquisition budget

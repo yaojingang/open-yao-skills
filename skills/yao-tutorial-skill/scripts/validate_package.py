@@ -28,6 +28,8 @@ class Validator:
         self.check_deps = check_deps
         self.strict = strict
         self.checks: list[Check] = []
+        self.chapter_numbers: list[int] = []
+        self.markdown_image_refs: list[str] = []
 
     def add(self, status: str, message: str) -> None:
         self.checks.append(Check(status, message))
@@ -148,7 +150,9 @@ class Validator:
         else:
             self.warn(f"tutorial.md should have one H1 title; found {h1_count}")
 
-        chapters = re.findall(r"^##\s+第\s*\d+\s*章\b", text, flags=re.M)
+        chapter_matches = list(re.finditer(r"^##\s+第\s*(\d+)\s*章\b", text, flags=re.M))
+        chapters = [match.group(0) for match in chapter_matches]
+        self.chapter_numbers = [int(match.group(1)) for match in chapter_matches]
         if chapters:
             self.pass_(f"Found {len(chapters)} numbered chapters")
         else:
@@ -162,6 +166,7 @@ class Validator:
             self.warn(f"{len(non_decimal)} H3 headings do not use decimal numbering")
 
         images = markdown_images(text)
+        self.markdown_image_refs = images
         if images:
             missing = [image for image in images if is_local_image(image) and not (self.package_dir / image).exists()]
             if missing:
@@ -192,6 +197,12 @@ class Validator:
             self.fail("visual-spec.json must contain a non-empty chapters array")
             return
         self.pass_(f"visual-spec.json contains {len(chapters)} chapter visual specs")
+        visual_ids = {
+            str(chapter.get("id") or f"chapter-{index:02d}")
+            for index, chapter in enumerate(chapters, start=1)
+            if isinstance(chapter, dict)
+        }
+        self.validate_chapter_visual_coverage(chapters, visual_ids)
 
         for index, chapter in enumerate(chapters, start=1):
             if not isinstance(chapter, dict):
@@ -214,6 +225,37 @@ class Validator:
                 self.validate_png_size(png, visual_id)
             else:
                 self.warn(f"Missing PNG screenshot for {visual_id}; SVG fallback may be used")
+
+    def validate_chapter_visual_coverage(self, chapters: list[object], visual_ids: set[str]) -> None:
+        if not self.chapter_numbers:
+            return
+
+        expected_ids = [chapter_visual_id(number) for number in self.chapter_numbers]
+        missing_specs = [visual_id for visual_id in expected_ids if visual_id not in visual_ids]
+        extra_specs = sorted(visual_ids - set(expected_ids))
+
+        if len(chapters) == len(self.chapter_numbers):
+            self.pass_("Visual spec count matches numbered chapter count")
+        else:
+            self.fail(
+                f"Visual spec count does not match numbered chapters: "
+                f"{len(chapters)} specs for {len(self.chapter_numbers)} chapters"
+            )
+
+        if missing_specs:
+            self.fail(f"Missing visual specs for chapters: {', '.join(missing_specs)}")
+        else:
+            self.pass_("Every numbered chapter has a matching visual spec ID")
+
+        if extra_specs:
+            self.warn(f"Visual spec has extra IDs not matched to numbered chapters: {', '.join(extra_specs)}")
+
+        embedded_ids = local_image_stems(self.markdown_image_refs)
+        missing_embeds = [visual_id for visual_id in expected_ids if visual_id not in embedded_ids]
+        if missing_embeds:
+            self.fail(f"Tutorial markdown is missing embedded visuals for: {', '.join(missing_embeds)}")
+        else:
+            self.pass_("Every numbered chapter has an embedded visual reference")
 
     def validate_png_size(self, png: Path, visual_id: str) -> None:
         try:
@@ -367,11 +409,37 @@ def read_text(path: Path) -> str:
 
 
 def markdown_images(markdown: str) -> list[str]:
-    return [match.group(2).strip() for match in re.finditer(r"!\[([^\]]*)\]\(([^)]+)\)", markdown)]
+    return [
+        normalize_markdown_target(match.group(2))
+        for match in re.finditer(r"!\[([^\]]*)\]\(([^)]+)\)", markdown)
+    ]
+
+
+def normalize_markdown_target(target: str) -> str:
+    target = target.strip()
+    if target.startswith("<"):
+        end = target.find(">")
+        if end != -1:
+            return target[1:end].strip()
+    return target.split()[0].strip("\"'")
 
 
 def is_local_image(path: str) -> bool:
     return not re.match(r"^[a-zA-Z][a-zA-Z0-9+.-]*:", path)
+
+
+def local_image_stems(paths: list[str]) -> set[str]:
+    stems: set[str] = set()
+    for path in paths:
+        if not is_local_image(path):
+            continue
+        clean_path = path.split("#", 1)[0].split("?", 1)[0]
+        stems.add(Path(clean_path).stem)
+    return stems
+
+
+def chapter_visual_id(number: int) -> str:
+    return f"chapter-{number:02d}"
 
 
 def parse_args() -> argparse.Namespace:

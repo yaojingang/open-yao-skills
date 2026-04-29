@@ -121,7 +121,21 @@ def postprocess_html(target: Path, document_date: str | None) -> None:
     if document_date and 'class="doc-date"' not in html:
         date_html = f'\n<p class="doc-date">更新日期：{escape(document_date)}</p>'
         html = re.sub(r"(<h1\b[^>]*>.*?</h1>)", rf"\1{date_html}", html, count=1, flags=re.S)
+    html = wrap_report_shell(html)
     target.write_text(html, encoding="utf-8")
+
+
+def wrap_report_shell(html: str) -> str:
+    if 'class="report-shell"' in html:
+        return html
+
+    toc_pattern = re.compile(r"(<body\b[^>]*>\s*)(<nav\b[^>]*id=\"TOC\"[^>]*>.*?</nav>\s*)", re.S)
+    if toc_pattern.search(html):
+        html = toc_pattern.sub(r'\1<div class="report-shell">\n\2<main class="article-body">\n', html, count=1)
+        return re.sub(r"\s*</body>", "\n</main>\n</div>\n</body>", html, count=1)
+
+    html = re.sub(r"(<body\b[^>]*>)", r'\1\n<div class="report-shell report-shell--no-toc">\n<main class="article-body">', html, count=1)
+    return re.sub(r"\s*</body>", "\n</main>\n</div>\n</body>", html, count=1)
 
 
 def insert_markdown_date(markdown: str, document_date: str) -> str:

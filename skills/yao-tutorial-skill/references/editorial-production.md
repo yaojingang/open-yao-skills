@@ -13,7 +13,7 @@ Use these ideas as constraints, not decoration.
 Default to a `frontend-slides`-first teaching report, not a decorative paper artifact:
 
 - every visible element must serve real tutorial content or navigation
-- use a clean content grid: sticky text navigation on the left, reading column on the right
+- use a clean centered report shell: sticky text navigation on the left, reading column on the right, and the two columns centered together as one layout
 - use `clamp()` for major type and spacing
 - use strong typographic hierarchy instead of decorative frames
 - use one accent color, preferably ink blue `#1B365D`, under 5 percent of the page
@@ -92,13 +92,15 @@ The final HTML report must feel like a designed reading artifact:
 
 - Include a table of contents generated from headings.
 - Style `nav#TOC` as a plain anchor-text menu, not as a decorative card.
-- On desktop, make the menu sticky on the left side while content scrolls.
-- Keep the title area compact: H1, date line, one divider, then opening text. A long table of contents must be fixed/sticky outside the normal content flow so it cannot create a large blank area below the title.
+- On desktop, place `nav#TOC` and the article body inside one centered `report-shell` grid. The menu and reading column should feel like one balanced container, not two independently positioned elements.
+- Make the menu sticky on the left side while content scrolls.
+- Keep the title area compact: H1, date line, one divider, then opening text. A long table of contents must stay outside the article body so it cannot create a large blank area below the title.
 - On mobile, make the menu a compact sticky top block.
 - Highlight hierarchy with chapter numbers, short headings, and visible source/caption rhythm.
 - Use textbook-style numbering: `第1章 章节标题` for H2 and `1.1 小节标题` for H3. The same visible numbering must carry through HTML, PDF, and DOCX.
 - Use chapter-aware visual captions when helpful, such as `图 1.1：...` for the first figure in chapter 1.
 - Keep the reading column between `700px` and `860px`.
+- Keep the combined desktop layout width restrained: table of contents around `196px-252px`, a responsive gap, and the reading column around `820px`, centered within the viewport.
 - Use responsive type with `clamp()`.
 - Use `scroll-margin-top` on headings so anchor jumps do not hide content behind sticky chrome.
 - For print/PDF, avoid sticky UI chrome; PDF should read like a clean document.
@@ -162,6 +164,7 @@ Before delivery, check:
 - HTML tables do not overflow, collapse awkwardly, or squeeze long Chinese text into unreadable columns
 - Word and PDF have no visible headers or footers
 - HTML has a sticky anchor menu
+- HTML desktop layout centers the table of contents and reading column together as one `report-shell`, instead of pinning the menu to the viewport edge
 - HTML has no duplicate visible title
 - PDF opens and images are visible
 - DOCX opens and contains embedded images

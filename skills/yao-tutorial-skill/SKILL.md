@@ -77,7 +77,7 @@ Use `templates/topic-brief-template.json` when the request is thin or the projec
     - the tutorial length matches the requested or default word-count range
     - the tutorial opens with a concrete hook and avoids unexplained jargon
     - examples and exercises match the beginner audience
-    - HTML has a fixed/sticky anchor-text menu for chapter navigation, but the title, date, and opening text appear without a large blank area
+    - HTML uses a centered report shell where the left anchor-text menu and right reading column behave as one balanced layout, with no large blank area below the title
     - DOCX, PDF, HTML, and visual HTML files exist and follow the editorial production system when requested
 
 ## Output Contract

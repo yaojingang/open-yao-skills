@@ -66,7 +66,7 @@ If the environment lacks these tools:
 - In HTML, render chapter images as clean figures: no browser-default figure indentation, no extra border when the image already has an artboard frame, and no duplicate auto/generated figcaption.
 - Chapter headings must stay visible in all formats as `第1章 标题`; chapter subheadings must stay visible as `1.1 标题`, `1.2 标题`.
 - In HTML, wrap tables in a scroll-safe table container so wide or dense tables stay readable.
-- HTML must include a plain fixed/sticky `nav#TOC` anchor menu that remains functional while scrolling, but the TOC must not participate in the title/content grid row; a long TOC must never push the first paragraphs below the fold.
+- HTML must include a plain sticky `nav#TOC` anchor menu that remains functional while scrolling. The exporter should wrap `nav#TOC` and the article in a centered `report-shell`, so the menu and reading column align as one balanced layout. The TOC must stay outside the article body; a long TOC must never push the first paragraphs below the fold.
 - Put a compact document date directly below the visible H1 title in HTML, PDF, and DOCX. The date is content metadata, not a browser print footer.
 - Do not create duplicate visible title blocks; the markdown `H1` is the only visible title, with one optional date line below it.
 - PDF should hide sticky UI chrome and render as a clean document.
@@ -85,6 +85,7 @@ If the environment lacks these tools:
 - HTML is standalone or has correctly linked local assets.
 - HTML has a sticky anchor-text table of contents when the tutorial is longer than three chapters.
 - HTML first viewport shows the title, date, and opening text without a large blank area below the title.
+- HTML desktop viewport centers the combined `nav#TOC + article-body` layout, leaving visually balanced outer margins.
 - HTML does not contain duplicated title blocks or visible generation/helper labels.
 - Links are clickable in exported files when the format supports links.
 - No chapter is missing its visual.

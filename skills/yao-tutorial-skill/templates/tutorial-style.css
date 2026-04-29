@@ -11,6 +11,8 @@
   --toc-width: clamp(196px, 19vw, 252px);
   --reading-width: 820px;
   --page-gap: clamp(28px, 4vw, 56px);
+  --shell-pad-x: clamp(18px, 3vw, 44px);
+  --layout-width: calc(var(--toc-width) + var(--page-gap) + var(--reading-width));
   --body-size: clamp(16px, 1.05vw, 18px);
   --small-size: clamp(12px, 0.85vw, 14px);
   --h1-size: clamp(2rem, 4.2vw, 3.55rem);
@@ -30,9 +32,8 @@ html {
 }
 
 body {
-  max-width: var(--reading-width);
-  margin: 0 auto;
-  padding: clamp(32px, 5vw, 72px) clamp(18px, 4vw, 44px) 80px;
+  margin: 0;
+  padding: 0;
   color: var(--ink);
   font-family: "Noto Sans SC", "Source Han Sans SC", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
   font-size: var(--body-size);
@@ -40,11 +41,30 @@ body {
   letter-spacing: 0;
 }
 
+.report-shell {
+  display: grid;
+  grid-template-columns: var(--toc-width) minmax(0, var(--reading-width));
+  column-gap: var(--page-gap);
+  align-items: start;
+  width: min(calc(100% - (var(--shell-pad-x) * 2)), var(--layout-width));
+  margin: 0 auto;
+  padding: clamp(32px, 5vw, 72px) 0 80px;
+}
+
+.report-shell--no-toc {
+  display: block;
+  max-width: var(--reading-width);
+}
+
+.article-body {
+  min-width: 0;
+  max-width: var(--reading-width);
+}
+
 nav#TOC {
-  position: fixed;
+  position: sticky;
   top: clamp(32px, 5vw, 72px);
-  left: max(20px, calc(50vw - (var(--reading-width) / 2) - var(--page-gap) - var(--toc-width)));
-  width: var(--toc-width);
+  width: auto;
   max-height: calc(100vh - 48px);
   overflow: auto;
   padding: 2px 0 2px 14px;
@@ -297,9 +317,17 @@ hr {
 }
 
 @media (max-width: 980px) {
-  body {
+  .report-shell,
+  .report-shell--no-toc {
     display: block;
     max-width: var(--reading-width);
+    width: auto;
+    margin: 0 auto;
+    padding: clamp(24px, 5vw, 48px) clamp(18px, 4vw, 44px) 72px;
+  }
+
+  .article-body {
+    max-width: none;
   }
 
   nav#TOC {
@@ -317,7 +345,8 @@ hr {
 }
 
 @media (max-width: 640px) {
-  body {
+  .report-shell,
+  .report-shell--no-toc {
     padding: 22px 16px 56px;
   }
 
@@ -355,6 +384,16 @@ hr {
     padding: 0;
     font-size: 10pt;
     line-height: 1.52;
+  }
+
+  .report-shell,
+  .report-shell--no-toc,
+  .article-body {
+    display: block;
+    width: auto;
+    max-width: none;
+    margin: 0;
+    padding: 0;
   }
 
   nav#TOC {

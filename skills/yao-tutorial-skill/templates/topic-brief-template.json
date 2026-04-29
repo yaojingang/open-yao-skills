@@ -1,0 +1,48 @@
+{
+  "topic": "",
+  "audience": {
+    "level": "beginner",
+    "role": "",
+    "prior_knowledge": "",
+    "target_outcome": ""
+  },
+  "language": "match user request",
+  "scope": {
+    "desired_length": "complete tutorial",
+    "chapter_count": "auto",
+    "time_budget": "",
+    "must_include": [],
+    "avoid": []
+  },
+  "research": {
+    "source_layers": [
+      "x.com",
+      "papers",
+      "authoritative sharing sites",
+      "github"
+    ],
+    "required_domains": [],
+    "forbidden_domains": [],
+    "freshness_requirement": "verify current facts before writing"
+  },
+  "visuals": {
+    "one_visual_per_chapter": true,
+    "preferred_types": [
+      "flow",
+      "layer",
+      "comparison",
+      "cycle",
+      "mindmap",
+      "matrix"
+    ],
+    "style_notes": "clear, instructional, screenshot-friendly"
+  },
+  "outputs": [
+    "markdown",
+    "docx",
+    "pdf",
+    "html",
+    "visual-html"
+  ],
+  "citation_style": "inline source IDs plus source appendix"
+}

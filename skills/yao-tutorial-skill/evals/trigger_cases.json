@@ -1,0 +1,21 @@
+{
+  "recommended_threshold": 0.34,
+  "should_trigger": [
+    "Use X.com, papers, GitHub repos, and authoritative blogs to build a beginner tutorial on retrieval augmented generation, with diagrams for every chapter and PDF/Word/HTML exports.",
+    "I will give you any topic. Research theory, practice, cases, and code examples, then create a textbook-style tutorial for beginners.",
+    "Create a Chinese beginner guide to AI agents with source citations, an outline first, visual HTML diagrams per chapter, textbook-style headings, and final docx/pdf/html files.",
+    "把这个主题做成5000到1万字的高审美教程，要求每章有清晰配图，章节标题采用第1章和1.1这种格式，HTML有固定锚文本目录，并导出Word和PDF。"
+  ],
+  "should_not_trigger": [
+    "Explain RAG in five bullets.",
+    "Convert this finished markdown file to a PDF.",
+    "Design a standalone interactive diagram page with no tutorial text.",
+    "Write an SEO blog post about AI agents without source research."
+  ],
+  "near_neighbor": [
+    "Build a personalized study guide from a learner profile.",
+    "Research this topic and summarize links only.",
+    "Make a course landing page.",
+    "Create a PowerPoint deck from this tutorial."
+  ]
+}

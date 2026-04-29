@@ -1,0 +1,24 @@
+interface:
+  display_name: "Yao Tutorial Skill"
+  short_description: "Research any topic and build a polished beginner tutorial with chapter visuals and DOCX/PDF/HTML exports"
+  default_prompt: "Use $yao-tutorial-skill to research this topic across X.com, papers, authoritative sources, and GitHub, then create a 5000-10000 Chinese-character beginner tutorial with frontend-slides-first layout, crisp per-chapter visuals, textbook-style headings such as 第1章 and 1.1, a plain sticky-anchor HTML report, and Word/PDF/HTML exports."
+compatibility:
+  canonical_format: "agent-skills"
+  adapter_targets:
+    - "openai"
+    - "claude"
+    - "generic"
+  activation:
+    mode: "manual"
+    paths: []
+  execution:
+    context: "inline"
+    shell: "bash"
+  trust:
+    source_tier: "local"
+    remote_inline_execution: "forbid"
+    remote_metadata_policy: "allow-metadata-only"
+  degradation:
+    openai: "metadata-adapter"
+    claude: "neutral-source-plus-adapter"
+    generic: "neutral-source"

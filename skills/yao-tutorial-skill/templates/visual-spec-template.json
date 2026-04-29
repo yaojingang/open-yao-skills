@@ -1,0 +1,59 @@
+{
+  "title": "Tutorial Chapter Visual Pack",
+  "theme": {
+    "accent": "#1f4e79",
+    "accent2": "#1f4e79",
+    "ink": "#111827",
+    "muted": "#5f6673",
+    "surface": "#f8f6f1",
+    "border": "#d9d6cc",
+    "paper": "#ffffff"
+  },
+  "board_style": {
+    "layout": "sticky-rail-canvas",
+    "aspect_ratio": "16:9",
+    "visual_system": "frontend-slides-first canvas board"
+  },
+  "chapters": [
+    {
+      "id": "chapter-01",
+      "title": "The First Mental Model",
+      "diagram_type": "flow",
+      "layout_note": "A flow is the clearest grammar because this chapter teaches a transformation sequence.",
+      "summary": "Show the beginner path from a confusing input to a usable mental model.",
+      "nodes": [
+        {
+          "label": "Raw topic",
+          "detail": "What the learner sees first"
+        },
+        {
+          "label": "Key question",
+          "detail": "The confusion to resolve"
+        },
+        {
+          "label": "Mental model",
+          "detail": "A simpler structure"
+        },
+        {
+          "label": "First example",
+          "detail": "A visible result"
+        }
+      ],
+      "caption": "A beginner learns faster when the first chapter turns confusion into one usable model."
+    },
+    {
+      "id": "chapter-02",
+      "title": "How The Pieces Fit",
+      "diagram_type": "layer",
+      "summary": "Show the topic as stacked levels so the learner can place new terms.",
+      "nodes": [
+        "User goal",
+        "Workflow",
+        "Core concepts",
+        "Tools or implementation",
+        "Tradeoffs"
+      ],
+      "caption": "The layers separate what the learner wants from how the system works."
+    }
+  ]
+}

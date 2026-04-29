@@ -117,12 +117,22 @@ def export_html(
 
 def postprocess_html(target: Path, document_date: str | None) -> None:
     html = target.read_text(encoding="utf-8")
-    html = re.sub(r"(?<!<div class=\"table-wrap\">)(<table>.*?</table>)", r'<div class="table-wrap">\1</div>', html, flags=re.S)
+    html = wrap_html_tables(html)
     if document_date and 'class="doc-date"' not in html:
         date_html = f'\n<p class="doc-date">更新日期：{escape(document_date)}</p>'
         html = re.sub(r"(<h1\b[^>]*>.*?</h1>)", rf"\1{date_html}", html, count=1, flags=re.S)
     html = wrap_report_shell(html)
     target.write_text(html, encoding="utf-8")
+
+
+def wrap_html_tables(html: str) -> str:
+    def replace(match: re.Match[str]) -> str:
+        prefix = html[max(0, match.start() - 120):match.start()]
+        if 'class="table-wrap"' in prefix:
+            return match.group(0)
+        return f'<div class="table-wrap">{match.group(0)}</div>'
+
+    return re.sub(r"<table\b[^>]*>.*?</table>", replace, html, flags=re.S | re.I)
 
 
 def wrap_report_shell(html: str) -> str:

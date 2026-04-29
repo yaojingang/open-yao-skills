@@ -1,7 +1,7 @@
 interface:
   display_name: "Yao Tutorial Skill"
   short_description: "Research any topic and build a polished beginner tutorial with chapter visuals and DOCX/PDF/HTML exports"
-  default_prompt: "Use $yao-tutorial-skill to research this topic across X.com, papers, authoritative sources, and GitHub, then create a 5000-10000 Chinese-character beginner tutorial with frontend-slides-first layout, crisp per-chapter visuals, textbook-style headings such as 第1章 and 1.1, a plain sticky-anchor HTML report, and Word/PDF/HTML exports."
+  default_prompt: "Use $yao-tutorial-skill to turn my topic and any supplied notes, URLs, files, papers, repos, or style references into a source-backed beginner tutorial. Treat user-provided material as the tutorial spine when it is strong enough; add X.com, papers, authoritative sources, and GitHub research only for gaps, verification, freshness, and examples. Create a 5000-10000 Chinese-character tutorial with frontend-slides-first layout, crisp per-chapter visuals, textbook-style headings such as 第1章 and 1.1, a centered sticky-anchor HTML report, Word/PDF/HTML exports, and run package validation before delivery."
 compatibility:
   canonical_format: "agent-skills"
   adapter_targets:

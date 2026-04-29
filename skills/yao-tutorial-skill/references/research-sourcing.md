@@ -2,6 +2,19 @@
 
 Use this guide to gather enough evidence to teach the topic without turning research into an endless crawl.
 
+Read `references/input-adaptation.md` before applying this guide. External research should adapt to the strength of user-provided material.
+
+## User Material First
+
+If the user supplies notes, URLs, files, drafts, papers, repos, or named references:
+
+1. Register those items first in `research/user-materials-register.md` with `U` source IDs.
+2. Extract the user's intended angle, examples, terms, and constraints before opening new sources.
+3. Decide whether the packet is rich, moderate, or thin.
+4. Build the external search plan only around missing support, freshness, contradiction checks, and source diversity.
+
+Do not treat user material as automatically factual. Treat it as primary intent and candidate evidence. Verify factual claims when they matter.
+
 ## Source Ladder
 
 1. Primary authority: official docs, standards, specifications, maintainer docs, regulator guidance, university or lab pages.
@@ -14,12 +27,16 @@ Do not give social posts the same weight as papers, official docs, or working co
 
 ## Minimum Research Set
 
-For a full tutorial, aim for `10-18` source records:
+For a full tutorial with thin user material, aim for `10-18` external source records:
 
 - `2-5` papers or paper-platform records
 - `2-5` GitHub records
 - `2-4` official or first-party authority records
 - `2-5` practitioner discussion or case records, including X.com when accessible
+
+For moderate user material, aim for `6-12` external records focused on gaps.
+
+For rich user material, aim for `3-8` external records focused on verification, freshness, implementation evidence, and counterexamples.
 
 For niche topics, use fewer sources but state the gap. For high-stakes topics, broaden primary sources and avoid unsupported claims.
 
@@ -93,12 +110,15 @@ Each source record should include:
 - `key_takeaway`
 - `limits_or_cautions`
 
+Use a separate `research/user-materials-register.md` for user material. User material records should include `user_priority` and should not be mixed with external authority scoring.
+
 ## Evidence Map
 
 Before drafting, map each chapter to source IDs:
 
 - chapter title
 - learner question answered
+- user material IDs that define the angle, example, or voice
 - source IDs supporting theory
 - source IDs supporting example or case
 - visual idea

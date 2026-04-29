@@ -7,6 +7,17 @@
     "target_outcome": ""
   },
   "language": "match user request",
+  "user_materials": {
+    "notes": [],
+    "urls": [],
+    "files": [],
+    "named_references": [],
+    "must_use": [],
+    "nice_to_use": [],
+    "do_not_use": [],
+    "style_references": [],
+    "sufficiency_tier": "auto: rich | moderate | thin"
+  },
   "scope": {
     "desired_length": "complete tutorial",
     "chapter_count": "auto",
@@ -15,6 +26,7 @@
     "avoid": []
   },
   "research": {
+    "priority_rule": "use user-provided material as the tutorial spine when it is strong enough; add external sources for verification, gaps, freshness, and counterexamples",
     "source_layers": [
       "x.com",
       "papers",
@@ -23,7 +35,8 @@
     ],
     "required_domains": [],
     "forbidden_domains": [],
-    "freshness_requirement": "verify current facts before writing"
+    "freshness_requirement": "verify current facts before writing",
+    "external_research_level": "auto: gap-check | targeted | full-source-ladder"
   },
   "visuals": {
     "one_visual_per_chapter": true,

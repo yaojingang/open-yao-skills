@@ -2,6 +2,8 @@
 
 The tutorial must feel like a guided learning path for a beginner, not a research report.
 
+Read `references/input-adaptation.md` before outlining. If the user supplied notes, drafts, URLs, or examples, the outline should preserve the user's core angle and only add external structure where it improves teaching quality.
+
 ## Outline Shape
 
 Use this structure unless the topic clearly needs another order:
@@ -18,6 +20,27 @@ Use this structure unless the topic clearly needs another order:
 10. Source appendix and next learning path.
 
 For a short tutorial, use `3-5` chapters. For a textbook-like guide, use `6-10` chapters, but keep each chapter scoped to one learner question.
+
+## User-Material Adaptation
+
+When the user gives substantial material:
+
+- start the outline from the user's strongest claim, case, or teaching angle
+- keep user examples as the running example when they are clear enough
+- convert loose notes into chapter questions instead of replacing them with generic chapters
+- add external theory only where it helps the learner understand or verify the user's point
+- mark unsupported user claims as claims to verify before drafting
+
+When the user gives only a topic:
+
+- use the default beginner path
+- choose one running example during research
+- make the first chapter solve the most common beginner confusion
+
+When the user gives URLs or named references:
+
+- create at least one chapter, section, visual, or source note that explains how those references matter
+- avoid turning the tutorial into a link summary; the references should become teaching structure
 
 ## Length Contract
 
@@ -100,6 +123,14 @@ For every important source-backed claim:
 4. Cite the source ID.
 5. Mention limits when the source is narrow, old, or context-specific.
 
+For user-provided claims:
+
+1. Preserve the intent.
+2. Verify or qualify the factual part.
+3. Keep the user's example when it teaches well.
+4. Cite the user material ID such as `[U1]` when the idea comes from supplied material.
+5. Add external source IDs when the claim needs authority beyond the user's note.
+
 ## Exercises
 
 Include a mix of:
@@ -118,5 +149,6 @@ Avoid exercises that require tools or accounts the learner has not been prepared
 - The chapter order has no hidden prerequisites.
 - Every chapter has a visual and a source-backed purpose.
 - The tutorial includes theory, practice, and case material.
+- User-provided material has been used as the spine when it is strong enough, and external material is added only where it improves support.
 - The source appendix is audit-friendly.
 - The conclusion gives the next concrete learning step.

@@ -78,6 +78,14 @@ If the environment lacks these tools:
 
 ## Export Quality Gate
 
+Run the package validator before final delivery:
+
+```bash
+python3 /path/to/yao-tutorial-skill/scripts/validate_package.py . --formats docx html pdf --check-deps
+```
+
+Use `--formats html` or another subset when the user requested fewer formats.
+
 - DOCX opens and contains images.
 - PDF opens and images are visible.
 - PDF has no visible header, footer, local file URL, browser date, or browser page counter.

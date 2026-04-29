@@ -17,6 +17,8 @@ Choose the simplest visual that explains the chapter:
 - `network`: nodes and relationships
 - `timeline`: chronological change
 
+If a chapter needs a visual grammar outside these types, create a bespoke SVG/HTML visual rather than forcing the idea into the nearest template. Keep the same artboard, typography, color, caption, and screenshot rules.
+
 ## Visual Spec
 
 Create `visuals/visual-spec.json` before generating graphics. Use `templates/visual-spec-template.json` as a starting point.
@@ -100,6 +102,7 @@ Fallback path:
 
 - If screenshots fail, embed the local SVG path in markdown and keep `visuals/index.html` as the visual deliverable.
 - If a diagram is too dense, reduce nodes before styling.
+- If the built-in renderer cannot express the chapter's core relationship, manually create a custom SVG or HTML artboard in `visuals/`, document the choice in `visual-spec.json`, and capture it with the same screenshot workflow.
 
 ## Visual Quality Gate
 
@@ -110,6 +113,7 @@ Fallback path:
 - The visual can stand alone in PDF and Word exports.
 - The visual is referenced in the chapter text.
 - The visual uses source-backed entities when it represents facts, architecture, or a published model.
+- Visuals based on user-provided examples should cite or trace to `U` source IDs in the chapter text or caption.
 - PNG screenshots are generated at `2x` scale unless the user asks for lighter files.
 - Screenshots should not contain visible browser gutters, pure-white bottom strips, or large unused artboard areas.
 - The bottom edge of the visual artboard must be visible in the PNG; if the last rows match the page background instead of the artboard/border, recapture before exporting.

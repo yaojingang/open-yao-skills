@@ -4,7 +4,8 @@
     "Use X.com, papers, GitHub repos, and authoritative blogs to build a beginner tutorial on retrieval augmented generation, with diagrams for every chapter and PDF/Word/HTML exports.",
     "I will give you any topic. Research theory, practice, cases, and code examples, then create a textbook-style tutorial for beginners.",
     "Create a Chinese beginner guide to AI agents with source citations, an outline first, visual HTML diagrams per chapter, textbook-style headings, and final docx/pdf/html files.",
-    "把这个主题做成5000到1万字的高审美教程，要求每章有清晰配图，章节标题采用第1章和1.1这种格式，HTML有固定锚文本目录，并导出Word和PDF。"
+    "把这个主题做成5000到1万字的高审美教程，要求每章有清晰配图，章节标题采用第1章和1.1这种格式，HTML有固定锚文本目录，并导出Word和PDF。",
+    "我给你一批资料、链接和参考项目，你以这些资料为核心，再补充必要的论文、GitHub和权威资料，生成一套教程输出物。"
   ],
   "should_not_trigger": [
     "Explain RAG in five bullets.",

@@ -1,0 +1,39 @@
+{
+  "topic": "Python 从入门到精通",
+  "audience": {
+    "level": "beginner",
+    "role": "想系统学习 Python 的零基础或转语言学习者",
+    "prior_knowledge": "会使用电脑和命令行更好，但不是必要前提",
+    "target_outcome": "能理解 Python 基础语法、写小脚本、组织小项目、使用第三方库、编写测试，并知道继续深入的方向"
+  },
+  "language": "zh-CN",
+  "scope": {
+    "desired_length": "tutorial sample",
+    "chapter_count": 6,
+    "must_include": [
+      "环境与运行方式",
+      "基础语法",
+      "函数和模块",
+      "数据结构与文件",
+      "虚拟环境和第三方库",
+      "测试与小项目"
+    ],
+    "avoid": [
+      "承诺一篇教程真正覆盖所有高级领域",
+      "过早堆砌框架名词",
+      "只列语法清单"
+    ]
+  },
+  "research": {
+    "user_materials": "none supplied",
+    "external_research_level": "full-source-ladder",
+    "priority_rule": "official Python documentation first, then packaging/testing docs, then implementation and research context"
+  },
+  "outputs": [
+    "markdown",
+    "visual-html",
+    "html",
+    "docx",
+    "pdf"
+  ]
+}

@@ -1,0 +1,130 @@
+{
+  "title": "英语自由路线图配图",
+  "theme": {
+    "accent": "#1f4e79",
+    "accent2": "#6f7682",
+    "ink": "#111827",
+    "muted": "#5f6673",
+    "surface": "#f5f3ec",
+    "border": "#d9d4c8",
+    "paper": "#fbfaf6",
+    "canvas": "#f1eee6",
+    "node": "#fbfaf6",
+    "node_alt": "#f7f4ec",
+    "grid": "#e7e1d6",
+    "strong_border": "#c9c1b4"
+  },
+  "board_style": {
+    "layout": "sticky-rail-canvas",
+    "aspect_ratio": "16:9",
+    "visual_system": "frontend-slides-first canvas board"
+  },
+  "chapters": [
+    {
+      "id": "chapter-01",
+      "title": "英语不是科目，而是内容入口",
+      "diagram_type": "layer",
+      "summary": "把英语学习从分数目标升级为内容、工具和判断入口。",
+      "nodes": [
+        {"label": "判断位", "detail": "选择问题与方向"},
+        {"label": "全球内容", "detail": "课程 社区 工具"},
+        {"label": "英语自由", "detail": "直接进入"},
+        {"label": "输入环境", "detail": "长期积累"},
+        {"label": "校内英语", "detail": "基础但不是终点"}
+      ],
+      "caption": "英语自由的终点不是多会几道题，而是能直接进入更大的内容世界。"
+    },
+    {
+      "id": "chapter-02",
+      "title": "从兴趣切入",
+      "diagram_type": "flow",
+      "summary": "用孩子已有兴趣降低认知负担，先形成稳定入口。",
+      "nodes": [
+        {"label": "强兴趣", "detail": "孩子愿意重复"},
+        {"label": "熟悉场景", "detail": "先懂发生了什么"},
+        {"label": "英文替换", "detail": "同主题迁移"},
+        {"label": "轻复述", "detail": "说出大意"},
+        {"label": "两周验证", "detail": "看真实信号"}
+      ],
+      "caption": "好的启动点不是最专业的材料，而是孩子愿意反复进入的英文入口。"
+    },
+    {
+      "id": "chapter-03",
+      "title": "可理解输入循环",
+      "diagram_type": "cycle",
+      "summary": "音画同步、重复观看和适度挑战共同形成有效输入。",
+      "center": "可理解输入",
+      "nodes": [
+        {"label": "音画相关", "detail": "画面帮理解"},
+        {"label": "难度合适", "detail": "能猜到大意"},
+        {"label": "高频重复", "detail": "模式被识别"},
+        {"label": "大意复述", "detail": "检查理解"},
+        {"label": "小幅升级", "detail": "保持增长"}
+      ],
+      "caption": "视频有用的前提，是它能变成可理解输入，而不是单纯增加屏幕时间。"
+    },
+    {
+      "id": "chapter-04",
+      "title": "从听懂到读懂",
+      "diagram_type": "flow",
+      "summary": "用图文材料桥接，把听力词汇逐步转成阅读能力。",
+      "nodes": [
+        {"label": "听力词汇", "detail": "在场景中懂"},
+        {"label": "图文桥接", "detail": "声音对文字"},
+        {"label": "分级阅读", "detail": "难度缓坡"},
+        {"label": "原版内容", "detail": "进入真实材料"},
+        {"label": "复述整理", "detail": "确认读懂"}
+      ],
+      "caption": "阅读不是突然开始硬啃原版书，而是把听过、见过、懂过的内容文字化。"
+    },
+    {
+      "id": "chapter-05",
+      "title": "让英语成为工具",
+      "diagram_type": "flow",
+      "summary": "输出从低门槛开始，逐步进入搜索、笔记、表达和创作。",
+      "nodes": [
+        {"label": "三句话", "detail": "最低输出"},
+        {"label": "模板笔记", "detail": "降低门槛"},
+        {"label": "英文搜索", "detail": "解决问题"},
+        {"label": "短评摘要", "detail": "组织观点"},
+        {"label": "小作品", "detail": "真实表达"}
+      ],
+      "caption": "自由不是只输入，孩子要能用英语完成一个真实的小任务。"
+    },
+    {
+      "id": "chapter-06",
+      "title": "阶段判断矩阵",
+      "diagram_type": "matrix",
+      "summary": "根据兴趣和理解决定升级、保持、换入口或降难度。",
+      "quadrants": [
+        {"label": "升级", "detail": "高兴趣 高理解"},
+        {"label": "保持辅助", "detail": "高兴趣 低理解"},
+        {"label": "换入口", "detail": "低兴趣 高理解"},
+        {"label": "降难度", "detail": "低兴趣 低理解"}
+      ],
+      "caption": "阶段判断决定路径质量：过早升级会挫败，过迟停留会浪费。"
+    },
+    {
+      "id": "chapter-07",
+      "title": "从英语自由到判断位",
+      "diagram_type": "network",
+      "summary": "把语言能力接到内容选择、问题定义、资源调度和行动复盘。",
+      "nodes": [
+        {"label": "英语自由", "detail": "入口层"},
+        {"label": "全球内容", "detail": "素材层"},
+        {"label": "问题定义", "detail": "判断层"},
+        {"label": "资源调度", "detail": "行动层"},
+        {"label": "复盘迭代", "detail": "成长层"},
+        {"label": "判断位", "detail": "长期上限"}
+      ],
+      "edges": [
+        ["英语自由", "全球内容"],
+        ["全球内容", "问题定义"],
+        ["问题定义", "资源调度"],
+        ["资源调度", "复盘迭代"],
+        ["复盘迭代", "判断位"]
+      ],
+      "caption": "语言只是入口，能否用内容做判断和行动，才决定长期上限。"
+    }
+  ]
+}

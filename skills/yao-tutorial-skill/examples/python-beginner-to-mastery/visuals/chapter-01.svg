@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-label="先把 Python 跑起来" font-family="Noto Sans SC, Source Han Sans SC, PingFang SC, system-ui, sans-serif">
+  <defs>
+    <filter id="soft-shadow" x="-8%" y="-12%" width="116%" height="128%">
+      <feDropShadow dx="0" dy="5" stdDeviation="7" flood-color="#111827" flood-opacity="0.08"/>
+    </filter>
+    <pattern id="dot-grid" width="28" height="28" patternUnits="userSpaceOnUse">
+      <circle cx="1.5" cy="1.5" r="1.2" fill="#e8e4da" opacity="0.85"/>
+    </pattern>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M2,2 L10,6 L2,10" fill="none" stroke="#1b365d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </marker>
+  </defs>
+  <rect width="1200" height="675" fill="#f8f6f1"/>
+  <rect x="1" y="1" width="1198" height="673" rx="18" fill="#faf9f5" stroke="#d9d6cc" stroke-width="1.6"/>
+  <rect x="1" y="1" width="1198" height="673" rx="18" fill="url(#dot-grid)" opacity="0.34"/>
+  <rect x="72" y="206" width="1056" height="390" rx="16" fill="#f8f6f1" stroke="#d9d6cc" stroke-width="1.1" opacity="0.82"/>
+  <text x="84" y="82" fill="#1b365d" font-size="12" font-weight="800" letter-spacing="1.2">第1章</text>
+  <text x="1116" y="82" text-anchor="end" fill="#5f6673" font-size="11" font-weight="700" letter-spacing="1">教学图示</text>
+  <rect x="84" y="100" width="54" height="4" rx="2" fill="#1b365d"/>
+  <text x="84.0" y="136.0" text-anchor="start" fill="#111827" font-size="31" font-weight="800"><tspan x="84.0" dy="0">先把 Python 跑起来</tspan></text>
+  <text x="84.0" y="178.0" text-anchor="start" fill="#5f6673" font-size="15" font-weight="500"><tspan x="84.0" dy="0">把初学者最容易混淆的安装、编辑、运行、输出拆成一条链路。</tspan></text>
+  <text x="94" y="252" fill="#5f6673" font-size="12" font-weight="700">从输入到结果的最短学习路径</text>
+  <line x1="94" y1="274" x2="1106" y2="274" stroke="#d9d6cc" stroke-width="1.4"/>
+  <line x1="341.5" y1="408.0" x2="343.5" y2="408.0" stroke="#1b365d" stroke-width="3" stroke-linecap="round" marker-end="url(#arrow)"/>
+  <rect x="94.0" y="334.0" width="239.5" height="148.0" rx="8" fill="#f7f5ee" stroke="#1b365d" stroke-width="1.4" filter="url(#soft-shadow)"/>
+  <rect x="94.0" y="334.0" width="239.5" height="5" rx="2.5" fill="#1b365d"/>
+  <circle cx="120.0" cy="362.0" r="15" fill="#1b365d"/>
+  <text x="120.0" y="367.0" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="800"><tspan x="120.0" dy="0">1</tspan></text>
+  <text x="146.0" y="367.0" text-anchor="start" fill="#111827" font-size="17" font-weight="760"><tspan x="146.0" dy="0">安装 Python</tspan></text>
+  <text x="116.0" y="454.0" text-anchor="start" fill="#5f6673" font-size="12" font-weight="560"><tspan x="116.0" dy="0">确认版本</tspan></text>
+  <line x1="599.0" y1="408.0" x2="601.0" y2="408.0" stroke="#1b365d" stroke-width="3" stroke-linecap="round" marker-end="url(#arrow)"/>
+  <rect x="351.5" y="334.0" width="239.5" height="148.0" rx="8" fill="#faf9f5" stroke="#d9d6cc" stroke-width="1.4" filter="url(#soft-shadow)"/>
+  <circle cx="377.5" cy="362.0" r="15" fill="#1b365d"/>
+  <text x="377.5" y="367.0" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="800"><tspan x="377.5" dy="0">2</tspan></text>
+  <text x="403.5" y="367.0" text-anchor="start" fill="#111827" font-size="17" font-weight="760"><tspan x="403.5" dy="0">写 .py 文件</tspan></text>
+  <text x="373.5" y="454.0" text-anchor="start" fill="#5f6673" font-size="12" font-weight="560"><tspan x="373.5" dy="0">保存代码</tspan></text>
+  <line x1="856.5" y1="408.0" x2="858.5" y2="408.0" stroke="#1b365d" stroke-width="3" stroke-linecap="round" marker-end="url(#arrow)"/>
+  <rect x="609.0" y="334.0" width="239.5" height="148.0" rx="8" fill="#faf9f5" stroke="#d9d6cc" stroke-width="1.4" filter="url(#soft-shadow)"/>
+  <circle cx="635.0" cy="362.0" r="15" fill="#1b365d"/>
+  <text x="635.0" y="367.0" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="800"><tspan x="635.0" dy="0">3</tspan></text>
+  <text x="661.0" y="367.0" text-anchor="start" fill="#111827" font-size="17" font-weight="760"><tspan x="661.0" dy="0">运行解释器</tspan></text>
+  <text x="631.0" y="454.0" text-anchor="start" fill="#5f6673" font-size="12" font-weight="560"><tspan x="631.0" dy="0">python script.py</tspan></text>
+  <rect x="866.5" y="334.0" width="239.5" height="148.0" rx="8" fill="#f7f5ee" stroke="#1b365d" stroke-width="1.4" filter="url(#soft-shadow)"/>
+  <rect x="866.5" y="334.0" width="239.5" height="5" rx="2.5" fill="#1b365d"/>
+  <circle cx="892.5" cy="362.0" r="15" fill="#1b365d"/>
+  <text x="892.5" y="367.0" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="800"><tspan x="892.5" dy="0">4</tspan></text>
+  <text x="918.5" y="367.0" text-anchor="start" fill="#111827" font-size="17" font-weight="760"><tspan x="918.5" dy="0">看到输出</tspan></text>
+  <text x="888.5" y="454.0" text-anchor="start" fill="#5f6673" font-size="12" font-weight="560"><tspan x="888.5" dy="0">验证成功</tspan></text>
+</svg>

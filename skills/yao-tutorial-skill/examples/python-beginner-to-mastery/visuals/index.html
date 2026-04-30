@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Python 从入门到精通：章节图示</title>
+  <style>
+    :root {
+      --ink: #111827;
+      --muted: #5f6673;
+      --accent: #1b365d;
+      --accent2: #1b365d;
+      --border: #d9d6cc;
+      --surface: #f8f6f1;
+      --paper: #faf9f5;
+      --canvas: #f2f0ea;
+      --grid: #e8e4da;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 1px 1px, var(--grid) 1px, transparent 1.4px),
+        var(--canvas);
+      background-size: 26px 26px;
+      color: var(--ink);
+      font-family: "Noto Sans SC", "Source Han Sans SC", "PingFang SC", system-ui, sans-serif;
+    }
+    .shell {
+      display: grid;
+      grid-template-columns: minmax(260px, 330px) minmax(0, 1fr);
+      gap: clamp(24px, 4vw, 56px);
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: clamp(24px, 4vw, 56px);
+    }
+    .rail {
+      position: sticky;
+      top: 32px;
+      align-self: start;
+      min-height: calc(100vh - 64px);
+      padding-right: 20px;
+      border-right: 1px solid var(--border);
+    }
+    .rail h1 {
+      margin: 0;
+      padding-bottom: 18px;
+      border-bottom: 2px solid var(--accent);
+      font-size: clamp(1.45rem, 2.3vw, 2.35rem);
+      line-height: 1.12;
+      letter-spacing: 0;
+    }
+    .rail nav {
+      display: grid;
+      gap: 10px;
+      margin-top: 24px;
+    }
+    .rail a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.94rem;
+      line-height: 1.35;
+    }
+    .rail a:hover {
+      color: var(--ink);
+    }
+    .rail span {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--accent);
+      font-family: "IBM Plex Mono", "SFMono-Regular", monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .workspace {
+      display: grid;
+      gap: clamp(34px, 5vw, 72px);
+    }
+    .chapter {
+      scroll-margin-top: 32px;
+    }
+    p {
+      margin: 0;
+      line-height: 1.6;
+    }
+    .artboard {
+      margin: 0;
+      aspect-ratio: 16 / 9;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--paper);
+      overflow: hidden;
+    }
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    .caption {
+      margin: 12px auto 0;
+      max-width: 820px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 0.95rem;
+    }
+    @media (max-width: 860px) {
+      .shell {
+        display: block;
+        padding: 20px;
+      }
+      .rail {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        min-height: auto;
+        margin: -20px -20px 28px;
+        padding: 18px 20px 16px;
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
+        background: color-mix(in srgb, var(--canvas) 92%, white);
+      }
+      .rail h1 {
+        font-size: 1.6rem;
+      }
+      .rail nav {
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(140px, 1fr);
+        overflow-x: auto;
+        gap: 16px;
+      }
+      .workspace {
+        gap: 42px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="rail">
+      <h1>Python 从入门到精通：章节图示</h1>
+      <nav>
+        <a href="#chapter-01"><span>第1章</span>先把 Python 跑起来</a><a href="#chapter-02"><span>第2章</span>变量、类型和控制流</a><a href="#chapter-03"><span>第3章</span>函数和模块</a><a href="#chapter-04"><span>第4章</span>真实数据流水线</a><a href="#chapter-05"><span>第5章</span>环境、依赖和测试</a><a href="#chapter-06"><span>第6章</span>从脚本到项目</a>
+      </nav>
+    </aside>
+    <main class="workspace">
+      <section class="chapter" id="chapter-01">
+  <figure class="artboard">
+    <img src="chapter-01.svg" alt="第1章：先把 Python 跑起来 diagram">
+  </figure>
+  <p class="caption">第一步不是背语法，而是建立从代码到结果的闭环。</p>
+</section><section class="chapter" id="chapter-02">
+  <figure class="artboard">
+    <img src="chapter-02.svg" alt="第2章：变量、类型和控制流 diagram">
+  </figure>
+  <p class="caption">变量保存状态，控制流决定下一步。</p>
+</section><section class="chapter" id="chapter-03">
+  <figure class="artboard">
+    <img src="chapter-03.svg" alt="第3章：函数和模块 diagram">
+  </figure>
+  <p class="caption">组织代码的核心，是把变化和重复放到合适的位置。</p>
+</section><section class="chapter" id="chapter-04">
+  <figure class="artboard">
+    <img src="chapter-04.svg" alt="第4章：真实数据流水线 diagram">
+  </figure>
+  <p class="caption">真实脚本要处理输入、转换、异常和输出。</p>
+</section><section class="chapter" id="chapter-05">
+  <figure class="artboard">
+    <img src="chapter-05.svg" alt="第5章：环境、依赖和测试 diagram">
+  </figure>
+  <p class="caption">项目不是代码文件，而是环境、依赖、测试和反馈。</p>
+</section><section class="chapter" id="chapter-06">
+  <figure class="artboard">
+    <img src="chapter-06.svg" alt="第6章：从脚本到项目 diagram">
+  </figure>
+  <p class="caption">从入门到精通的关键，是让代码逐步具备可维护性。</p>
+</section>
+    </main>
+  </div>
+</body>
+</html>

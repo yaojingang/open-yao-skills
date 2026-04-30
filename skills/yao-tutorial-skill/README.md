@@ -58,3 +58,4 @@ output/
 - [`references/visual-html-workflow.md`](references/visual-html-workflow.md): HTML 配图画板生成规则
 - [`references/export-workflow.md`](references/export-workflow.md): Word/PDF/HTML 导出规则
 - [`scripts/validate_package.py`](scripts/validate_package.py): 输出包验证脚本
+- [`examples/`](examples/): 三套完整教程示例，包含 Markdown、HTML、Word、PDF、配图画板和验证产物

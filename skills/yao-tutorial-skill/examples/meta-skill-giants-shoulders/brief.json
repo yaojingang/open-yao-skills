@@ -1,0 +1,38 @@
+{
+  "topic": "如何写出高质量元Skill：站在真正巨人的肩膀上",
+  "audience": {
+    "level": "beginner",
+    "role": "想开始设计、迭代或复用 Agent Skill 的个人创作者、产品经理、内容型创业者和 AI 工程实践者",
+    "prior_knowledge": "知道 Skill 是可复用的 Agent 工作流或能力包，但还不清楚如何系统设计和迭代",
+    "target_outcome": "学会用标杆研究、工程思想、商业参照和简化原则，设计一个可持续迭代的元Skill"
+  },
+  "language": "zh-CN",
+  "scope": {
+    "desired_length": "polished complete tutorial, 5000-10000 Chinese characters",
+    "module_count": 6,
+    "time_budget": "60-90 minutes",
+    "must_include": [
+      "站在真正巨人的肩膀上",
+      "标杆选择",
+      "拆解维度",
+      "Agent工程思想",
+      "商业策划参照物",
+      "奥卡姆剃刀",
+      "持续迭代"
+    ],
+    "avoid": [
+      "把Skill写成泛泛提示词",
+      "只讲理念不讲操作",
+      "把官方Skill简单贬低为不够强"
+    ]
+  },
+  "outputs": [
+    "markdown",
+    "visual-html",
+    "png-visuals",
+    "docx",
+    "pdf",
+    "html"
+  ],
+  "source_policy": "用户原稿作为主素材，外部资料作为理论、工程和案例参照；X.com 内容只作为实践信号，不作为权威事实。"
+}

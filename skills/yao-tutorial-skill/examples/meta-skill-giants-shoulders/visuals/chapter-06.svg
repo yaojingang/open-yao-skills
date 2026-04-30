@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-label="奥卡姆剃刀式迭代循环" font-family="Noto Sans SC, Source Han Sans SC, PingFang SC, system-ui, sans-serif">
+  <defs>
+    <filter id="soft-shadow" x="-8%" y="-12%" width="116%" height="128%">
+      <feDropShadow dx="0" dy="5" stdDeviation="7" flood-color="#111827" flood-opacity="0.08"/>
+    </filter>
+    <pattern id="dot-grid" width="28" height="28" patternUnits="userSpaceOnUse">
+      <circle cx="1.5" cy="1.5" r="1.2" fill="#e8e4da" opacity="0.85"/>
+    </pattern>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M2,2 L10,6 L2,10" fill="none" stroke="#1f4e79" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </marker>
+  </defs>
+  <rect width="1200" height="675" fill="#f5f4ed"/>
+  <rect x="1" y="1" width="1198" height="673" rx="18" fill="#faf9f5" stroke="#d9d6cc" stroke-width="1.6"/>
+  <rect x="1" y="1" width="1198" height="673" rx="18" fill="url(#dot-grid)" opacity="0.34"/>
+  <rect x="72" y="206" width="1056" height="390" rx="16" fill="#f5f4ed" stroke="#d9d6cc" stroke-width="1.1" opacity="0.82"/>
+  <text x="84" y="82" fill="#1f4e79" font-size="12" font-weight="800" letter-spacing="1.2">第6章</text>
+  <text x="1116" y="82" text-anchor="end" fill="#5f6673" font-size="11" font-weight="700" letter-spacing="1">教学图示</text>
+  <rect x="84" y="100" width="54" height="4" rx="2" fill="#1f4e79"/>
+  <text x="84.0" y="136.0" text-anchor="start" fill="#111827" font-size="31" font-weight="800"><tspan x="84.0" dy="0">奥卡姆剃刀式迭代循环</tspan></text>
+  <text x="84.0" y="178.0" text-anchor="start" fill="#5f6673" font-size="15" font-weight="500"><tspan x="84.0" dy="0">每次迭代都追问必要性：保留能提高可靠性的，删掉只增加复杂度的。</tspan></text>
+  <circle cx="600" cy="408" r="168" fill="none" stroke="#d9d6cc" stroke-width="1.2" stroke-dasharray="5 9"/>
+  <path d="M694.0,273.0 Q713.5,302.0 746.0,289.0" fill="none" stroke="#6f7682" stroke-width="2" stroke-linecap="round" marker-end="url(#arrow)"/>
+  <path d="M815.8,368.0 Q774.2,403.4 772.2,458.0" fill="none" stroke="#6f7682" stroke-width="2" stroke-linecap="round" marker-end="url(#arrow)"/>
+  <path d="M654.0,508.0 Q600.0,486.0 546.0,508.0" fill="none" stroke="#6f7682" stroke-width="2" stroke-linecap="round" marker-end="url(#arrow)"/>
+  <path d="M427.8,458.0 Q425.8,403.4 384.2,368.0" fill="none" stroke="#6f7682" stroke-width="2" stroke-linecap="round" marker-end="url(#arrow)"/>
+  <path d="M454.0,289.0 Q486.5,302.0 506.0,273.0" fill="none" stroke="#6f7682" stroke-width="2" stroke-linecap="round" marker-end="url(#arrow)"/>
+  <circle cx="600" cy="408" r="86" fill="#f7f5ee" stroke="#d9d6cc" stroke-width="1.4" filter="url(#soft-shadow)"/>
+  <text x="600.0" y="404.0" text-anchor="middle" fill="#111827" font-size="20" font-weight="800"><tspan x="600.0" dy="0">持续打磨</tspan></text>
+  <rect x="514.0" y="202.0" width="172.0" height="84.0" rx="8" fill="#f7f5ee" stroke="#1f4e79" stroke-width="1.4" filter="url(#soft-shadow)"/>
+  <rect x="514.0" y="202.0" width="172.0" height="5" rx="2.5" fill="#1f4e79"/>
+  <circle cx="540.0" cy="230.0" r="15" fill="#1f4e79"/>
+  <text x="540.0" y="235.0" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="800"><tspan x="540.0" dy="0">1</tspan></text>
+  <text x="566.0" y="235.0" text-anchor="start" fill="#111827" font-size="17" font-weight="760"><tspan x="566.0" dy="0">真实使用</tspan></text>
+  <text x="536.0" y="258.0" text-anchor="start" fill="#5f6673" font-size="12" font-weight="560"><tspan x="536.0" dy="0">暴露问题</tspan></text>
+  <rect x="754.0" y="276.0" width="172.0" height="84.0" rx="8" fill="#faf9f5" stroke="#d9d6cc" stroke-width="1.4" filter="url(#soft-shadow)"/>
+  <circle cx="780.0" cy="304.0" r="15" fill="#1f4e79"/>
+  <text x="780.0" y="309.0" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="800"><tspan x="780.0" dy="0">2</tspan></text>
+  <text x="806.0" y="309.0" text-anchor="start" fill="#111827" font-size="17" font-weight="760"><tspan x="806.0" dy="0">发现摩擦</tspan></text>
+  <text x="776.0" y="332.0" text-anchor="start" fill="#5f6673" font-size="12" font-weight="560"><tspan x="776.0" dy="0">定位卡点</tspan></text>
+  <rect x="662.0" y="466.0" width="172.0" height="84.0" rx="8" fill="#faf9f5" stroke="#d9d6cc" stroke-width="1.4" filter="url(#soft-shadow)"/>
+  <circle cx="688.0" cy="494.0" r="15" fill="#1f4e79"/>
+  <text x="688.0" y="499.0" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="800"><tspan x="688.0" dy="0">3</tspan></text>
+  <text x="714.0" y="499.0" text-anchor="start" fill="#111827" font-size="17" font-weight="760"><tspan x="714.0" dy="0">追问必要性</tspan></text>
+  <text x="684.0" y="522.0" text-anchor="start" fill="#5f6673" font-size="12" font-weight="560"><tspan x="684.0" dy="0">是否真需要</tspan></text>
+  <rect x="366.0" y="466.0" width="172.0" height="84.0" rx="8" fill="#faf9f5" stroke="#d9d6cc" stroke-width="1.4" filter="url(#soft-shadow)"/>
+  <circle cx="392.0" cy="494.0" r="15" fill="#1f4e79"/>
+  <text x="392.0" y="499.0" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="800"><tspan x="392.0" dy="0">4</tspan></text>
+  <text x="418.0" y="499.0" text-anchor="start" fill="#111827" font-size="17" font-weight="760"><tspan x="418.0" dy="0">精简结构</tspan></text>
+  <text x="388.0" y="522.0" text-anchor="start" fill="#5f6673" font-size="12" font-weight="560"><tspan x="388.0" dy="0">去掉负担</tspan></text>
+  <rect x="274.0" y="276.0" width="172.0" height="84.0" rx="8" fill="#faf9f5" stroke="#d9d6cc" stroke-width="1.4" filter="url(#soft-shadow)"/>
+  <circle cx="300.0" cy="304.0" r="15" fill="#1f4e79"/>
+  <text x="300.0" y="309.0" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="800"><tspan x="300.0" dy="0">5</tspan></text>
+  <text x="326.0" y="309.0" text-anchor="start" fill="#111827" font-size="17" font-weight="760"><tspan x="326.0" dy="0">补充验证</tspan></text>
+  <text x="296.0" y="332.0" text-anchor="start" fill="#5f6673" font-size="12" font-weight="560"><tspan x="296.0" dy="0">看是否变好</tspan></text>
+</svg>

@@ -1,0 +1,97 @@
+{
+  "title": "Python 从入门到精通：章节图示",
+  "theme": {
+    "accent": "#1b365d",
+    "accent2": "#1b365d",
+    "ink": "#111827",
+    "muted": "#5f6673",
+    "surface": "#f8f6f1",
+    "border": "#d9d6cc",
+    "paper": "#faf9f5"
+  },
+  "chapters": [
+    {
+      "id": "chapter-01",
+      "title": "先把 Python 跑起来",
+      "diagram_type": "flow",
+      "summary": "把初学者最容易混淆的安装、编辑、运行、输出拆成一条链路。",
+      "nodes": [
+        {"label": "安装 Python", "detail": "确认版本"},
+        {"label": "写 .py 文件", "detail": "保存代码"},
+        {"label": "运行解释器", "detail": "python script.py"},
+        {"label": "看到输出", "detail": "验证成功"}
+      ],
+      "caption": "第一步不是背语法，而是建立从代码到结果的闭环。"
+    },
+    {
+      "id": "chapter-02",
+      "title": "变量、类型和控制流",
+      "diagram_type": "mindmap",
+      "summary": "程序的基础不是零散语法，而是数据如何被条件和循环推动。",
+      "center": "表达想法",
+      "nodes": [
+        {"label": "变量", "detail": "给数据命名"},
+        {"label": "类型", "detail": "数据的能力"},
+        {"label": "条件", "detail": "选择路径"},
+        {"label": "循环", "detail": "重复处理"},
+        {"label": "表达式", "detail": "产生结果"}
+      ],
+      "caption": "变量保存状态，控制流决定下一步。"
+    },
+    {
+      "id": "chapter-03",
+      "title": "函数和模块",
+      "diagram_type": "layer",
+      "summary": "从一段脚本，到可复用函数，再到模块边界。",
+      "nodes": [
+        {"label": "脚本", "detail": "能跑起来"},
+        {"label": "函数", "detail": "给逻辑命名"},
+        {"label": "模块", "detail": "给能力分区"},
+        {"label": "风格", "detail": "让别人读懂"}
+      ],
+      "caption": "组织代码的核心，是把变化和重复放到合适的位置。"
+    },
+    {
+      "id": "chapter-04",
+      "title": "真实数据流水线",
+      "diagram_type": "flow",
+      "summary": "列表、字典、文件、异常组合成真实脚本的处理链。",
+      "nodes": [
+        {"label": "读取文件", "detail": "输入数据"},
+        {"label": "列表/字典", "detail": "组织数据"},
+        {"label": "处理逻辑", "detail": "转换结果"},
+        {"label": "异常处理", "detail": "面对意外"},
+        {"label": "写回结果", "detail": "形成输出"}
+      ],
+      "caption": "真实脚本要处理输入、转换、异常和输出。"
+    },
+    {
+      "id": "chapter-05",
+      "title": "环境、依赖和测试",
+      "diagram_type": "cycle",
+      "summary": "用虚拟环境隔离依赖，用测试建立反馈，用文档保持可复现。",
+      "center": "项目反馈",
+      "nodes": [
+        {"label": "venv", "detail": "隔离环境"},
+        {"label": "安装依赖", "detail": "记录版本"},
+        {"label": "写测试", "detail": "固定预期"},
+        {"label": "运行 pytest", "detail": "快速反馈"},
+        {"label": "修正代码", "detail": "持续改进"}
+      ],
+      "caption": "项目不是代码文件，而是环境、依赖、测试和反馈。"
+    },
+    {
+      "id": "chapter-06",
+      "title": "从脚本到项目",
+      "diagram_type": "matrix",
+      "summary": "区分能运行、可阅读、可测试、可交付四种成熟度。",
+      "quadrants": [
+        {"label": "能运行", "detail": "脚本可执行"},
+        {"label": "可阅读", "detail": "命名和风格清晰"},
+        {"label": "可测试", "detail": "行为有验证"},
+        {"label": "可交付", "detail": "依赖和文档完整"}
+      ],
+      "caption": "从入门到精通的关键，是让代码逐步具备可维护性。"
+    }
+  ]
+}

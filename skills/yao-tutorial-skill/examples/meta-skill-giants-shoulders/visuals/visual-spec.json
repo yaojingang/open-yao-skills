@@ -1,0 +1,211 @@
+{
+  "title": "如何写出高质量元Skill：章节图示",
+  "theme": {
+    "accent": "#1f4e79",
+    "accent2": "#1f4e79",
+    "ink": "#111827",
+    "muted": "#5f6673",
+    "surface": "#f5f4ed",
+    "border": "#d9d6cc",
+    "paper": "#faf9f5",
+    "node": "#faf9f5",
+    "node_alt": "#f7f5ee"
+  },
+  "chapters": [
+    {
+      "id": "chapter-01",
+      "title": "从孤立想法到巨人网络",
+      "diagram_type": "flow",
+      "summary": "高质量元Skill不是从空白开始，而是先找到已经被验证过的世界级样本。",
+      "nodes": [
+        {
+          "label": "一个想法",
+          "detail": "我想写一个Skill"
+        },
+        {
+          "label": "系统调研",
+          "detail": "收集顶级样本"
+        },
+        {
+          "label": "拆解标杆",
+          "detail": "看背后机制"
+        },
+        {
+          "label": "吸收长处",
+          "detail": "转成设计原则"
+        },
+        {
+          "label": "本地迭代",
+          "detail": "用真实场景打磨"
+        }
+      ],
+      "caption": "第一步不是写，而是先找到值得站上去的肩膀。"
+    },
+    {
+      "id": "chapter-02",
+      "title": "真正巨人的筛选矩阵",
+      "diagram_type": "matrix",
+      "summary": "参考对象要同时看相关性、成熟度、可迁移性和可验证性。",
+      "quadrants": [
+        {
+          "title": "相关性",
+          "detail": "是否解决相近问题"
+        },
+        {
+          "title": "成熟度",
+          "detail": "是否经过真实使用"
+        },
+        {
+          "title": "可迁移性",
+          "detail": "能否抽象成方法"
+        },
+        {
+          "title": "可验证性",
+          "detail": "是否能被测试复现"
+        }
+      ],
+      "caption": "普通样本带来普通方法，顶级样本才可能带来顶级方法。"
+    },
+    {
+      "id": "chapter-03",
+      "title": "标杆拆解六层栈",
+      "diagram_type": "layer",
+      "summary": "不要只看表面功能，要看结构、流程、交互、记忆、评估和迭代机制。",
+      "nodes": [
+        "结构：文件和边界",
+        "流程：执行顺序",
+        "交互：何时提问",
+        "记忆：上下文组织",
+        "评估：怎么判断好坏",
+        "迭代：如何变得更好"
+      ],
+      "caption": "拆解越深入，能迁移的就越多。"
+    },
+    {
+      "id": "chapter-04",
+      "title": "Agent工程思想转译图",
+      "diagram_type": "mindmap",
+      "center": "元Skill设计",
+      "summary": "CLAUDE.md、上下文、任务编排和简单组合模式，都可以被转译成Skill设计原则。",
+      "nodes": [
+        {
+          "label": "CLAUDE.md",
+          "detail": "项目级指令"
+        },
+        {
+          "label": "上下文分层",
+          "detail": "减少噪音"
+        },
+        {
+          "label": "简单组合",
+          "detail": "少而清楚"
+        },
+        {
+          "label": "任务编排",
+          "detail": "步骤可控"
+        },
+        {
+          "label": "脚本辅助",
+          "detail": "可重复验证"
+        },
+        {
+          "label": "真实反馈",
+          "detail": "持续修正"
+        }
+      ],
+      "caption": "工程思想的价值不在术语，而在它能让Skill更可控。"
+    },
+    {
+      "id": "chapter-05",
+      "title": "从Idea到世界级参照物",
+      "diagram_type": "flow",
+      "summary": "商业策划里的对标思维，可以帮助Skill从个人想法走向可验证设计。",
+      "nodes": [
+        {
+          "label": "Idea",
+          "detail": "脑中灵感"
+        },
+        {
+          "label": "找对标",
+          "detail": "世界级参照"
+        },
+        {
+          "label": "拆机制",
+          "detail": "成立的原因"
+        },
+        {
+          "label": "做取舍",
+          "detail": "适配自己的场景"
+        },
+        {
+          "label": "做版本",
+          "detail": "形成可测Skill"
+        }
+      ],
+      "caption": "对标不是复制，而是理解别人为什么成立。"
+    },
+    {
+      "id": "chapter-06",
+      "title": "奥卡姆剃刀式迭代循环",
+      "diagram_type": "cycle",
+      "center": "持续打磨",
+      "summary": "每次迭代都追问必要性：保留能提高可靠性的，删掉只增加复杂度的。",
+      "nodes": [
+        {
+          "label": "真实使用",
+          "detail": "暴露问题"
+        },
+        {
+          "label": "发现摩擦",
+          "detail": "定位卡点"
+        },
+        {
+          "label": "追问必要性",
+          "detail": "是否真需要"
+        },
+        {
+          "label": "精简结构",
+          "detail": "去掉负担"
+        },
+        {
+          "label": "补充验证",
+          "detail": "看是否变好"
+        }
+      ],
+      "caption": "好的迭代不是越写越多，而是越来越清楚。"
+    },
+    {
+      "id": "chapter-07",
+      "title": "30分钟元Skill设计练习",
+      "diagram_type": "flow",
+      "summary": "把想法、标杆、机制、边界、验证和交付标准串成一张可执行工作表。",
+      "nodes": [
+        {
+          "label": "Skill idea",
+          "detail": "反复解决的问题"
+        },
+        {
+          "label": "巨人清单",
+          "detail": "8-12个候选"
+        },
+        {
+          "label": "机制转译",
+          "detail": "拆出可迁移规则"
+        },
+        {
+          "label": "边界定义",
+          "detail": "负责与不负责"
+        },
+        {
+          "label": "验证提示",
+          "detail": "真实和近邻案例"
+        },
+        {
+          "label": "交付标准",
+          "detail": "质量门槛"
+        }
+      ],
+      "caption": "最终练习把前六章的方法压缩成一次可执行的元Skill设计流程。"
+    }
+  ]
+}

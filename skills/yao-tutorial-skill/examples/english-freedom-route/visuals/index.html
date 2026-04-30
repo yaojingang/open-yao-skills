@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>英语自由路线图配图</title>
+  <style>
+    :root {
+      --ink: #111827;
+      --muted: #5f6673;
+      --accent: #1f4e79;
+      --accent2: #6f7682;
+      --border: #d9d4c8;
+      --surface: #f5f3ec;
+      --paper: #fbfaf6;
+      --canvas: #f1eee6;
+      --grid: #e7e1d6;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 1px 1px, var(--grid) 1px, transparent 1.4px),
+        var(--canvas);
+      background-size: 26px 26px;
+      color: var(--ink);
+      font-family: "Noto Sans SC", "Source Han Sans SC", "PingFang SC", system-ui, sans-serif;
+    }
+    .shell {
+      display: grid;
+      grid-template-columns: minmax(260px, 330px) minmax(0, 1fr);
+      gap: clamp(24px, 4vw, 56px);
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: clamp(24px, 4vw, 56px);
+    }
+    .rail {
+      position: sticky;
+      top: 32px;
+      align-self: start;
+      min-height: calc(100vh - 64px);
+      padding-right: 20px;
+      border-right: 1px solid var(--border);
+    }
+    .rail h1 {
+      margin: 0;
+      padding-bottom: 18px;
+      border-bottom: 2px solid var(--accent);
+      font-size: clamp(1.45rem, 2.3vw, 2.35rem);
+      line-height: 1.12;
+      letter-spacing: 0;
+    }
+    .rail nav {
+      display: grid;
+      gap: 10px;
+      margin-top: 24px;
+    }
+    .rail a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.94rem;
+      line-height: 1.35;
+    }
+    .rail a:hover {
+      color: var(--ink);
+    }
+    .rail span {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--accent);
+      font-family: "IBM Plex Mono", "SFMono-Regular", monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .workspace {
+      display: grid;
+      gap: clamp(34px, 5vw, 72px);
+    }
+    .chapter {
+      scroll-margin-top: 32px;
+    }
+    p {
+      margin: 0;
+      line-height: 1.6;
+    }
+    .artboard {
+      margin: 0;
+      aspect-ratio: 16 / 9;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--paper);
+      overflow: hidden;
+    }
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    .caption {
+      margin: 12px auto 0;
+      max-width: 820px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 0.95rem;
+    }
+    @media (max-width: 860px) {
+      .shell {
+        display: block;
+        padding: 20px;
+      }
+      .rail {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        min-height: auto;
+        margin: -20px -20px 28px;
+        padding: 18px 20px 16px;
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
+        background: color-mix(in srgb, var(--canvas) 92%, white);
+      }
+      .rail h1 {
+        font-size: 1.6rem;
+      }
+      .rail nav {
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(140px, 1fr);
+        overflow-x: auto;
+        gap: 16px;
+      }
+      .workspace {
+        gap: 42px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="rail">
+      <h1>英语自由路线图配图</h1>
+      <nav>
+        <a href="#chapter-01"><span>第1章</span>英语不是科目，而是内容入口</a><a href="#chapter-02"><span>第2章</span>从兴趣切入</a><a href="#chapter-03"><span>第3章</span>可理解输入循环</a><a href="#chapter-04"><span>第4章</span>从听懂到读懂</a><a href="#chapter-05"><span>第5章</span>让英语成为工具</a><a href="#chapter-06"><span>第6章</span>阶段判断矩阵</a><a href="#chapter-07"><span>第7章</span>从英语自由到判断位</a>
+      </nav>
+    </aside>
+    <main class="workspace">
+      <section class="chapter" id="chapter-01">
+  <figure class="artboard">
+    <img src="chapter-01.svg" alt="第1章：英语不是科目，而是内容入口 diagram">
+  </figure>
+  <p class="caption">英语自由的终点不是多会几道题，而是能直接进入更大的内容世界。</p>
+</section><section class="chapter" id="chapter-02">
+  <figure class="artboard">
+    <img src="chapter-02.svg" alt="第2章：从兴趣切入 diagram">
+  </figure>
+  <p class="caption">好的启动点不是最专业的材料，而是孩子愿意反复进入的英文入口。</p>
+</section><section class="chapter" id="chapter-03">
+  <figure class="artboard">
+    <img src="chapter-03.svg" alt="第3章：可理解输入循环 diagram">
+  </figure>
+  <p class="caption">视频有用的前提，是它能变成可理解输入，而不是单纯增加屏幕时间。</p>
+</section><section class="chapter" id="chapter-04">
+  <figure class="artboard">
+    <img src="chapter-04.svg" alt="第4章：从听懂到读懂 diagram">
+  </figure>
+  <p class="caption">阅读不是突然开始硬啃原版书，而是把听过、见过、懂过的内容文字化。</p>
+</section><section class="chapter" id="chapter-05">
+  <figure class="artboard">
+    <img src="chapter-05.svg" alt="第5章：让英语成为工具 diagram">
+  </figure>
+  <p class="caption">自由不是只输入，孩子要能用英语完成一个真实的小任务。</p>
+</section><section class="chapter" id="chapter-06">
+  <figure class="artboard">
+    <img src="chapter-06.svg" alt="第6章：阶段判断矩阵 diagram">
+  </figure>
+  <p class="caption">阶段判断决定路径质量：过早升级会挫败，过迟停留会浪费。</p>
+</section><section class="chapter" id="chapter-07">
+  <figure class="artboard">
+    <img src="chapter-07.svg" alt="第7章：从英语自由到判断位 diagram">
+  </figure>
+  <p class="caption">语言只是入口，能否用内容做判断和行动，才决定长期上限。</p>
+</section>
+    </main>
+  </div>
+</body>
+</html>

@@ -50,6 +50,7 @@
 - **章节有图**：每个编号章节都要有对应配图，验证器会检查缺失。
 - **排版克制**：HTML 使用居中报告容器和粘性目录；Word/PDF 默认不显示页眉页脚。
 - **可验证交付**：内置脚本会检查结构、导出物、图片、引用和本地路径。
+- **示例完整**：仓库内提供三套完整示例，覆盖方法论、技术学习和家庭教育类教程。
 
 ### 重要边界
 
@@ -84,3 +85,4 @@ Primary entry points:
 - [Course design principles](../../skills/yao-tutorial-skill/references/course-design-principles.md)
 - [Visual workflow](../../skills/yao-tutorial-skill/references/visual-html-workflow.md)
 - [Export workflow](../../skills/yao-tutorial-skill/references/export-workflow.md)
+- [Generated examples](../../skills/yao-tutorial-skill/examples/)

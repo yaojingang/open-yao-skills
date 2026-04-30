@@ -1,0 +1,28 @@
+{
+  "topic": "英语自由路线图：让孩子用英文打开全球内容世界",
+  "audience": {
+    "level": "beginner",
+    "role": "6-16岁孩子家长",
+    "prior_knowledge": "了解常规英语学习方式，但不知道如何从兴趣、输入、阅读、输出和阶段判断搭建家庭路径",
+    "target_outcome": "能设计一套两周启动、长期迭代的英语自由家庭执行系统"
+  },
+  "language": "zh-CN",
+  "user_materials": {
+    "notes": ["用户提供了一篇关于12岁英语自由、视听输入、内容接入和判断位的长文。"],
+    "urls": ["https://x.com/ReyJudgementOS/status/2042532546668564813"],
+    "sufficiency_tier": "rich",
+    "public_copy_rule": "final tutorial must be standalone and must not mention the supplied article or show source IDs"
+  },
+  "scope": {
+    "desired_length": "formal tutorial sample, roughly 5000-8000 Chinese characters",
+    "chapter_count": 7,
+    "must_include": [
+      "standalone public tutorial",
+      "specific H3 headings",
+      "one visual per chapter",
+      "HTML, PDF, DOCX, Markdown",
+      "no bracket source markers in public outputs"
+    ]
+  },
+  "outputs": ["markdown", "html", "docx", "pdf", "visual-html"]
+}

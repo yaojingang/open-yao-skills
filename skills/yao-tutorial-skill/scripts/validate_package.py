@@ -58,6 +58,7 @@ class Validator:
         self.validate_docx()
         self.validate_pdf()
         self.validate_no_absolute_paths()
+        self.validate_public_provenance_hygiene()
 
         return self.finish()
 
@@ -177,11 +178,16 @@ class Validator:
         else:
             self.warn("No markdown images found; each chapter should normally include a visual")
 
-        source_ids = re.findall(r"\[(?:U|P|G|A|X|L)\d+\]", text)
+        source_ids = public_source_markers(text)
         if source_ids:
-            self.pass_(f"Found {len(set(source_ids))} distinct source IDs in tutorial.md")
+            self.fail(
+                "tutorial.md exposes internal source markers: "
+                + ", ".join(sorted(set(source_ids))[:8])
+            )
         else:
-            self.warn("No source IDs found in tutorial.md")
+            self.pass_("tutorial.md contains no public bracket source markers")
+
+        self.validate_specific_h3_headings(h3_headings)
 
     def validate_visuals(self) -> None:
         spec_path = self.package_dir / "visuals/visual-spec.json"
@@ -379,6 +385,74 @@ class Validator:
         else:
             self.pass_("No local absolute paths found in final text outputs")
 
+    def validate_specific_h3_headings(self, h3_headings: list[str]) -> None:
+        if not h3_headings:
+            return
+        generic_labels = {
+            "你要做的事",
+            "你要注意什么",
+            "示例",
+            "检查点",
+            "小结",
+            "练习",
+            "what to notice",
+            "example",
+            "checkpoint",
+            "summary",
+        }
+        repeated: dict[str, int] = {}
+        for heading in h3_headings:
+            label = re.sub(r"^\d+\.\d+\s+", "", heading).strip()
+            label = re.sub(r"[：: ].*$", "", label).strip()
+            if label.lower() in generic_labels:
+                repeated[label] = repeated.get(label, 0) + 1
+        offenders = [f"{label} x{count}" for label, count in repeated.items() if count > 1]
+        if offenders:
+            self.fail(
+                "H3 headings repeat generic labels instead of outline-specific section titles: "
+                + ", ".join(offenders)
+            )
+        else:
+            self.pass_("H3 headings are specific, not repeated generic labels")
+
+    def validate_public_provenance_hygiene(self) -> None:
+        public_texts: list[tuple[str, str]] = []
+        tutorial = self.package_dir / "tutorial.md"
+        html_path = self.package_dir / "exports" / f"{self.basename}.html"
+        docx_path = self.package_dir / "exports" / f"{self.basename}.docx"
+        pdf_path = self.package_dir / "exports" / f"{self.basename}.pdf"
+
+        if tutorial.exists():
+            public_texts.append(("tutorial.md", read_text(tutorial)))
+        if html_path.exists():
+            public_texts.append((f"exports/{self.basename}.html", read_text(html_path)))
+        if docx_path.exists():
+            public_texts.append((f"exports/{self.basename}.docx", docx_visible_text(docx_path)))
+        if pdf_path.exists() and shutil.which("pdftotext"):
+            text = extract_pdf_text(pdf_path)
+            if text:
+                public_texts.append((f"exports/{self.basename}.pdf", text))
+
+        marker_leaks = []
+        provenance_leaks = []
+        for label, text in public_texts:
+            markers = sorted(set(public_source_markers(text)))
+            if markers:
+                marker_leaks.append(f"{label}: {', '.join(markers[:8])}")
+            phrases = public_provenance_phrases(text)
+            if phrases:
+                provenance_leaks.append(f"{label}: {', '.join(phrases[:6])}")
+
+        if marker_leaks:
+            self.fail("Public outputs expose internal source markers: " + "; ".join(marker_leaks))
+        else:
+            self.pass_("Public outputs contain no internal bracket source markers")
+
+        if provenance_leaks:
+            self.fail("Public outputs expose internal provenance wording: " + "; ".join(provenance_leaks))
+        else:
+            self.pass_("Public outputs do not describe themselves as based on supplied material")
+
 
 def can_import(module: str) -> bool:
     try:
@@ -407,6 +481,61 @@ def find_browser() -> str:
 
 def read_text(path: Path) -> str:
     return path.read_text(encoding="utf-8", errors="ignore")
+
+
+def public_source_markers(text: str) -> list[str]:
+    return re.findall(r"\[(?:U|P|G|A|X|L)\d+\]", text)
+
+
+def public_provenance_phrases(text: str) -> list[str]:
+    patterns = [
+        r"用户粘贴",
+        r"用户提供",
+        r"用户给(?:到|的)",
+        r"基于[^。\n]{0,30}(?:文章|原文|资料|材料)",
+        r"根据[^。\n]{0,30}(?:文章|原文|资料|材料)(?:整理|生成|改写)",
+        r"参考原文",
+        r"原文(?:中|里|作者)",
+        r"X Article",
+        r"user-supplied",
+        r"pasted (?:article|note|material)",
+        r"based on (?:the )?(?:article|source|supplied material|original text)",
+    ]
+    found: list[str] = []
+    for pattern in patterns:
+        match = re.search(pattern, text, flags=re.I)
+        if match:
+            found.append(match.group(0))
+    return found
+
+
+def docx_visible_text(path: Path) -> str:
+    try:
+        with zipfile.ZipFile(path, "r") as archive:
+            chunks = []
+            for name in archive.namelist():
+                if name == "word/document.xml" or name.startswith("word/header") or name.startswith("word/footer"):
+                    chunks.append(archive.read(name).decode("utf-8", errors="ignore"))
+            return "\n".join(chunks)
+    except Exception:
+        return ""
+
+
+def extract_pdf_text(path: Path) -> str:
+    import subprocess
+
+    try:
+        completed = subprocess.run(
+            ["pdftotext", str(path), "-"],
+            check=False,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.DEVNULL,
+            text=True,
+            timeout=30,
+        )
+    except Exception:
+        return ""
+    return completed.stdout if completed.returncode == 0 else ""
 
 
 def markdown_images(markdown: str) -> list[str]:

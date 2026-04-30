@@ -58,7 +58,9 @@ If the environment lacks these tools:
 ## Formatting Rules
 
 - Keep headings short and hierarchical.
-- Use source IDs in text and a full source appendix at the end.
+- Do not show internal source IDs in public text. Keep `[U1]`, `[X1]`, `[A2]`, `[P3]`, `[G4]`, and similar audit IDs inside `research/` files only.
+- If references are useful to readers, use a human-readable `参考资料` or `延伸阅读` section with names and links, not bracket IDs.
+- Public outputs should not say they are based on user notes, pasted source material, a supplied article, or the original text.
 - When a source is a local file, use a human-readable label in final deliverables and keep absolute audit paths only in internal research notes.
 - Keep image paths relative to `tutorial.md`.
 - Use captions directly below images.
@@ -100,4 +102,5 @@ Use `--formats html` or another subset when the user requested fewer formats.
 - HTML tables are readable at desktop and mobile widths.
 - HTML image captions are not duplicated.
 - No absolute local filesystem paths appear in final HTML, PDF, or DOCX.
+- No public output contains bracket source markers or internal provenance wording.
 - Output typography, colors, captions, and tables match the editorial production system.

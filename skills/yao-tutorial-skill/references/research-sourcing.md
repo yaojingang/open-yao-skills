@@ -140,6 +140,17 @@ Continue research when:
 - a tool/API/version matters
 - a chapter has no credible source backing
 
+## Public Reference Rules
+
+Research files must keep source IDs for auditability. Public tutorial outputs must not expose those internal IDs inline or in appendix tables.
+
+Use this split:
+
+- `research/*`: keep `U1`, `X1`, `A1`, `P1`, `G1` IDs, evidence maps, cautions, and internal provenance.
+- `tutorial.md` and exports: write standalone teaching prose. If references help readers, use human-readable names and links only.
+
+Do not write "based on the supplied article", "from the user's pasted material", or similar provenance notes in final public copy.
+
 ## Citation And Copyright Rules
 
 - Cite exact URLs in the source appendix.

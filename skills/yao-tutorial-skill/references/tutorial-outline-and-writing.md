@@ -2,7 +2,9 @@
 
 The tutorial must feel like a guided learning path for a beginner, not a research report.
 
-Read `references/input-adaptation.md` before outlining. If the user supplied notes, drafts, URLs, or examples, the outline should preserve the user's core angle and only add external structure where it improves teaching quality.
+Read `references/input-adaptation.md` and `references/course-design-principles.md` before outlining. If the user supplied notes, drafts, URLs, or examples, the outline should preserve the user's core angle and only add external structure where it improves teaching quality.
+
+Final public copy must read as a standalone tutorial, not as a summary of supplied references. Do not write phrases such as "based on the article", "the user supplied", "the pasted note says", or "this tutorial is organized from the original text".
 
 ## Outline Shape
 
@@ -17,7 +19,7 @@ Use this structure unless the topic clearly needs another order:
 7. Chapter 4: practical workflow or implementation.
 8. Chapter 5: real cases, mistakes, and tradeoffs.
 9. Practice: tasks that reinforce the path.
-10. Source appendix and next learning path.
+10. Human-readable reference or further-reading section when useful, plus next learning path.
 
 For a short tutorial, use `3-5` chapters. For a textbook-like guide, use `6-10` chapters, but keep each chapter scoped to one learner question.
 
@@ -30,6 +32,7 @@ When the user gives substantial material:
 - convert loose notes into chapter questions instead of replacing them with generic chapters
 - add external theory only where it helps the learner understand or verify the user's point
 - mark unsupported user claims as claims to verify before drafting
+- do not tell readers which parts came from user material; convert the material into polished teaching structure
 
 When the user gives only a topic:
 
@@ -79,6 +82,7 @@ Each chapter must use this numbering pattern:
 - H2: `## 第1章 章节标题`
 - H3: `### 1.1 小节标题`, `### 1.2 小节标题`, continuing within the chapter
 - Final practice can be a numbered chapter when it is part of the learning path.
+- H3 headings must be specific to the outline item. Avoid repeated generic headings such as `你要做的事`, `你要注意什么`, `示例`, `检查点`, or `小结`.
 
 Each chapter must include:
 
@@ -90,17 +94,17 @@ Each chapter must include:
 - common pitfall
 - practice task
 - checkpoint question
-- source IDs
+- source traceability in internal research notes; no visible bracket source IDs in the public tutorial
 
 Recommended chapter rhythm:
 
-1. State the learner question.
-2. Explain the mental model.
-3. Show the visual and tell the reader what to notice.
-4. Walk through one concrete example.
-5. Name the common mistake.
-6. Give one small practice task.
-7. End with a checkpoint.
+1. Start from a concrete scene challenge or learner question.
+2. Name the failed old approach and why it does not work.
+3. Introduce the new method or mental model.
+4. Show the visual and tell the reader what to notice.
+5. Walk through one concrete example, table, or template.
+6. Give one small behavior prompt or practice task.
+7. End with a specific checkpoint.
 
 ## Beginner-Friendly Rules
 
@@ -120,7 +124,7 @@ For every important source-backed claim:
 1. State the claim in plain language.
 2. Explain why it matters to the learner.
 3. Show it in an example or visual.
-4. Cite the source ID.
+4. Keep the source ID in `research/evidence-map.md`, not in public prose.
 5. Mention limits when the source is narrow, old, or context-specific.
 
 For user-provided claims:
@@ -128,8 +132,8 @@ For user-provided claims:
 1. Preserve the intent.
 2. Verify or qualify the factual part.
 3. Keep the user's example when it teaches well.
-4. Cite the user material ID such as `[U1]` when the idea comes from supplied material.
-5. Add external source IDs when the claim needs authority beyond the user's note.
+4. Keep user material IDs in `research/user-materials-register.md`, not in public prose.
+5. Add external source IDs in internal research notes when the claim needs authority beyond the user's note.
 
 ## Exercises
 
@@ -151,4 +155,7 @@ Avoid exercises that require tools or accounts the learner has not been prepared
 - The tutorial includes theory, practice, and case material.
 - User-provided material has been used as the spine when it is strong enough, and external material is added only where it improves support.
 - The source appendix is audit-friendly.
+- Public prose contains no bracket source markers like `[U1]`, `[X1]`, `[A2]`, `[P3]`, or `[G4]`.
+- Public prose does not expose internal provenance such as "user supplied material" or "based on the original article".
+- Chapter and section headings match the learner path and do not repeat generic labels.
 - The conclusion gives the next concrete learning step.

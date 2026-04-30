@@ -19,8 +19,8 @@
 1. 归一化输入：主题、受众、目标、已有资料、输出格式和风格偏好。
 2. 资料优先级判断：用户资料足够时以用户资料为主；资料不足时补充权威来源、论文、GitHub 和实践案例。
 3. 研究取证：生成来源登记和证据映射，避免凭空编造引用。
-4. 大纲设计：使用 `第1章`、`1.1` 这类清晰编号，面向小白逐层展开。
-5. 正文写作：默认中文教程约 `5000-10000` 字，兼顾故事化开头、解释、例子、步骤和检查点。
+4. 大纲设计：用“专业内容 + 用户痛点”和“点线面体”方法，把资料重构成面向小白的学习路径。
+5. 正文写作：默认中文教程约 `5000-10000` 字，使用正式对外成品口吻，不暴露内部来源角标或资料来源话术。
 6. 章节配图：每章生成一个 HTML 可视化画板，再截图嵌入对应章节。
 7. 多格式导出：生成 `tutorial.md`、`tutorial.docx`、`tutorial.pdf`、`tutorial.html`。
 8. 质量验证：检查章节配图一一对应、引用覆盖、导出文件、截图尺寸、页眉页脚和本地路径泄漏。
@@ -44,8 +44,9 @@
 ### 设计特点
 
 - **资料优先**：先尊重用户给的材料，只有信息不足时才扩大外部检索。
-- **证据驱动**：重要判断要能回到来源、论文、官方文档、GitHub 或案例。
+- **证据内化**：重要判断要能在内部研究记录中回到来源，但公开成品不显示 `[U1]` 这类内部 ID。
 - **新手友好**：避免默认读者已经懂术语，把概念拆成问题、例子和操作步骤。
+- **课程化结构**：标题要有用户利益，大纲要说人话，小节标题要与具体学习任务对应。
 - **章节有图**：每个编号章节都要有对应配图，验证器会检查缺失。
 - **排版克制**：HTML 使用居中报告容器和粘性目录；Word/PDF 默认不显示页眉页脚。
 - **可验证交付**：内置脚本会检查结构、导出物、图片、引用和本地路径。
@@ -80,5 +81,6 @@ Primary entry points:
 - [Input adaptation](../../skills/yao-tutorial-skill/references/input-adaptation.md)
 - [Research sourcing](../../skills/yao-tutorial-skill/references/research-sourcing.md)
 - [Tutorial writing](../../skills/yao-tutorial-skill/references/tutorial-outline-and-writing.md)
+- [Course design principles](../../skills/yao-tutorial-skill/references/course-design-principles.md)
 - [Visual workflow](../../skills/yao-tutorial-skill/references/visual-html-workflow.md)
 - [Export workflow](../../skills/yao-tutorial-skill/references/export-workflow.md)

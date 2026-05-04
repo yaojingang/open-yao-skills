@@ -1,0 +1,106 @@
+{
+  "case_type": "multi-opportunity-allocation",
+  "objective": "Allocate this week's product, design, and engineering capacity between fixing new-user retention and validating an AI assistant demo.",
+  "context": {
+    "background": "某互联网产品最近发现新用户首日留存从 32% 掉到 26%。与此同时，团队也在讨论要不要做一个 AI 助手 Demo，用来给销售和管理层展示新方向。",
+    "tension": "修留存问题比较朴素，但大概率能改善当前业务；AI Demo 更有展示价值，但它可能只是演示效果好，短期未必带来真实留存或收入。",
+    "question": "团队真正纠结的不是 AI 好不好，而是本周有限的 100 小时，到底应该继续追一个亮眼的新功能，还是先补一个正在漏水的核心转化环节？",
+    "solution": "把两个选择都看成资源投入机会：流失修复胜率更高、回报更稳；AI Demo 上限可能更高，但不确定性更大。先用 Kelly 思路算理论比例，再压成可执行的小投入。"
+  },
+  "capital_base": 100,
+  "resource_unit": "team-hours",
+  "review_window": "end of this sprint",
+  "review_collect": [
+    "hours actually spent",
+    "new-user first-action completion rate",
+    "AI demo click and input-completion rate"
+  ],
+  "recalculate_when": [
+    "retention fix improves the first-action completion rate by at least 10%",
+    "AI demo receives strong click and useful-input signals",
+    "either path takes materially more hours than planned"
+  ],
+  "constraints": {
+    "total_exposure_cap": 0.4,
+    "min_cash_reserve_ratio": 0.6,
+    "fractional_kelly_mode": "auto"
+  },
+  "opportunities": [
+    {
+      "name": "New-user Retention Fix",
+      "scenario_returns": [
+        {
+          "name": "best",
+          "probability": 0.25,
+          "return_multiple": 1.1
+        },
+        {
+          "name": "base",
+          "probability": 0.55,
+          "return_multiple": 0.45
+        },
+        {
+          "name": "bear",
+          "probability": 0.2,
+          "return_multiple": -0.2
+        }
+      ],
+      "confidence_level": "medium",
+      "max_fraction_cap": 0.28,
+      "dependence": "low",
+      "action_package": {
+        "first_action": "用一个小任务包修复新用户完成首个关键动作前最明显的流失点。",
+        "success_metric": "首个关键动作完成率提升，或者团队确认了一个真实阻塞点。",
+        "add_condition": "只有首个关键动作完成率提升至少 10%，或者阻塞点被明确验证时，才继续加一个任务包。",
+        "stop_condition": "如果排查不到真实阻塞点，或者修复反而制造新的上手摩擦，就停止。",
+        "owner": "产品 + 前端"
+      }
+    },
+    {
+      "name": "AI Assistant Demo",
+      "scenario_returns": [
+        {
+          "name": "best",
+          "probability": 0.2,
+          "return_multiple": 2.2
+        },
+        {
+          "name": "base",
+          "probability": 0.35,
+          "return_multiple": 0.25
+        },
+        {
+          "name": "bear",
+          "probability": 0.45,
+          "return_multiple": -0.55
+        }
+      ],
+      "confidence_level": "low",
+      "max_fraction_cap": 0.16,
+      "dependence": "unknown",
+      "action_package": {
+        "first_action": "只做假门或静态可点击 Demo，不做真正的 AI 功能。",
+        "success_metric": "用户点击 AI 入口，并愿意提交有用的问题描述。",
+        "add_condition": "只有点击率和有效输入质量都超过 base 预期时，才投入真实工程开发。",
+        "stop_condition": "如果用户只是好奇点击，但不愿意提交有效输入，就停止。",
+        "owner": "产品经理 + 设计"
+      }
+    }
+  ],
+  "round_log": [
+    {
+      "round": 1,
+      "stage": "资源和问题识别",
+      "summary": "用户给出本周 100 小时团队产能，并说明留存下滑和 AI Demo 同时争抢资源。",
+      "readiness": 0.6,
+      "next_question": "补齐两个方向的 best/base/bear 结果、置信度和最小行动包。"
+    },
+    {
+      "round": 2,
+      "stage": "行动包和复盘条件补齐",
+      "summary": "用户补充每个方向的最小验证动作、成功指标、加码条件和停止条件。",
+      "readiness": 0.95,
+      "stop_reason": "达到 readiness 阈值，且保守建议已经能转成可执行行动包。"
+    }
+  ]
+}

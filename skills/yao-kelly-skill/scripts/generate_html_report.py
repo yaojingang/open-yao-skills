@@ -131,6 +131,101 @@ def render_kelly_principle() -> str:
     """
 
 
+def render_practical_guidance(
+    report: dict[str, Any],
+    opportunities: list[dict[str, Any]],
+    resource_unit: str,
+) -> str:
+    guidance = report.get("practical_guidance", {})
+    fit = guidance.get("fit_assessment", {})
+    snapshot = guidance.get("resource_snapshot", {})
+    review = guidance.get("review_loop", {})
+    total = float(snapshot.get("total") or 0)
+    recommended = float(snapshot.get("recommended") or 0)
+    unused_risk = float(snapshot.get("unused_risk_budget") or 0)
+    protected = float(snapshot.get("protected_or_unallocated") or 0)
+
+    def stack_width(value: float) -> str:
+        if total <= 0:
+            return "0%"
+        return f"{max(0.0, min(100.0, value / total * 100)):.2f}%"
+
+    reasons = "".join(f"<li>{esc(item)}</li>" for item in fit.get("reasons", []))
+    caveats = "".join(f"<li>{esc(item)}</li>" for item in fit.get("caveats", []))
+    packages = []
+    for item in opportunities:
+        package = item.get("action_package", {})
+        packages.append(
+            f"""
+            <article class="package-item">
+              <h3>{esc(item.get("name"))}</h3>
+              <strong>{amount(item.get("recommended_amount"), resource_unit)} ({pct(item.get("recommended_fraction"))})</strong>
+              <p>{esc(package.get("first_action"))}</p>
+              <dl>
+                <dt>看什么指标</dt><dd>{esc(package.get("success_metric"))}</dd>
+                <dt>什么时候加码</dt><dd>{esc(package.get("add_condition"))}</dd>
+                <dt>什么时候停</dt><dd>{esc(package.get("stop_condition"))}</dd>
+              </dl>
+            </article>
+            """
+        )
+
+    collect_items = "".join(f"<li>{esc(item)}</li>" for item in review.get("collect", []))
+    recalc_items = "".join(
+        f"<li>{esc(item)}</li>" for item in review.get("recalculate_when", [])
+    )
+
+    return f"""
+      <section class="section coach-section" id="coach">
+        <h2>先判断：这个问题适不适合用 Kelly</h2>
+        <div class="coach-grid">
+          <div class="coach-panel">
+            <span>适用性判断</span>
+            <strong>{esc(fit.get("plain_label", "可以用，但要保守"))}</strong>
+            <ul>{reasons or "<li>当前信息可用于保守试算。</li>"}</ul>
+            <ul class="muted-list">{caveats}</ul>
+          </div>
+          <div class="coach-panel">
+            <span>当前资源池</span>
+            <strong>{amount(snapshot.get("total"), resource_unit)}</strong>
+            <div class="resource-stack">
+              <i class="stack-recommended" style="width:{stack_width(recommended)}"></i>
+              <i class="stack-unused" style="width:{stack_width(unused_risk)}"></i>
+              <i class="stack-protected" style="width:{stack_width(protected)}"></i>
+            </div>
+            <ul class="legend-list">
+              <li><b class="dot green"></b>建议先投入：{amount(recommended, resource_unit)}</li>
+              <li><b class="dot gold"></b>风险预算未使用：{amount(unused_risk, resource_unit)}</li>
+              <li><b class="dot gray"></b>保护或未分配：{amount(protected, resource_unit)}</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section package-section" id="packages">
+        <h2>最小行动包</h2>
+        <p>普通用户不要先纠结比例本身。先把比例翻译成一个小行动包：做什么、做多大、看什么指标、什么时候加码或停止。</p>
+        <div class="package-grid">{''.join(packages)}</div>
+      </section>
+
+      <section class="section review-section" id="review-loop">
+        <h2>复盘闭环</h2>
+        <div class="coach-grid">
+          <div class="coach-panel">
+            <span>复盘窗口</span>
+            <strong>{esc(review.get("review_window", "one review cycle"))}</strong>
+            <ul>{collect_items}</ul>
+          </div>
+          <div class="coach-panel">
+            <span>重新计算条件</span>
+            <strong>不要长期沿用旧比例</strong>
+            <ul>{recalc_items}</ul>
+          </div>
+        </div>
+      </section>
+    """
+
+
 def plain_reason(item: dict[str, Any]) -> str:
     full = float(item.get("full_kelly_fraction") or 0.0)
     recommended = float(item.get("recommended_fraction") or 0.0)
@@ -561,6 +656,109 @@ def render_html(payload: dict[str, Any]) -> str:
       gap: 12px;
       max-width: 920px;
     }}
+    .coach-section {{
+      border-top: 5px solid var(--blue);
+    }}
+    .coach-grid {{
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }}
+    .coach-panel {{
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 15px;
+      background: #fffefa;
+      min-width: 0;
+    }}
+    .coach-panel span {{
+      display: block;
+      color: var(--blue);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }}
+    .coach-panel strong {{
+      display: block;
+      font-size: 20px;
+      margin-bottom: 8px;
+    }}
+    .coach-panel ul {{
+      margin: 0;
+    }}
+    .muted-list {{
+      color: var(--muted);
+      margin-top: 8px !important;
+    }}
+    .resource-stack {{
+      display: flex;
+      height: 18px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e8eee8;
+      margin: 12px 0;
+    }}
+    .resource-stack i {{
+      display: block;
+      height: 100%;
+    }}
+    .stack-recommended {{ background: var(--green); }}
+    .stack-unused {{ background: var(--gold); }}
+    .stack-protected {{ background: #cfd8d1; }}
+    .legend-list {{
+      list-style: none;
+      padding-left: 0;
+      color: var(--muted);
+    }}
+    .dot {{
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-right: 8px;
+    }}
+    .dot.green {{ background: var(--green); }}
+    .dot.gold {{ background: var(--gold); }}
+    .dot.gray {{ background: #cfd8d1; }}
+    .package-section {{
+      border-top: 5px solid var(--green);
+    }}
+    .package-grid {{
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }}
+    .package-item {{
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      background: #fffefa;
+    }}
+    .package-item h3 {{
+      margin: 0 0 6px;
+    }}
+    .package-item strong {{
+      display: block;
+      color: var(--green);
+      margin-bottom: 8px;
+    }}
+    .package-item dl {{
+      display: grid;
+      grid-template-columns: 108px minmax(0, 1fr);
+      gap: 6px 10px;
+      margin: 12px 0 0;
+      font-size: 13px;
+    }}
+    .package-item dt {{
+      color: var(--muted);
+    }}
+    .package-item dd {{
+      margin: 0;
+      color: var(--ink);
+    }}
+    .review-section {{
+      border-top: 5px solid var(--gold);
+    }}
     .section h2, .opportunity h3 {{
       margin: 0 0 10px;
     }}
@@ -656,7 +854,10 @@ def render_html(payload: dict[str, Any]) -> str:
       font-size: 12px;
     }}
     @media (max-width: 860px) {{
-      .hero, .split, .allocation-grid, .metrics, .mini-grid, .story-grid {{
+      .hero, .split, .allocation-grid, .metrics, .mini-grid, .story-grid, .coach-grid, .package-grid {{
+        grid-template-columns: 1fr;
+      }}
+      .package-item dl {{
         grid-template-columns: 1fr;
       }}
       h1 {{ font-size: 30px; }}
@@ -708,6 +909,8 @@ def render_html(payload: dict[str, Any]) -> str:
     </section>
 
     {render_story(report, primary_action)}
+
+    {render_practical_guidance(report, opportunities, resource_unit)}
 
     {render_action_plan(report, opportunities, resource_unit, primary_action)}
 

@@ -1,6 +1,6 @@
 # Yao Kelly Skill
 
-`yao-kelly-skill` turns uncertain investment, betting, and resource-allocation questions into conservative Kelly sizing reports.
+`yao-kelly-skill` turns uncertain investment, betting, and resource-allocation questions into practical resource allocation plans. Kelly is used as the sizing engine, but the user-facing output is an action plan.
 
 It is not a formula tutor. Its job is to help answer:
 
@@ -8,6 +8,8 @@ It is not a formula tutor. Its job is to help answer:
 - how much should I allocate
 - how conservative should the raw Kelly number become
 - what assumptions still matter
+- what is the smallest useful action package
+- when should I add, stop, or recalculate
 - why the skill stopped asking follow-up questions
 
 ## When To Use It
@@ -33,8 +35,9 @@ Do not use it for:
 3. If information is incomplete, score `decision_readiness` and ask only the top `1-3` missing questions.
 4. Stop asking when readiness reaches the threshold or the action class is already stable.
 5. Compute full Kelly, then apply fractional Kelly, dependence haircuts, caps, reserve rules, and total exposure scaling.
-6. Output canonical JSON plus a polished standalone HTML report.
-7. Append every package-level iteration to `history/CHANGELOG.md`.
+6. Translate the final fraction into minimum action packages with success metrics, add conditions, stop conditions, and review windows.
+7. Output canonical JSON plus a polished standalone HTML report.
+8. Append every package-level iteration to `history/CHANGELOG.md`.
 
 ## Outputs
 
@@ -47,6 +50,7 @@ The public version includes:
 - `reports/example-html-report.html`: sample HTML report with print/save-PDF support
 - `reports/marketing-budget-report.html`: quarterly customer-acquisition budget allocation example
 - `reports/engineering-hours-report.html`: non-financial engineering-capacity allocation example
+- `reports/internet-product-sprint-report.html`: internet product sprint allocation example with action packages
 - `history/CHANGELOG.md`: append-only iteration log
 
 ## HTML Report
@@ -77,6 +81,13 @@ Reports now also open with a narrative framing section:
 - solution path: how the report will turn the situation into a conservative allocation
 
 After that, the report introduces the Kelly principle in plain language before showing the detailed scenario tables and sizing calculations.
+
+The current report structure also adds:
+
+- fit assessment: whether Kelly is suitable for this problem
+- resource snapshot: total resource, recommended first commitment, unused risk budget, and protected reserve
+- minimum action packages: what to do first, what metric to watch, when to add, and when to stop
+- review loop: what to collect and when to recalculate
 
 ## Example Reports
 

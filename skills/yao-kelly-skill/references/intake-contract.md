@@ -25,12 +25,27 @@ Every brief should contain:
   - examples: long-term growth, capped drawdown, exploratory test, fixed budget allocation
 - `capital_base`
   - the money or resource pool that this recommendation is allowed to touch
+- `resource_unit`
+  - examples: `CNY`, `USD`, `engineering-hours`, `sprint-days`, `ad-budget`
+- `review_window`
+  - when the user will inspect real results before adding more resources
 - `constraints`
   - reserve cash, total exposure cap, single-opportunity cap, max loss tolerance, minimum ticket size, or lockup limits
 - `opportunities`
   - one or more candidate opportunities
 - `confidence_level`
   - `high`, `medium`, `low`, or `very_low`
+
+Every opportunity should also contain an `action_package` when possible:
+
+- `first_action`
+  - the smallest useful action the user can actually take
+- `success_metric`
+  - what to observe before adding more resources
+- `add_condition`
+  - what must be true before scaling
+- `stop_condition`
+  - what would make the user stop or shrink the allocation
 
 ## 3. Required fields by case type
 
@@ -83,6 +98,8 @@ Ask only the questions that can change the sizing result:
   - `你认可的胜率或各场景概率是多少？如果不确定，可以给 best / base / bear 三档。`
 - constraints are missing:
   - `单次上限、总暴露上限、最大可接受亏损、最少保留现金分别是多少？`
+- minimum action is missing:
+  - `如果只先做一个最小验证动作，它应该是什么？做完以后看哪个指标决定是否加码？`
 - multiple opportunities but dependence is missing:
   - `这些机会是独立、相关、互斥，还是你现在也不确定？`
 

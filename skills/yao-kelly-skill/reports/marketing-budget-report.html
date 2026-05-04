@@ -236,6 +236,109 @@
       gap: 12px;
       max-width: 920px;
     }
+    .coach-section {
+      border-top: 5px solid var(--blue);
+    }
+    .coach-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .coach-panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 15px;
+      background: #fffefa;
+      min-width: 0;
+    }
+    .coach-panel span {
+      display: block;
+      color: var(--blue);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .coach-panel strong {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+    .coach-panel ul {
+      margin: 0;
+    }
+    .muted-list {
+      color: var(--muted);
+      margin-top: 8px !important;
+    }
+    .resource-stack {
+      display: flex;
+      height: 18px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e8eee8;
+      margin: 12px 0;
+    }
+    .resource-stack i {
+      display: block;
+      height: 100%;
+    }
+    .stack-recommended { background: var(--green); }
+    .stack-unused { background: var(--gold); }
+    .stack-protected { background: #cfd8d1; }
+    .legend-list {
+      list-style: none;
+      padding-left: 0;
+      color: var(--muted);
+    }
+    .dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-right: 8px;
+    }
+    .dot.green { background: var(--green); }
+    .dot.gold { background: var(--gold); }
+    .dot.gray { background: #cfd8d1; }
+    .package-section {
+      border-top: 5px solid var(--green);
+    }
+    .package-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+    .package-item {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      background: #fffefa;
+    }
+    .package-item h3 {
+      margin: 0 0 6px;
+    }
+    .package-item strong {
+      display: block;
+      color: var(--green);
+      margin-bottom: 8px;
+    }
+    .package-item dl {
+      display: grid;
+      grid-template-columns: 108px minmax(0, 1fr);
+      gap: 6px 10px;
+      margin: 12px 0 0;
+      font-size: 13px;
+    }
+    .package-item dt {
+      color: var(--muted);
+    }
+    .package-item dd {
+      margin: 0;
+      color: var(--ink);
+    }
+    .review-section {
+      border-top: 5px solid var(--gold);
+    }
     .section h2, .opportunity h3 {
       margin: 0 0 10px;
     }
@@ -331,7 +434,10 @@
       font-size: 12px;
     }
     @media (max-width: 860px) {
-      .hero, .split, .allocation-grid, .metrics, .mini-grid, .story-grid {
+      .hero, .split, .allocation-grid, .metrics, .mini-grid, .story-grid, .coach-grid, .package-grid {
+        grid-template-columns: 1fr;
+      }
+      .package-item dl {
         grid-template-columns: 1fr;
       }
       h1 { font-size: 30px; }
@@ -412,7 +518,7 @@
         <div class="bar-track"><div class="bar-fill raw" style="width:50.00%"></div></div>
       </div>
     
-        <p>生成时间：2026-04-27T06:55:58.764824+00:00</p>
+        <p>生成时间：2026-05-04T02:44:08.781455+00:00</p>
       </aside>
     </section>
 
@@ -436,6 +542,78 @@
             <span>建议方案</span>
             <p>先把两个渠道拆成 best/base/bear 三种结果，估算每投入 1 元可能带来的净回报，再用 Kelly 得到理论投入比例，最后用置信度和渠道相关性把它压成保守预算上限。 当前动作判断是：先小规模试，不要大规模加码。</p>
           </article>
+        </div>
+      </section>
+    
+
+    
+      <section class="section coach-section" id="coach">
+        <h2>先判断：这个问题适不适合用 Kelly</h2>
+        <div class="coach-grid">
+          <div class="coach-panel">
+            <span>适用性判断</span>
+            <strong>可以用，但只能作为保守投入上限</strong>
+            <ul><li>The opportunities can be expressed as bounded payoff scenarios.</li><li>The current brief is ready enough for a conservative first allocation.</li></ul>
+            <ul class="muted-list"><li>At least one opportunity has weak estimate confidence; use the allocation as a test budget.</li></ul>
+          </div>
+          <div class="coach-panel">
+            <span>当前资源池</span>
+            <strong>¥300,000</strong>
+            <div class="resource-stack">
+              <i class="stack-recommended" style="width:9.47%"></i>
+              <i class="stack-unused" style="width:25.52%"></i>
+              <i class="stack-protected" style="width:65.00%"></i>
+            </div>
+            <ul class="legend-list">
+              <li><b class="dot green"></b>建议先投入：¥28,425</li>
+              <li><b class="dot gold"></b>风险预算未使用：¥76,575</li>
+              <li><b class="dot gray"></b>保护或未分配：¥195,000</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section package-section" id="packages">
+        <h2>最小行动包</h2>
+        <p>普通用户不要先纠结比例本身。先把比例翻译成一个小行动包：做什么、做多大、看什么指标、什么时候加码或停止。</p>
+        <div class="package-grid">
+            <article class="package-item">
+              <h3>Search Retargeting</h3>
+              <strong>¥25,500 (8.5%)</strong>
+              <p>Create one small action package for Search Retargeting; do not expand scope yet.</p>
+              <dl>
+                <dt>看什么指标</dt><dd>Compare actual result with the base scenario before adding more resources.</dd>
+                <dt>什么时候加码</dt><dd>Add resources only if the observed result reaches the base scenario and downside has not expanded.</dd>
+                <dt>什么时候停</dt><dd>Stop or shrink the allocation if the first review looks like the bear scenario.</dd>
+              </dl>
+            </article>
+            
+            <article class="package-item">
+              <h3>KOL Seeding Campaign</h3>
+              <strong>¥2,925 (1.0%)</strong>
+              <p>Run the smallest possible validation for KOL Seeding Campaign; buy information, not scale.</p>
+              <dl>
+                <dt>看什么指标</dt><dd>Compare actual result with the base scenario before adding more resources.</dd>
+                <dt>什么时候加码</dt><dd>Add resources only if the observed result reaches the base scenario and downside has not expanded.</dd>
+                <dt>什么时候停</dt><dd>Stop or shrink the allocation if the first review looks like the bear scenario.</dd>
+              </dl>
+            </article>
+            </div>
+      </section>
+
+      <section class="section review-section" id="review-loop">
+        <h2>复盘闭环</h2>
+        <div class="coach-grid">
+          <div class="coach-panel">
+            <span>复盘窗口</span>
+            <strong>one review cycle</strong>
+            <ul><li>actual resource spent</li><li>actual return or learning signal</li><li>worst observed downside</li></ul>
+          </div>
+          <div class="coach-panel">
+            <span>重新计算条件</span>
+            <strong>不要长期沿用旧比例</strong>
+            <ul><li>actual result is materially better or worse than the base scenario</li><li>downside risk changes</li><li>resource pool or exposure cap changes</li></ul>
+          </div>
         </div>
       </section>
     

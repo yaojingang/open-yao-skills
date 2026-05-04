@@ -31,6 +31,7 @@
 - `reports/example-html-report.html`: sample HTML report
 - `reports/marketing-budget-report.html`: customer-acquisition budget allocation example
 - `reports/engineering-hours-report.html`: non-financial engineering-capacity allocation example
+- `reports/internet-product-sprint-report.html`: practical internet product sprint allocation example
 - `history/CHANGELOG.md`: package iteration log
 - `logs/`: session log location
 

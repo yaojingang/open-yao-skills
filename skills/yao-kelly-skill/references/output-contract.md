@@ -1,6 +1,6 @@
 # Output Contract
 
-Return one Kelly application report that lets the user act immediately. The preferred artifact pair is:
+Return one practical resource allocation report that uses Kelly as the sizing engine. The preferred artifact pair is:
 
 - `JSON`: canonical calculation and audit source
 - `HTML`: polished human-readable report, suitable for review, print, and save-as-PDF
@@ -19,16 +19,33 @@ Return one Kelly application report that lets the user act immediately. The pref
    - conservative Kelly fraction
    - translated amount from the stated capital base
    - total exposure cap and reserve rule
-3. `公式路径`
+3. `适用性判断`
+   - whether this question is fit for Kelly
+   - why the result should be treated as an execution cap, test budget, or no-allocation answer
+4. `当前资源画像`
+   - total resource pool
+   - recommended first commitment
+   - unused risk budget
+   - protected or unallocated reserve
+5. `最小行动包`
+   - what to do first
+   - what success metric to watch
+   - when to add
+   - when to stop
+6. `复盘闭环`
+   - review window
+   - what real data to collect
+   - when to recalculate
+7. `公式路径`
    - binary closed form, scenario log-growth search, or multi-opportunity conservative scaling
-4. `关键假设`
+8. `关键假设`
    - mark each key number as `observed`, `estimated`, or `assumed`
-5. `为什么停止追问`
+9. `为什么停止追问`
    - readiness threshold reached, action class stable, or best current action already clear
-6. `敏感性与风险`
+10. `敏感性与风险`
    - which variable can change the answer most
    - when the recommendation should be cut further or abandoned
-7. `轮次日志`
+11. `轮次日志`
    - append each round in chronological order
 
 ## HTML report UI rules
@@ -46,6 +63,7 @@ Return one Kelly application report that lets the user act immediately. The pref
   - when to recalculate
 - repeated opportunities can use cards, but do not put nested cards inside them
 - label full Kelly as theory and conservative Kelly as the execution ceiling so non-technical readers do not over-use the raw number
+- include `适用性判断`, `当前资源画像`, `最小行动包`, and `复盘闭环` before the detailed formula tables
 - introduce the Kelly principle in plain language before the detailed method and scenario tables
 - keep tables for scenario probabilities and return multiples
 - include a sticky top bar with `Print / Save PDF`

@@ -1,7 +1,7 @@
 {
   "ok": true,
   "report": {
-    "generated_at": "2026-04-27T06:55:58.768889+00:00",
+    "generated_at": "2026-05-04T02:44:08.799402+00:00",
     "case_type": "multi-opportunity-allocation",
     "objective": "Allocate monthly engineering capacity between a retention automation project and an experimental AI triage assistant.",
     "capital_base": 120.0,
@@ -35,6 +35,40 @@
       "preliminary_total_fraction": 0.062125,
       "recommended_total_fraction": 0.062125,
       "recommended_total_amount": 7.46
+    },
+    "practical_guidance": {
+      "fit_assessment": {
+        "status": "fit-with-caution",
+        "plain_label": "可以用，但只能作为保守投入上限",
+        "reasons": [
+          "The opportunities can be expressed as bounded payoff scenarios.",
+          "The current brief is ready enough for a conservative first allocation."
+        ],
+        "caveats": [
+          "Dependence across opportunities is uncertain or high, so exposure is reduced.",
+          "At least one opportunity has weak estimate confidence; use the allocation as a test budget."
+        ]
+      },
+      "resource_snapshot": {
+        "total": 120.0,
+        "recommended": 7.46,
+        "risk_budget_cap": 48.0,
+        "unused_risk_budget": 40.54,
+        "protected_or_unallocated": 72.0
+      },
+      "review_loop": {
+        "review_window": "one review cycle",
+        "collect": [
+          "actual resource spent",
+          "actual return or learning signal",
+          "worst observed downside"
+        ],
+        "recalculate_when": [
+          "actual result is materially better or worse than the base scenario",
+          "downside risk changes",
+          "resource pool or exposure cap changes"
+        ]
+      }
     },
     "opportunities": [
       {
@@ -81,7 +115,15 @@
         "dependence_explicit": true,
         "friction_explicit": false,
         "recommended_fraction": 0.053125,
-        "recommended_amount": 6.38
+        "recommended_amount": 6.38,
+        "action_package": {
+          "first_action": "Create one small action package for Retention Automation; do not expand scope yet.",
+          "success_metric": "Compare actual result with the base scenario before adding more resources.",
+          "review_window": "one review cycle",
+          "add_condition": "Add resources only if the observed result reaches the base scenario and downside has not expanded.",
+          "stop_condition": "Stop or shrink the allocation if the first review looks like the bear scenario.",
+          "owner": null
+        }
       },
       {
         "name": "AI Triage Assistant",
@@ -127,7 +169,15 @@
         "dependence_explicit": true,
         "friction_explicit": false,
         "recommended_fraction": 0.009,
-        "recommended_amount": 1.08
+        "recommended_amount": 1.08,
+        "action_package": {
+          "first_action": "Run the smallest possible validation for AI Triage Assistant; buy information, not scale.",
+          "success_metric": "Compare actual result with the base scenario before adding more resources.",
+          "review_window": "one review cycle",
+          "add_condition": "Add resources only if the observed result reaches the base scenario and downside has not expanded.",
+          "stop_condition": "Stop or shrink the allocation if the first review looks like the bear scenario.",
+          "owner": null
+        }
       }
     ],
     "notes": [],

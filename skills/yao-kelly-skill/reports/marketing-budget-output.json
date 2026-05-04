@@ -1,7 +1,7 @@
 {
   "ok": true,
   "report": {
-    "generated_at": "2026-04-27T06:55:58.764824+00:00",
+    "generated_at": "2026-05-04T02:44:08.781455+00:00",
     "case_type": "multi-opportunity-allocation",
     "objective": "Allocate a quarterly customer-acquisition budget between proven search ads and a riskier KOL campaign while preserving downside control.",
     "capital_base": 300000.0,
@@ -30,6 +30,39 @@
       "preliminary_total_fraction": 0.09475,
       "recommended_total_fraction": 0.09475,
       "recommended_total_amount": 28425.0
+    },
+    "practical_guidance": {
+      "fit_assessment": {
+        "status": "fit-with-caution",
+        "plain_label": "可以用，但只能作为保守投入上限",
+        "reasons": [
+          "The opportunities can be expressed as bounded payoff scenarios.",
+          "The current brief is ready enough for a conservative first allocation."
+        ],
+        "caveats": [
+          "At least one opportunity has weak estimate confidence; use the allocation as a test budget."
+        ]
+      },
+      "resource_snapshot": {
+        "total": 300000.0,
+        "recommended": 28425.0,
+        "risk_budget_cap": 105000.0,
+        "unused_risk_budget": 76575.0,
+        "protected_or_unallocated": 195000.0
+      },
+      "review_loop": {
+        "review_window": "one review cycle",
+        "collect": [
+          "actual resource spent",
+          "actual return or learning signal",
+          "worst observed downside"
+        ],
+        "recalculate_when": [
+          "actual result is materially better or worse than the base scenario",
+          "downside risk changes",
+          "resource pool or exposure cap changes"
+        ]
+      }
     },
     "opportunities": [
       {
@@ -77,7 +110,15 @@
         "dependence_explicit": true,
         "friction_explicit": true,
         "recommended_fraction": 0.085,
-        "recommended_amount": 25500.0
+        "recommended_amount": 25500.0,
+        "action_package": {
+          "first_action": "Create one small action package for Search Retargeting; do not expand scope yet.",
+          "success_metric": "Compare actual result with the base scenario before adding more resources.",
+          "review_window": "one review cycle",
+          "add_condition": "Add resources only if the observed result reaches the base scenario and downside has not expanded.",
+          "stop_condition": "Stop or shrink the allocation if the first review looks like the bear scenario.",
+          "owner": null
+        }
       },
       {
         "name": "KOL Seeding Campaign",
@@ -124,7 +165,15 @@
         "dependence_explicit": true,
         "friction_explicit": true,
         "recommended_fraction": 0.00975,
-        "recommended_amount": 2925.0
+        "recommended_amount": 2925.0,
+        "action_package": {
+          "first_action": "Run the smallest possible validation for KOL Seeding Campaign; buy information, not scale.",
+          "success_metric": "Compare actual result with the base scenario before adding more resources.",
+          "review_window": "one review cycle",
+          "add_condition": "Add resources only if the observed result reaches the base scenario and downside has not expanded.",
+          "stop_condition": "Stop or shrink the allocation if the first review looks like the bear scenario.",
+          "owner": null
+        }
       }
     ],
     "notes": [],

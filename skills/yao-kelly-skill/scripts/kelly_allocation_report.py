@@ -284,6 +284,140 @@ def action_class(fraction: float) -> str:
     return "large"
 
 
+def default_action_text(action: str, opportunity_name: str) -> str:
+    if action == "skip":
+        return f"暂不投入 {opportunity_name}，先放进观察名单。"
+    if action == "observe-or-tiny-test":
+        return f"只为 {opportunity_name} 做最小验证，目标是买信息，不是扩大投入。"
+    if action == "small":
+        return f"为 {opportunity_name} 拆一个小行动包，先不要扩大范围。"
+    if action == "medium":
+        return f"可以把 {opportunity_name} 当成正式工作流推进，但必须守住投入上限。"
+    return f"可以分批扩大 {opportunity_name}，但每一批之后都要复盘并重新计算。"
+
+
+def build_action_package(
+    opportunity: dict[str, Any],
+    result: dict[str, Any],
+    brief: dict[str, Any],
+) -> dict[str, Any]:
+    package = dict(opportunity.get("action_package", {}))
+    action = result.get("action_class", "skip")
+    name = str(result.get("name", "this opportunity"))
+    review_window = first_present(
+        package.get("review_window"),
+        brief.get("review_window"),
+        "one review cycle",
+    )
+    return {
+        "first_action": first_present(
+            package.get("first_action"),
+            default_action_text(action, name),
+        ),
+        "success_metric": first_present(
+            package.get("success_metric"),
+            "先把真实结果和 base 场景对比，再决定是否加资源。",
+        ),
+        "review_window": review_window,
+        "add_condition": first_present(
+            package.get("add_condition"),
+            "只有真实结果达到 base 场景，且下行风险没有扩大时，才加资源。",
+        ),
+        "stop_condition": first_present(
+            package.get("stop_condition"),
+            "如果第一次复盘接近 bear 场景，就停止或缩小投入。",
+        ),
+        "owner": package.get("owner"),
+    }
+
+
+def build_fit_assessment(
+    brief: dict[str, Any],
+    results: list[dict[str, Any]],
+    readiness: dict[str, Any],
+) -> dict[str, Any]:
+    constraints = dict(brief.get("constraints", {}))
+    reasons: list[str] = []
+    caveats: list[str] = []
+    status = "fit-with-caution"
+
+    if constraints.get("irreversible") or constraints.get("unbounded_downside"):
+        status = "not-fit"
+        reasons.append("The decision has irreversible or unbounded downside.")
+    else:
+        reasons.append("The opportunities can be expressed as bounded payoff scenarios.")
+
+    if readiness.get("score", 0) < READINESS_THRESHOLD:
+        status = "provisional"
+        caveats.append("Decision readiness is below the default threshold.")
+    else:
+        reasons.append("The current brief is ready enough for a conservative first allocation.")
+
+    if any(item.get("dependence") in ("unknown", "high") for item in results):
+        caveats.append("Dependence across opportunities is uncertain or high, so exposure is reduced.")
+
+    if any(item.get("confidence_level") in ("low", "very_low") for item in results):
+        caveats.append("At least one opportunity has weak estimate confidence; use the allocation as a test budget.")
+
+    return {
+        "status": status,
+        "plain_label": {
+            "fit-with-caution": "可以用，但只能作为保守投入上限",
+            "provisional": "可以先给临时建议，但还需要补信息",
+            "not-fit": "不适合直接用 Kelly 定投入",
+        }.get(status, status),
+        "reasons": reasons,
+        "caveats": caveats,
+    }
+
+
+def build_resource_snapshot(
+    capital_base: float | None,
+    summary: dict[str, Any],
+) -> dict[str, Any]:
+    recommended_total = summary.get("recommended_total_amount")
+    if capital_base is None or recommended_total is None:
+        return {
+            "total": capital_base,
+            "recommended": recommended_total,
+            "risk_budget_cap": None,
+            "unused_risk_budget": None,
+            "protected_or_unallocated": None,
+        }
+    risk_budget_cap = capital_base * float(summary.get("total_exposure_cap", 0.0))
+    unused_risk_budget = max(0.0, risk_budget_cap - float(recommended_total))
+    protected = max(0.0, capital_base - risk_budget_cap)
+    return {
+        "total": round(capital_base, 2),
+        "recommended": round(float(recommended_total), 2),
+        "risk_budget_cap": round(risk_budget_cap, 2),
+        "unused_risk_budget": round(unused_risk_budget, 2),
+        "protected_or_unallocated": round(protected, 2),
+    }
+
+
+def build_review_loop(brief: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "review_window": first_present(brief.get("review_window"), "one review cycle"),
+        "collect": brief.get(
+            "review_collect",
+            [
+                "实际花掉的资源",
+                "真实收益或学习信号",
+                "观察到的最差损失",
+            ],
+        ),
+        "recalculate_when": brief.get(
+            "recalculate_when",
+            [
+                "真实结果明显好于或差于 base 场景",
+                "下行风险发生变化",
+                "资源池或总暴露上限发生变化",
+            ],
+        ),
+    }
+
+
 def derive_total_exposure_cap(
     constraints: dict[str, Any], notes: list[str]
 ) -> tuple[float, float]:
@@ -517,6 +651,26 @@ def build_report(brief: dict[str, Any]) -> dict[str, Any]:
         item["action_class"] = action_class(recommended_fraction)
 
     readiness = assess_readiness(brief, results, case_type, constraints)
+    for result, opportunity in zip(results, opportunities, strict=False):
+        result["action_package"] = build_action_package(opportunity, result, brief)
+
+    summary = {
+        "decision_readiness": readiness,
+        "total_exposure_cap": round(total_exposure_cap, 6),
+        "min_cash_reserve_ratio": round(min_cash_reserve_ratio, 6),
+        "preliminary_total_fraction": round(preliminary_total, 6),
+        "recommended_total_fraction": round(
+            sum(item["recommended_fraction"] for item in results), 6
+        ),
+        "recommended_total_amount": (
+            round(
+                sum(item["recommended_amount"] or 0.0 for item in results),
+                2,
+            )
+            if capital_base is not None
+            else None
+        ),
+    }
 
     return {
         "generated_at": datetime.now(timezone.utc).isoformat(),
@@ -525,22 +679,11 @@ def build_report(brief: dict[str, Any]) -> dict[str, Any]:
         "capital_base": capital_base,
         "resource_unit": brief.get("resource_unit", "currency"),
         "context": brief.get("context", {}),
-        "summary": {
-            "decision_readiness": readiness,
-            "total_exposure_cap": round(total_exposure_cap, 6),
-            "min_cash_reserve_ratio": round(min_cash_reserve_ratio, 6),
-            "preliminary_total_fraction": round(preliminary_total, 6),
-            "recommended_total_fraction": round(
-                sum(item["recommended_fraction"] for item in results), 6
-            ),
-            "recommended_total_amount": (
-                round(
-                    sum(item["recommended_amount"] or 0.0 for item in results),
-                    2,
-                )
-                if capital_base is not None
-                else None
-            ),
+        "summary": summary,
+        "practical_guidance": {
+            "fit_assessment": build_fit_assessment(brief, results, readiness),
+            "resource_snapshot": build_resource_snapshot(capital_base, summary),
+            "review_loop": build_review_loop(brief),
         },
         "opportunities": results,
         "notes": report_notes,

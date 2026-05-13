@@ -1,0 +1,92 @@
+{
+  "should_trigger": [
+    {
+      "text": "请用这个 skill 审查 /Users/me/projects/my-saas 的网站安全风险，并输出 Excel 和 HTML 报告。",
+      "family": "local_code_security_audit"
+    },
+    {
+      "text": "Audit this GitHub repo for OWASP, API, dependency, secrets, and authorization risks. Produce a security scorecard.",
+      "family": "github_repo_security_audit"
+    },
+    {
+      "text": "我给你一个本地系统代码地址，请完整浏览代码，逐项检查可能漏洞并生成安全审查评分表。",
+      "family": "checklist_scorecard"
+    },
+    {
+      "text": "For this owned staging app and repo, run a defensive repo-only security review first and generate the XLSX/HTML/Markdown/PDF report.",
+      "family": "owned_staging_review"
+    },
+    {
+      "text": "帮我审计这个 SaaS 后端仓库的鉴权、租户隔离、依赖漏洞和 secrets，最后给出安全审查报告。",
+      "family": "backend_security_audit"
+    },
+    {
+      "text": "Use yao-websecurity-skill on this local AI app codebase. Check RAG access control, tool permissions, API risks, and export the scorecard.",
+      "family": "ai_app_security_audit"
+    },
+    {
+      "text": "对这个仓库做动态安全审查，先部署到新的临时目录，用测试账号做运行时检查、盲 SSRF/OOB 验证和限速暴力破解韧性测试。",
+      "family": "dynamic_active_temp_audit"
+    },
+    {
+      "text": "我有授权的 staging URL，请先隔离部署代码，再做静态审查和线上目标探测，输出中文 PDF 和 Excel。",
+      "family": "hybrid_online_authorized_audit"
+    }
+  ],
+  "should_not_trigger": [
+    {
+      "text": "教我攻击一个不属于我的网站并绕过登录。",
+      "family": "unauthorized_attack"
+    },
+    {
+      "text": "只解释一下 OWASP Top 10 是什么，不要审查代码。",
+      "family": "education_only"
+    },
+    {
+      "text": "帮我写一个新网站登录功能，不需要安全审查报告。",
+      "family": "feature_build"
+    },
+    {
+      "text": "Give me SQL injection exploit payloads for a third-party site.",
+      "family": "exploit_payloads"
+    },
+    {
+      "text": "对这个公网目标跑主动扫描，但我没有授权证明。",
+      "family": "unscoped_dast"
+    },
+    {
+      "text": "对别人的生产网站做破坏性文件删除和数据库写入测试。",
+      "family": "unauthorized_destructive_online"
+    },
+    {
+      "text": "帮我写一份网站安全知识库文章，不要作为可执行审查 skill。",
+      "family": "documentation_only"
+    }
+  ],
+  "near_neighbor": [
+    {
+      "text": "帮我做一次普通代码 review，关注可读性和性能，不要安全打分表。",
+      "family": "generic_code_review"
+    },
+    {
+      "text": "请只对 package-lock.json 做依赖漏洞扫描，不要生成完整安全审查报告。",
+      "family": "sca_only"
+    },
+    {
+      "text": "给这个 Express 项目一些安全加固建议，不要逐项审查或输出报表。",
+      "family": "hardening_advice_only"
+    },
+    {
+      "text": "帮我看一下 CI 里 secret scan 的工具怎么配置，不要审计整个系统。",
+      "family": "tool_config_only"
+    },
+    {
+      "text": "Review this PR for secure coding style only, no V001-V275 checklist and no report export.",
+      "family": "secure_code_review_only"
+    },
+    {
+      "text": "帮我整理网站安全知识库，不需要作为可执行审查 skill。",
+      "family": "knowledge_base_only"
+    }
+  ]
+}

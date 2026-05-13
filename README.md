@@ -117,8 +117,35 @@ yao-open-skills/
 - [Yao Game Theory Skill](docs/skills/yao-gametheory-skill.md)
 - [Yao Kelly Skill](docs/skills/yao-kelly-skill.md)
 - [Yao Tutorial Skill](docs/skills/yao-tutorial-skill.md)
+- [Yao Websecurity Skill](docs/skills/yao-websecurity-skill.md)
 
 ## Featured Published Skills
+
+### Yao Websecurity Skill
+
+[`yao-websecurity-skill`](docs/skills/yao-websecurity-skill.md) 是一个面向授权网站、SaaS、API、AI 应用、本地代码目录和 GitHub 仓库的安全审查 Skill。
+
+它不是简单调用扫描器，而是先理解系统代码、路由、认证、数据模型、部署配置、依赖和 AI/LLM 集成，再从 `V001-V275` 漏洞本体中筛选真正相关的检查项，最后输出可复核的安全评分表和审查报告。
+
+它的公开版本现在有这些比较突出的特点：
+
+- 内置 275 个网站安全检查项，覆盖访问控制、认证会话、API、XSS、CSRF、SSRF、文件上传、依赖、容器、CI/CD、数据库、缓存、AI/RAG/LLM 等风险域
+- 支持 `static`、`dynamic-safe`、`dynamic-active`、`online-authorized` 和 `hybrid` 多种审查模式
+- 本地代码和 GitHub 仓库都必须先复制或克隆到全新的临时目录，构建、运行、测试和报告生成都在隔离工作区内完成
+- 动态主动测试按授权开关控制，盲 SSRF/OOB、暴力破解、文件变更、数据库写入和资源压力测试默认只允许在隔离临时部署内执行
+- 报告默认中文，输出 `Excel + HTML + Markdown + PDF + sanitized JSON`
+- HTML 支持中英切换和粘性顶部导航；Excel 使用中文状态、中文解释和工程分派友好的评分表
+- 渲染前会清洗本地绝对路径、Cookie、Bearer Token、API Key、密码、私钥和长 token-like 字符串
+
+如果你想快速理解这个 Skill，建议按这个顺序看：
+
+1. [公开说明文档](docs/skills/yao-websecurity-skill.md)
+2. [Skill 入口](skills/yao-websecurity-skill/SKILL.md)
+3. [目录说明](skills/yao-websecurity-skill/README.md)
+4. [审查模式](skills/yao-websecurity-skill/references/review-modes.md)
+5. [报告契约](skills/yao-websecurity-skill/references/report-contract.md)
+6. [漏洞本体](skills/yao-websecurity-skill/references/vulnerability-ontology.csv)
+7. [报告脚本](skills/yao-websecurity-skill/scripts/security_audit_report.py)
 
 ### Yao Tutorial Skill
 
@@ -250,6 +277,7 @@ yao-open-skills/
 | [yao-kelly-skill](skills/yao-kelly-skill/SKILL.md) | [guide](docs/skills/yao-kelly-skill.md) | `active` | `published` | [skills/yao-kelly-skill](skills/yao-kelly-skill) | `external-local-source` | [link](https://github.com/yaojingang/yao-open-skills/tree/main/skills/yao-kelly-skill) |
 | [yao-open-skills-sync](skills/yao-open-skills-sync/SKILL.md) | [guide](docs/skills/yao-open-skills-sync.md) | `active` | `published` | [skills/yao-open-skills-sync](skills/yao-open-skills-sync) | [skills/yao-open-skills-sync](skills/yao-open-skills-sync) | [link](https://github.com/yaojingang/yao-open-skills/tree/main/skills/yao-open-skills-sync) |
 | [yao-tutorial-skill](skills/yao-tutorial-skill/SKILL.md) | [guide](docs/skills/yao-tutorial-skill.md) | `active` | `published` | [skills/yao-tutorial-skill](skills/yao-tutorial-skill) | `external-local-source` | [link](https://github.com/yaojingang/yao-open-skills/tree/main/skills/yao-tutorial-skill) |
+| [yao-websecurity-skill](skills/yao-websecurity-skill/SKILL.md) | [guide](docs/skills/yao-websecurity-skill.md) | `active` | `published` | [skills/yao-websecurity-skill](skills/yao-websecurity-skill) | `external-local-source` | [link](https://github.com/yaojingang/yao-open-skills/tree/main/skills/yao-websecurity-skill) |
 <!-- catalog:end -->
 
 ## 后续约定

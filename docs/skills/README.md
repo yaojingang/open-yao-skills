@@ -16,3 +16,4 @@ Current guides:
 - [yao-gametheory-skill](yao-gametheory-skill.md)
 - [yao-kelly-skill](yao-kelly-skill.md)
 - [yao-tutorial-skill](yao-tutorial-skill.md)
+- [yao-websecurity-skill](yao-websecurity-skill.md)

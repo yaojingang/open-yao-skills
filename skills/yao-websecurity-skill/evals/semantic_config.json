@@ -1,0 +1,281 @@
+{
+  "optimizer_hints": {
+    "capability": "Defensive website security audit from local code, GitHub repository, isolated runtime, or authorized staging target with static/dynamic modes, checklist scoring, and Chinese Excel/HTML/Markdown/PDF reports",
+    "inputs": [
+      "local code path",
+      "GitHub repository",
+      "staging URL",
+      "owned runtime",
+      "dynamic review",
+      "active validation",
+      "website system",
+      "SaaS",
+      "API",
+      "AI app",
+      "本地代码地址",
+      "GitHub 仓库",
+      "网站系统"
+    ],
+    "trigger_actions": [
+      "audit security",
+      "security review",
+      "check vulnerabilities",
+      "scorecard",
+      "export Excel",
+      "export HTML",
+      "export Markdown",
+      "export PDF",
+      "dynamic audit",
+      "runtime check",
+      "blind SSRF",
+      "OOB",
+      "brute-force resilience",
+      "安全审查",
+      "漏洞检查",
+      "评分表",
+      "动态审查",
+      "运行时检查",
+      "盲测",
+      "临时部署",
+      "生成报告"
+    ],
+    "exclusions": [
+      "unauthorized attack",
+      "exploit weaponization",
+      "credential theft",
+      "destructive testing without authorization",
+      "production data mutation",
+      "generic explanation",
+      "feature build",
+      "未授权攻击",
+      "绕过登录",
+      "漏洞利用",
+      "未授权破坏性测试",
+      "只解释"
+    ]
+  },
+  "fallback_positive_concepts": [
+    "web_security_audit",
+    "repo_code_review",
+    "dynamic_review",
+    "checklist_scorecard",
+    "report_export"
+  ],
+  "positive_concepts": {
+    "web_security_audit": {
+      "weight": 0.34,
+      "phrases": [
+        "website security audit",
+        "web security review",
+        "security audit",
+        "security review",
+        "website security risk",
+        "audit security",
+        "review security",
+        "check vulnerabilities",
+        "owasp",
+        "api security",
+        "网站安全审查",
+        "安全审查",
+        "网站安全风险",
+        "审查",
+        "安全检查",
+        "漏洞检查",
+        "漏洞审查"
+      ]
+    },
+    "repo_code_review": {
+      "weight": 0.24,
+      "phrases": [
+        "local code path",
+        "local path",
+        "github repo",
+        "github repository",
+        "codebase",
+        "repository",
+        "browse code",
+        "inspect code",
+        "本地代码",
+        "本地路径",
+        "代码地址",
+        "github 仓库",
+        "完整浏览代码",
+        "系统代码"
+      ]
+    },
+    "checklist_scorecard": {
+      "weight": 0.22,
+      "phrases": [
+        "checklist",
+        "scorecard",
+        "score table",
+        "risk scoring",
+        "risk found",
+        "unclear",
+        "not applicable",
+        "逐项检查",
+        "评分表",
+        "打分表",
+        "风险评估",
+        "存在风险",
+        "存疑"
+      ]
+    },
+    "dynamic_review": {
+      "weight": 0.22,
+      "phrases": [
+        "dynamic review",
+        "dynamic audit",
+        "runtime check",
+        "active validation",
+        "temporary deployment",
+        "isolated runtime",
+        "blind ssrf",
+        "oob test",
+        "brute-force resilience",
+        "动态审查",
+        "动态安全审查",
+        "运行时检查",
+        "主动验证",
+        "临时部署",
+        "隔离环境",
+        "盲测",
+        "OOB",
+        "暴力破解韧性"
+      ]
+    },
+    "report_export": {
+      "weight": 0.2,
+      "phrases": [
+        "excel",
+        "xlsx",
+        "html",
+        "markdown",
+        "pdf",
+        "report",
+        "export",
+        "security report",
+        "Excel 报表",
+        "输出 Excel",
+        "输出 HTML",
+        "输出 Markdown",
+        "输出 PDF",
+        "HTML",
+        "安全审查报告",
+        "输出报告",
+        "生成报告"
+      ]
+    }
+  },
+  "negative_concepts": {
+    "unauthorized_attack": {
+      "weight": 0.45,
+      "exclusive": true,
+      "phrases": [
+        "unauthorized",
+        "attack a website",
+        "third-party target",
+        "bypass login",
+        "exploit payloads",
+        "sql injection exploit",
+        "stealth",
+        "exploit weaponization",
+        "credential theft",
+        "malware",
+        "未授权",
+        "攻击网站",
+        "绕过登录",
+        "窃取凭证",
+        "木马",
+        "免杀"
+      ]
+    },
+    "education_only": {
+      "weight": 0.22,
+      "exclusive": false,
+      "phrases": [
+        "explain",
+        "what is",
+        "summary only",
+        "do not audit",
+        "只解释",
+        "是什么",
+        "不要审查",
+        "只总结"
+      ]
+    },
+    "feature_build": {
+      "weight": 0.28,
+      "exclusive": false,
+      "phrases": [
+        "build a login feature",
+        "new feature",
+        "implement",
+        "login feature",
+        "开发功能",
+        "写功能",
+        "登录功能",
+        "写一个新网站",
+        "新建网站"
+      ]
+    },
+    "do_not_audit": {
+      "weight": 0.42,
+      "exclusive": true,
+      "phrases": [
+        "do not audit",
+        "no security audit",
+        "do not need a security report",
+        "do not audit the whole system",
+        "no report export",
+        "no v001-v275 checklist",
+        "不需要安全审查报告",
+        "不需要安全审查",
+        "不要安全审查",
+        "不要审查",
+        "不要审计整个系统",
+        "不要逐项审查",
+        "不要生成完整安全审查报告"
+      ]
+    },
+    "generic_code_review": {
+      "weight": 0.18,
+      "exclusive": false,
+      "phrases": [
+        "readability",
+        "performance review",
+        "generic code review",
+        "可读性",
+        "性能",
+        "普通代码 review"
+      ]
+    },
+    "partial_tooling_only": {
+      "weight": 0.24,
+      "exclusive": false,
+      "phrases": [
+        "sca only",
+        "dependency scan only",
+        "only package-lock",
+        "tool config",
+        "configure secret scan",
+        "只做依赖漏洞扫描",
+        "只对 package-lock",
+        "secret scan 的工具怎么配置",
+        "工具怎么配置"
+      ]
+    },
+    "hardening_advice_only": {
+      "weight": 0.24,
+      "exclusive": false,
+      "phrases": [
+        "hardening advice",
+        "secure coding style only",
+        "no checklist",
+        "安全加固建议",
+        "不要输出报表",
+        "不要逐项审查"
+      ]
+    }
+  }
+}

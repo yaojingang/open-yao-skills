@@ -1,0 +1,43 @@
+{
+  "name": "yao-websecurity-skill",
+  "version": "1.1.0",
+  "owner": "Yao Team",
+  "updated_at": "2026-05-13",
+  "status": "active",
+  "maturity_tier": "production",
+  "lifecycle_stage": "production",
+  "context_budget_tier": "production",
+  "review_cadence": "monthly",
+  "category": "security",
+  "complexity_tier": "complex",
+  "target_platforms": [
+    "openai",
+    "claude",
+    "generic"
+  ],
+  "factory_components": [
+    "references",
+    "scripts",
+    "templates",
+    "evals",
+    "reports",
+    "examples",
+    "tests"
+  ],
+  "source_documents": [
+    {
+      "title": "网站安全审查 AI Skill 设计与漏洞知识库报告",
+      "path": "references/security-audit-method.md",
+      "checked_at": "2026-05-12"
+    }
+  ],
+  "external_benchmarks": [
+    "OWASP Top 10:2025",
+    "OWASP API Security Top 10 2023",
+    "OWASP ASVS",
+    "MITRE CWE Top 25 2025",
+    "CISA KEV",
+    "FIRST CVSS v4.0",
+    "OWASP Top 10 for LLM Applications 2025"
+  ]
+}

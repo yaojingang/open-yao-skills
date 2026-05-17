@@ -1,6 +1,6 @@
 {
   "repo_name": "yao-open-skills",
-  "updated_at": "2026-05-13",
+  "updated_at": "2026-05-17",
   "skills": [
     {
       "slug": "learning-builder",
@@ -209,6 +209,29 @@
       ],
       "last_synced_at": "2026-05-13",
       "updated_at": "2026-05-13"
+    },
+    {
+      "slug": "yao-weread-skill",
+      "title": "Yao WeRead Skill",
+      "summary": "Generate polished WeRead personal reading analytics reports with reading rhythm, shelf assets, category preference, note semantics, word clouds, and a standalone HTML output.",
+      "source_local_path": "/Users/laoyao/AI Coding/03-Development/Skills/yao-weread-skill",
+      "collection_path": "skills/yao-weread-skill",
+      "lifecycle": "active",
+      "sync_status": "published",
+      "github_repo": "yao-open-skills",
+      "github_url": "https://github.com/yaojingang/yao-open-skills/tree/main/skills/yao-weread-skill",
+      "guide_path": "docs/skills/yao-weread-skill.md",
+      "license": "MIT",
+      "tags": [
+        "weread",
+        "reading-analytics",
+        "visualization",
+        "html",
+        "word-cloud",
+        "notes"
+      ],
+      "last_synced_at": "2026-05-17",
+      "updated_at": "2026-05-17"
     }
   ]
 }

@@ -1,0 +1,22 @@
+interface:
+  display_name: "Yao WeRead Skill"
+  short_description: "Generate polished live or sample HTML reading reports from WeRead stats, shelf, notes, and highlights"
+  default_prompt: "Use $yao-weread-skill to generate my WeRead personal reading visualization report for the last 2 years, including word cloud, heatmaps, radar charts, and 20+ chart modules."
+compatibility:
+  canonical_format: "agent-skills"
+  adapter_targets:
+    - "openai"
+    - "generic"
+  activation:
+    mode: "manual"
+    paths: []
+  execution:
+    context: "local"
+    shell: "bash"
+  trust:
+    source_tier: "local"
+    remote_inline_execution: "forbid"
+    remote_metadata_policy: "allow-metadata-only"
+  degradation:
+    openai: "metadata-adapter"
+    generic: "neutral-source"

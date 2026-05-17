@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>微信读书个人可视化报告：AI创业者版</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/echarts-wordcloud@2/dist/echarts-wordcloud.min.js"></script>
+<style>
+  :root {
+    --parchment:#f5f4ed;
+    --ivory:#faf9f5;
+    --near-black:#141413;
+    --dark-warm:#3d3d3a;
+    --charcoal:#4d4c48;
+    --olive:#5e5d59;
+    --stone:#87867f;
+    --brand:#1B365D;
+    --brand-light:#2D5A8A;
+    --border:#e8e6dc;
+    --border-soft:#e5e3d8;
+    --tag-bg:#E4ECF5;
+  }
+  * { box-sizing:border-box; }
+  html, body { margin:0; background:var(--parchment); color:var(--near-black); overflow-x:hidden; }
+  body {
+    font-family:"Inter","Source Han Sans SC","Noto Sans CJK SC",-apple-system,BlinkMacSystemFont,"PingFang SC",Arial,sans-serif;
+    line-height:1.5;
+  }
+  h1, h2, h3, .serif {
+    font-family:"TsangerJinKai02","Source Han Serif SC","Noto Serif CJK SC","Songti SC",Georgia,serif;
+    font-weight:500;
+    letter-spacing:0;
+  }
+  .page { max-width:1240px; margin:0 auto; padding:40px 28px 72px; overflow-x:hidden; }
+  .cover {
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    border-bottom:1px solid var(--border);
+    padding:48px 0 34px;
+  }
+  .cover > div, .section-title, .insights, .metric, .chart-card { min-width:0; }
+  .eyebrow { color:var(--brand); font-size:13px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:18px; }
+  h1 { font-size:clamp(38px, 6vw, 76px); line-height:1.08; margin:0 0 22px; max-width:920px; }
+  .subtitle { max-width:760px; color:var(--olive); font-size:20px; line-height:1.5; margin:0; }
+  .meta-line { display:flex; flex-wrap:wrap; gap:10px; color:var(--stone); font-size:14px; margin-top:30px; }
+  .tag { background:var(--tag-bg); color:var(--brand); border-radius:4px; padding:4px 8px; }
+  section { padding:42px 0; border-bottom:1px solid var(--border); }
+  .section-title { border-left:3px solid var(--brand); padding-left:12px; margin-bottom:18px; }
+  .section-title h2 { margin:0; font-size:28px; line-height:1.2; }
+  .section-title p { margin:7px 0 0; color:var(--olive); max-width:760px; }
+  .metrics { display:grid; grid-template-columns:repeat(6, minmax(0, 1fr)); gap:12px; margin:28px 0 22px; }
+  .metric { background:var(--ivory); border:1px solid var(--border); border-radius:8px; padding:16px 16px 14px; min-height:92px; }
+  .metric-value { display:block; color:var(--brand); font-family:"TsangerJinKai02","Source Han Serif SC",serif; font-size:28px; line-height:1.05; overflow-wrap:anywhere; }
+  .metric-label { display:block; color:var(--olive); font-size:13px; margin-top:8px; }
+  .insights { background:var(--ivory); border:1px solid var(--border); border-radius:8px; padding:22px 24px; }
+  .insights ul { margin:0; padding-left:22px; }
+  .insights li { margin:7px 0; color:var(--charcoal); }
+  .chart-grid { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:18px; }
+  .chart-card { background:var(--ivory); border:1px solid var(--border); border-radius:8px; padding:16px; min-width:0; }
+  .chart-head { display:flex; justify-content:space-between; gap:16px; align-items:flex-start; margin-bottom:8px; min-height:64px; }
+  .chart-head h3 { margin:0 0 5px; font-size:18px; line-height:1.2; color:var(--near-black); }
+  .chart-head p { margin:0; color:var(--olive); font-size:13px; line-height:1.35; }
+  .chart-head span { flex:0 0 auto; max-width:180px; color:var(--stone); font-size:11px; line-height:1.3; text-align:right; overflow-wrap:anywhere; }
+  .chart { height:300px; width:100%; }
+  .empty-state { display:none; height:300px; align-items:center; justify-content:center; color:var(--stone); border:1px dashed var(--border); border-radius:6px; text-align:center; padding:20px; }
+  .chart-card.is-empty .chart { display:none; }
+  .chart-card.is-empty .empty-state { display:flex; }
+  .table-wrap { overflow:auto; background:var(--ivory); border:1px solid var(--border); border-radius:8px; margin-top:16px; }
+  table { width:100%; border-collapse:collapse; font-size:14px; }
+  th, td { padding:10px 12px; border-bottom:1px solid var(--border-soft); text-align:left; white-space:nowrap; }
+  th { color:var(--brand); font-weight:600; background:#f0eee6; }
+  td { color:var(--charcoal); }
+  .appendix { display:grid; grid-template-columns:1.2fr .8fr; gap:18px; }
+  .note { color:var(--olive); background:var(--ivory); border:1px solid var(--border); border-radius:8px; padding:18px 20px; }
+  .note p { margin:0 0 10px; }
+  @media (max-width: 920px) {
+    .page { padding:28px 16px 52px; }
+    h1 { max-width:100%; font-size:30px; line-height:1.18; white-space:normal; word-break:break-all; overflow-wrap:anywhere; }
+    .subtitle { max-width:100%; font-size:18px; white-space:normal; word-break:break-all; overflow-wrap:anywhere; }
+    .metrics { grid-template-columns:repeat(2, minmax(0, 1fr)); }
+    .chart-grid { grid-template-columns:1fr; }
+    .appendix { grid-template-columns:1fr; }
+    .chart-head { display:block; min-height:auto; }
+    .chart-head span { display:block; max-width:none; text-align:left; margin-top:8px; }
+  }
+  @media print {
+    .page { max-width:none; padding:0; }
+    .chart-card, .metric, .insights, .note, .table-wrap { break-inside:avoid; }
+    section { break-after:auto; }
+  }
+</style>
+</head>
+<body>
+<main class="page">
+  <header class="cover">
+    <div>
+      <div class="eyebrow">WeRead AI-Founder Analytics</div>
+      <h1>微信读书个人可视化报告：AI创业者版</h1>
+      <p class="subtitle">一个 AI 创业者读者的近两年阅读画像。把阅读时间、书架资产、内容偏好和笔记语义放在同一张纸面上：先看节律，再看兴趣，最后看留下来的句子。</p>
+      <div class="meta-line"><span class="tag">范围：2024-05-17 至 2026-05-17</span>
+<span class="tag">生成：2026-05-17 22:24:11 CST</span>
+<span class="tag">图表：26 个模块</span>
+<span class="tag">画像：AI创业者读者</span></div>
+    </div>
+  </header>
+
+  <section>
+    <div class="section-title">
+      <h2>总览</h2>
+      <p>这里的数字来自微信读书账户数据。阅读时长按秒计算后转成人类可读格式，书架总数包含电子书、有声/专辑和文章收藏入口。</p>
+    </div>
+    <div class="metrics"><div class="metric"><span class="metric-value">1693小时30分钟</span><span class="metric-label">阅读时长</span></div>
+<div class="metric"><span class="metric-value">439</span><span class="metric-label">有效阅读日</span></div>
+<div class="metric"><span class="metric-value">771</span><span class="metric-label">书架条目</span></div>
+<div class="metric"><span class="metric-value">10950</span><span class="metric-label">笔记总量</span></div>
+<div class="metric"><span class="metric-value">42</span><span class="metric-label">有笔记书籍</span></div>
+<div class="metric"><span class="metric-value">9900</span><span class="metric-label">语义文本</span></div></div>
+    <div class="insights"><ul><li>近两年累计阅读 1693小时30分钟，有效阅读 439 天。</li>
+<li>书架共有 771 个条目，其中电子书 725 本、有声/专辑 45 个、文章收藏入口 1 个。</li>
+<li>有笔记的书 42 本，笔记总量 10950 条；本次抓取到近两年划线 7455 条、想法/点评 2445 条用于语义分析。</li>
+<li>月度记录中读得最久的是《定位》，累计约 27.46 小时。</li>
+<li>年度偏好聚合中，最高分类是「AI技术」，约 474.18 小时。</li></ul></div>
+  </section>
+
+  <section>
+    <div class="section-title">
+      <h2>时间节律</h2>
+      <p>月、日、星期三个尺度一起看，能区分持续阅读、阶段性冲刺和短期空窗。</p>
+    </div>
+    <div class="chart-grid">
+        <article class="chart-card" data-chart-card="chart-01e632eec7">
+          <div class="chart-head">
+            <div>
+              <h3>月度阅读时长</h3>
+              <p>按自然月汇总，边界月份使用日级 readTimes 过滤。</p>
+            </div>
+            <span>/readdata/detail monthly</span>
+          </div>
+          <div class="chart" id="chart-01e632eec7"></div>
+          <div class="empty-state" data-empty-for="chart-01e632eec7">当前接口没有返回足够数据，已保留模块位置。</div>
+        </article>
+        
+
+        <article class="chart-card" data-chart-card="chart-b3283361d1">
+          <div class="chart-head">
+            <div>
+              <h3>月度阅读天数</h3>
+              <p>单日阅读满 1 分钟计为有效阅读日。</p>
+            </div>
+            <span>/readdata/detail monthly</span>
+          </div>
+          <div class="chart" id="chart-b3283361d1"></div>
+          <div class="empty-state" data-empty-for="chart-b3283361d1">当前接口没有返回足够数据，已保留模块位置。</div>
+        </article>
+        
+
+        <article class="chart-card" data-chart-card="chart-298e9008f0">
+          <div class="chart-head">
+            <div>
+              <h3>阅读日时长分布</h3>
+              <p>只统计有阅读记录的日期，按单日分钟数分桶。</p>
+            </div>
+            <span>/readdata/detail readTimes</span>
+          </div>
+          <div class="chart" id="chart-298e9008f0"></div>
+          <div class="empty-state" data-empty-for="chart-298e9008f0">当前接口没有返回足够数据，已保留模块位置。</div>
+        </article>
+        
+
+        <article class="chart-card" data-chart-card="chart-7cbe8aa636">
+          <div class="chart-head">
+            <div>
+              <h3>月内星期节律</h3>
+              <p>观察哪些月份的哪些星期更容易读书。</p>
+            </div>
+            <span>/readdata/detail readTimes</span>
+          </div>
+          <div class="chart" id="chart-7cbe8aa636"></div>
+          <div class="empty-state" data-empty-for="chart-7cbe8aa636">当前接口没有返回足够数据，已保留模块位置。</div>
+        </article>
+        
+
+        <article class="chart-card" data-chart-card="chart-09681ee7b4">
+          <div class="chart-head">
+            <div>
+              <h3>累计阅读小时</h3>
+              <p>近 24 个月阅读时间的累积曲线。</p>
+            </div>
+            <span>/readdata/detail readTimes</span>
+          </div>
+          <div class="chart" id="chart-09681ee7b4"></div>
+          <div class="empty-state" data-empty-for="chart-09681ee7b4">当前接口没有返回足够数据，已保留模块位置。</div>
+        </article>
+        
+
+        <article class="chart-card" data-chart-card="chart-4aa25d2024">
+          <div class="chart-head">
+            <div>
+              <h3>月度读过/读完/笔记</h3>
+              <p>来自月度 readStat 文案解析，用于趋势观察。</p>
+            </div>
+            <span>/readdata/detail readStat</span>
+          </div>
+          <div class="chart" id="chart-4aa25d2024"></div>
+          <div class="empty-state" data-empty-for="chart-4aa25d2024">当前接口没有返回足够数据，已保留模块位置。</div>
+        </article>
+        
+
+        <article class="chart-card" data-chart-card="chart-0a7ca81731">
+          <div class="chart-head">
+            <div>
+              <h3>触达自然年对比</h3>
+              <p>年度接口按自然年返回；默认报告范围跨到的年份都会展示。</p>
+            </div>
+            <span>/readdata/detail annually</span>
+          </div>
+          <div class="chart" id="chart-0a7ca81731"></div>
+          <div class="empty-state" data-empty-for="chart-0a7ca81731">当前接口没有返回足够数据，已保留模块位置。</div>
+        </article>
+        </div>
+  </section>
+
+  <section>
+    <div class="section-title">
+      <h2>阅读偏好</h2>
+      <p>这部分使用月度读得最久的书和年度偏好字段。年度字段按触达自然年聚合，因此更适合看长期兴趣结构，而不是精确滚动区间。</p>
+    </div>
+    <div class="chart-grid">
+        <article class="chart-card" data-chart-card="chart-be35f38a57">
+          <div class="chart-head">
+            <div>
+              <h3>读得最久的书</h3>
+              <p>按月度 readLongest 聚合，避免直接用书架推断时长。</p>
+            </div>
+            <span>/readdata/detail readLongest</span>
+          </div>
+          <div class="chart" id="chart-be35f38a57"></div>
+          <div class="empty-state" data-empty-for="chart-be35f38a57">当前接口没有返回足够数据，已保留模块位置。</div>
+        </article>
+        
+
+        <article class="chart-card" data-chart-card="chart-de20a2b125">
+          <div class="chart-head">
+            <div>
+              <h3>阅读分类雷达</h3>
+              <p>按年度偏好分类 readingTime 聚合。</p>
+            </div>
+            <span>/readdata/detail preferCategory</span>
+          </div>
+          <div class="chart" id="chart-de20a2b125"></div>
+          <div class="empty-state" data-empty-for="chart-de20a2b125">当前接口没有返回足够数据，已保留模块位置。</div>
+        </article>
+        
+
+        <article class="chart-card" data-chart-card="chart-cba424e726">
+          <div class="chart-head">
+            <div>
+              <h3>分类阅读时长</h3>
+              <p>分类按阅读小时降序。</p>
+            </div>
+            <span>/readdata/detail preferCategory</span>
+          </div>
+          <div class="chart" id="chart-cba424e726"></div>
+          <div class="empty-state" data-empty-for="chart-cba424e726">当前接口没有返回足够数据，已保留模块位置。</div>
+        </article>
+        
+
+        <article class="chart-card" data-chart-card="chart-db29788f54">
+          <div class="chart-head">
+            <div>
+              <h3>分类阅读地图</h3>
+              <p>面积代表分类阅读时长。</p>
+            </div>
+            <span>/readdata/detail preferCategory</span>
+          </div>
+          <div class="chart" id="chart-db29788f54"></div>
+          <div class="empty-state" data-empty-for="chart-db29788f54">当前接口没有返回足够数据，已保留模块位置。</div>
+        </article>
+        
+
+        <article class="chart-card" data-chart-card="chart-45c014dcb9">
+          <div class="chart-head">
+            <div>
+              <h3>偏好作者</h3>
+              <p>作者偏好来自年度接口，时长字段按中文时长解析。</p>
+            </div>
+            <span>/readdata/detail preferAuthor</span>
+          </div>
+          <div class="chart" id="chart-45c014dcb9"></div>
+          <div class="empty-state" data-empty-for="chart-45c014dcb9">当前接口没有返回足够数据，已保留模块位置。</div>
+        </article>
+        
+
+        <article class="chart-card" data-chart-card="chart-0069ce8507">
+          <div class="chart-head">
+            <div>
+              <h3>偏好出版社</h3>
+              <p>按年度接口返回的出版社阅读本数聚合。</p>
+            </div>
+            <span>/readdata/detail preferPublisher</span>
+          </div>
+          <div class="chart" id="chart-0069ce8507"></div>
+          <div class="empty-state" data-empty-for="chart-0069ce8507">当前接口没有返回足够数据，已保留模块位置。</div>
+        </article>
+        
+
+        <article class="chart-card" data-chart-card="chart-e72cb625da">
+          <div class="chart-head">
+            <div>
+              <h3>文字阅读与听书</h3>
+              <p>接口仅在满足展示阈值时返回，按触达自然年聚合。</p>
+            </div>
+            <span>/readdata/detail wrReadTime/wrListenTime</span>
+          </div>
+          <div class="chart" id="chart-e72cb625da"></div>
+          <div class="empty-state" data-empty-for="chart-e72cb625da">当前接口没有返回足够数据，已保留模块位置。</div>
+        </article>
+        </div>
+  </section>
+
+  <section>
+    <div class="section-title">
+      <h2>书架资产</h2>
+      <p>书架是阅读资产的全量视角：未读、已读、有声、私密、书单和最近活动都在这里。</p>
+    </div>
+    <div class="chart-grid">
+        <article class="chart-card" data-chart-card="chart-a5b586097b">
+          <div class="chart-head">
+            <div>
+              <h3>书架构成</h3>
+              <p>书架总数包含电子书、专辑/有声书和文章收藏入口。</p>
+            </div>
+            <span>/shelf/sync</span>
+          </div>
+          <div class="chart" id="chart-a5b586097b"></div>
+          <div class="empty-state" data-empty-for="chart-a5b586097b">当前接口没有返回足够数据，已保留模块位置。</div>
+        </article>
+        
+
+        <article class="chart-card" data-chart-card="chart-d1ff5c9c0c">
+          <div class="chart-head">
+            <div>
+              <h3>书架分类资产</h3>
+              <p>按书架条目 category 分布；有声和文章收藏单独归类。</p>
+            </div>
+            <span>/shelf/sync books/albums/mp</span>
+          </div>
+          <div class="chart" id="chart-d1ff5c9c0c"></div>
+          <div class="empty-state" data-empty-for="chart-d1ff5c9c0c">当前接口没有返回足够数据，已保留模块位置。</div>
+        </article>
+        
+
+        <article class="chart-card" data-chart-card="chart-d356bcfe4e">
+          <div class="chart-head">
+            <div>
+              <h3>书架读完状态</h3>
+              <p>电子书用 finishReading，专辑用完结状态。</p>
+            </div>
+            <span>/shelf/sync</span>
+          </div>
+          <div class="chart" id="chart-d356bcfe4e"></div>
+          <div class="empty-state" data-empty-for="chart-d356bcfe4e">当前接口没有返回足够数据，已保留模块位置。</div>
+        </article>
+        
+
+        <article class="chart-card" data-chart-card="chart-2430e21475">
+          <div class="chart-head">
+            <div>
+              <h3>公开/私密阅读</h3>
+              <p>文章收藏入口固定计入私密阅读。</p>
+            </div>
+            <span>/shelf/sync</span>
+          </div>
+          <div class="chart" id="chart-2430e21475"></div>
+          <div class="empty-state" data-empty-for="chart-2430e21475">当前接口没有返回足够数据，已保留模块位置。</div>
+        </article>
+        
+
+        <article class="chart-card" data-chart-card="chart-974517f00e">
+          <div class="chart-head">
+            <div>
+              <h3>书单规模</h3>
+              <p>archive[].bookIds 的数量。</p>
+            </div>
+            <span>/shelf/sync archive</span>
+          </div>
+          <div class="chart" id="chart-974517f00e"></div>
+          <div class="empty-state" data-empty-for="chart-974517f00e">当前接口没有返回足够数据，已保留模块位置。</div>
+        </article>
+        
+
+        <article class="chart-card" data-chart-card="chart-3da278e30a">
+          <div class="chart-head">
+            <div>
+              <h3>近两年书架活动</h3>
+              <p>按最近阅读或更新时间聚合的书架活动条目数。</p>
+            </div>
+            <span>/shelf/sync readUpdateTime</span>
+          </div>
+          <div class="chart" id="chart-3da278e30a"></div>
+          <div class="empty-state" data-empty-for="chart-3da278e30a">当前接口没有返回足够数据，已保留模块位置。</div>
+        </article>
+        </div>
+  </section>
+
+  <section>
+    <div class="section-title">
+      <h2>笔记与语义</h2>
+      <p>划线和想法是阅读后真正留下来的东西。词云是高频短语抽取，不等于严格自然语言分词。</p>
+    </div>
+    <div class="chart-grid">
+        <article class="chart-card" data-chart-card="chart-71c88e7dfe">
+          <div class="chart-head">
+            <div>
+              <h3>笔记最多的书</h3>
+              <p>总笔记数 = 划线 + 想法/点评 + 书签。</p>
+            </div>
+            <span>/user/notebooks</span>
+          </div>
+          <div class="chart" id="chart-71c88e7dfe"></div>
+          <div class="empty-state" data-empty-for="chart-71c88e7dfe">当前接口没有返回足够数据，已保留模块位置。</div>
+        </article>
+        
+
+        <article class="chart-card" data-chart-card="chart-fd003420d1">
+          <div class="chart-head">
+            <div>
+              <h3>笔记类型构成</h3>
+              <p>书签只展示数量，当前接口不能导出书签内容。</p>
+            </div>
+            <span>/user/notebooks</span>
+          </div>
+          <div class="chart" id="chart-fd003420d1"></div>
+          <div class="empty-state" data-empty-for="chart-fd003420d1">当前接口没有返回足够数据，已保留模块位置。</div>
+        </article>
+        
+
+        <article class="chart-card" data-chart-card="chart-413eed1bc5">
+          <div class="chart-head">
+            <div>
+              <h3>阅读进度与笔记量</h3>
+              <p>每个点是一本文档；横轴阅读进度，纵轴笔记总数。</p>
+            </div>
+            <span>/user/notebooks readingProgress</span>
+          </div>
+          <div class="chart" id="chart-413eed1bc5"></div>
+          <div class="empty-state" data-empty-for="chart-413eed1bc5">当前接口没有返回足够数据，已保留模块位置。</div>
+        </article>
+        
+
+        <article class="chart-card" data-chart-card="chart-d1c6cbcda7">
+          <div class="chart-head">
+            <div>
+              <h3>划线与想法词云</h3>
+              <p>由近两年划线和想法文本抽取高频短语。</p>
+            </div>
+            <span>/book/bookmarklist + /review/list/mine</span>
+          </div>
+          <div class="chart" id="chart-d1c6cbcda7"></div>
+          <div class="empty-state" data-empty-for="chart-d1c6cbcda7">当前接口没有返回足够数据，已保留模块位置。</div>
+        </article>
+        
+
+        <article class="chart-card" data-chart-card="chart-53f71eb8f9">
+          <div class="chart-head">
+            <div>
+              <h3>笔记时间线</h3>
+              <p>按划线和想法创建时间聚合。</p>
+            </div>
+            <span>/book/bookmarklist createTime + /review/list/mine createTime</span>
+          </div>
+          <div class="chart" id="chart-53f71eb8f9"></div>
+          <div class="empty-state" data-empty-for="chart-53f71eb8f9">当前接口没有返回足够数据，已保留模块位置。</div>
+        </article>
+        
+
+        <article class="chart-card" data-chart-card="chart-5cf2890b9d">
+          <div class="chart-head">
+            <div>
+              <h3>划线长度分布</h3>
+              <p>按划线原文字数分桶。</p>
+            </div>
+            <span>/book/bookmarklist markText</span>
+          </div>
+          <div class="chart" id="chart-5cf2890b9d"></div>
+          <div class="empty-state" data-empty-for="chart-5cf2890b9d">当前接口没有返回足够数据，已保留模块位置。</div>
+        </article>
+        </div>
+  </section>
+
+  <section>
+    <div class="section-title">
+      <h2>重点列表</h2>
+      <p>用于复核图表背后的具体书名。</p>
+    </div>
+    <h3>笔记最多的书</h3>
+    <div class="table-wrap"><table><thead><tr><th>#</th><th>书名</th><th>作者</th><th>总笔记</th><th>划线</th><th>想法/点评</th><th>书签</th></tr></thead><tbody><tr><td>1</td><td>被讨厌的勇气</td><td>岸见一郎 / 古贺史健</td><td>380</td><td>265</td><td>85</td><td>30</td></tr>
+<tr><td>2</td><td>浪潮之巅</td><td>吴军</td><td>370</td><td>265</td><td>95</td><td>10</td></tr>
+<tr><td>3</td><td>AI 2041</td><td>李开复 / 陈楸帆</td><td>355</td><td>265</td><td>55</td><td>35</td></tr>
+<tr><td>4</td><td>纳瓦尔宝典</td><td>埃里克·乔根森</td><td>345</td><td>265</td><td>65</td><td>15</td></tr>
+<tr><td>5</td><td>启示录</td><td>Marty Cagan</td><td>345</td><td>230</td><td>90</td><td>25</td></tr>
+<tr><td>6</td><td>增长黑客</td><td>Sean Ellis / Morgan Brown</td><td>340</td><td>265</td><td>35</td><td>40</td></tr>
+<tr><td>7</td><td>程序员修炼之道</td><td>David Thomas / Andrew Hunt</td><td>330</td><td>265</td><td>45</td><td>20</td></tr>
+<tr><td>8</td><td>置身事内</td><td>兰小欢</td><td>330</td><td>230</td><td>70</td><td>30</td></tr>
+<tr><td>9</td><td>深度学习</td><td>Ian Goodfellow / Yoshua Bengio / Aaron Courville</td><td>320</td><td>195</td><td>85</td><td>40</td></tr>
+<tr><td>10</td><td>OKR工作法</td><td>Christina Wodtke</td><td>320</td><td>230</td><td>80</td><td>10</td></tr></tbody></table></div>
+    <h3>读得最久的书</h3>
+    <div class="table-wrap"><table><thead><tr><th>#</th><th>书名</th><th>作者</th><th>小时</th></tr></thead><tbody><tr><td>1</td><td>定位</td><td>艾·里斯 / 杰克·特劳特</td><td>27.46</td></tr>
+<tr><td>2</td><td>创新者的窘境</td><td>克莱顿·克里斯坦森</td><td>27.14</td></tr>
+<tr><td>3</td><td>生命3.0</td><td>Max Tegmark</td><td>27.13</td></tr>
+<tr><td>4</td><td>架构整洁之道</td><td>Robert C. Martin</td><td>26.9</td></tr>
+<tr><td>5</td><td>深度学习</td><td>Ian Goodfellow / Yoshua Bengio / Aaron Courville</td><td>26.66</td></tr>
+<tr><td>6</td><td>管理的实践</td><td>彼得·德鲁克</td><td>25.91</td></tr>
+<tr><td>7</td><td>原则</td><td>瑞·达利欧</td><td>25.19</td></tr>
+<tr><td>8</td><td>系统之美</td><td>德内拉·梅多斯</td><td>24.85</td></tr>
+<tr><td>9</td><td>用户体验要素</td><td>Jesse James Garrett</td><td>23.81</td></tr>
+<tr><td>10</td><td>必然</td><td>凯文·凯利</td><td>20.74</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <div class="section-title">
+      <h2>附录</h2>
+      <p>数据覆盖、边界和生成口径。</p>
+    </div>
+    <div class="appendix">
+      <div class="note">
+        <p><strong>口径说明</strong></p>
+        <p>月度数据使用 readTimes 做日级过滤；年度偏好模块按触达自然年聚合。</p>
+        <p>书签内容当前不能通过接口导出，报告只展示书签数量。词云只使用你自己的划线与想法文本，不包含书籍正文。</p>
+      </div>
+      <div class="table-wrap"><table><thead><tr><th>覆盖项</th><th>数量</th></tr></thead><tbody><tr><td>monthlyRequests</td><td>25</td></tr>
+<tr><td>annualRequests</td><td>3</td></tr>
+<tr><td>shelfBooks</td><td>725</td></tr>
+<tr><td>shelfAlbums</td><td>45</td></tr>
+<tr><td>notebooks</td><td>42</td></tr>
+<tr><td>noteDetailBooksFetched</td><td>42</td></tr>
+<tr><td>noteFetchErrors</td><td>0</td></tr></tbody></table></div>
+    </div>
+  </section>
+</main>
+<script>
+const REPORT_CONTEXT = {"meta": {"range": "2024-05-17 至 2026-05-17", "start": "2024-05-17", "end": "2026-05-17", "generatedAt": "2026-05-17 22:24:11 CST", "skillVersion": "1.0.3", "timezone": "Asia/Shanghai", "dataCaveat": "月度数据使用 readTimes 做日级过滤；年度偏好模块按触达自然年聚合。", "title": "微信读书个人可视化报告：AI创业者版", "subtitle": "一个 AI 创业者读者的近两年阅读画像。把阅读时间、书架资产、内容偏好和笔记语义放在同一张纸面上：先看节律，再看兴趣，最后看留下来的句子。", "eyebrow": "WeRead AI-Founder Analytics", "sampleReport": true, "persona": "AI创业者读者"}, "kpis": {"totalReadTime": "1693小时30分钟", "totalReadHours": 1693.5, "readDays": 439, "shelfTotal": 771, "ebookCount": 725, "albumCount": 45, "mpCount": 1, "notebookBooks": 42, "noteTotal": 10950, "highlightsFetchedInRange": 7455, "reviewsFetchedInRange": 2445, "noteFetchErrors": 0}, "tables": {"topNoteBooks": [{"bookId": "sample-book-0042", "title": "被讨厌的勇气", "author": "岸见一郎 / 古贺史健", "category": "心理成长", "total": 380, "highlightCount": 265, "reviewCount": 85, "bookmarkCount": 30, "progress": 96, "sort": 1726329600}, {"bookId": "sample-book-0036", "title": "浪潮之巅", "author": "吴军", "category": "科技趋势", "total": 370, "highlightCount": 265, "reviewCount": 95, "bookmarkCount": 10, "progress": 100, "sort": 1717516800}, {"bookId": "sample-book-0012", "title": "AI 2041", "author": "李开复 / 陈楸帆", "category": "AI趋势", "total": 355, "highlightCount": 265, "reviewCount": 55, "bookmarkCount": 35, "progress": 78, "sort": 1745424000}, {"bookId": "sample-book-0006", "title": "纳瓦尔宝典", "author": "埃里克·乔根森", "category": "认知学习", "total": 345, "highlightCount": 265, "reviewCount": 65, "bookmarkCount": 15, "progress": 90, "sort": 1736611200}, {"bookId": "sample-book-0023", "title": "启示录", "author": "Marty Cagan", "category": "产品增长", "total": 345, "highlightCount": 230, "reviewCount": 90, "bookmarkCount": 25, "progress": 43, "sort": 1761580800}, {"bookId": "sample-book-0024", "title": "增长黑客", "author": "Sean Ellis / Morgan Brown", "category": "产品增长", "total": 340, "highlightCount": 265, "reviewCount": 35, "bookmarkCount": 40, "progress": 54, "sort": 1763049600}, {"bookId": "sample-book-0018", "title": "程序员修炼之道", "author": "David Thomas / Andrew Hunt", "category": "工程架构", "total": 330, "highlightCount": 265, "reviewCount": 45, "bookmarkCount": 20, "progress": 66, "sort": 1754236800}, {"bookId": "sample-book-0035", "title": "置身事内", "author": "兰小欢", "category": "商业财经", "total": 330, "highlightCount": 230, "reviewCount": 70, "bookmarkCount": 30, "progress": 97, "sort": 1716048000}, {"bookId": "sample-book-0010", "title": "深度学习", "author": "Ian Goodfellow / Yoshua Bengio / Aaron Courville", "category": "AI技术", "total": 320, "highlightCount": 195, "reviewCount": 85, "bookmarkCount": 40, "progress": 56, "sort": 1742486400}, {"bookId": "sample-book-0029", "title": "OKR工作法", "author": "Christina Wodtke", "category": "组织管理", "total": 320, "highlightCount": 230, "reviewCount": 80, "bookmarkCount": 10, "progress": 100, "sort": 1770393600}], "topReadBooks": [{"title": "定位", "author": "艾·里斯 / 杰克·特劳特", "bookId": "sample-book-0025", "hours": 27.46, "seconds": 98850}, {"title": "创新者的窘境", "author": "克莱顿·克里斯坦森", "bookId": "sample-book-0004", "hours": 27.14, "seconds": 97716}, {"title": "生命3.0", "author": "Max Tegmark", "bookId": "sample-book-0013", "hours": 27.13, "seconds": 97662}, {"title": "架构整洁之道", "author": "Robert C. Martin", "bookId": "sample-book-0016", "hours": 26.9, "seconds": 96852}, {"title": "深度学习", "author": "Ian Goodfellow / Yoshua Bengio / Aaron Courville", "bookId": "sample-book-0010", "hours": 26.66, "seconds": 95988}, {"title": "管理的实践", "author": "彼得·德鲁克", "bookId": "sample-book-0028", "hours": 25.91, "seconds": 93288}, {"title": "原则", "author": "瑞·达利欧", "bookId": "sample-book-0007", "hours": 25.19, "seconds": 90696}, {"title": "系统之美", "author": "德内拉·梅多斯", "bookId": "sample-book-0019", "hours": 24.85, "seconds": 89454}, {"title": "用户体验要素", "author": "Jesse James Garrett", "bookId": "sample-book-0022", "hours": 23.81, "seconds": 85728}, {"title": "必然", "author": "凯文·凯利", "bookId": "sample-book-0031", "hours": 20.74, "seconds": 74658}], "coverage": [{"name": "monthlyRequests", "value": 25}, {"name": "annualRequests", "value": 3}, {"name": "shelfBooks", "value": 725}, {"name": "shelfAlbums", "value": 45}, {"name": "notebooks", "value": 42}, {"name": "noteDetailBooksFetched", "value": 42}, {"name": "noteFetchErrors", "value": 0}]}, "insights": ["近两年累计阅读 1693小时30分钟，有效阅读 439 天。", "书架共有 771 个条目，其中电子书 725 本、有声/专辑 45 个、文章收藏入口 1 个。", "有笔记的书 42 本，笔记总量 10950 条；本次抓取到近两年划线 7455 条、想法/点评 2445 条用于语义分析。", "月度记录中读得最久的是《定位》，累计约 27.46 小时。", "年度偏好聚合中，最高分类是「AI技术」，约 474.18 小时。"], "coverage": {"monthlyRequests": 25, "annualRequests": 3, "shelfBooks": 725, "shelfAlbums": 45, "notebooks": 42, "noteDetailBooksFetched": 42, "noteFetchErrors": 0}};
+const CHARTS = [{"id": "chart-01e632eec7", "title": "月度阅读时长", "subtitle": "按自然月汇总，边界月份使用日级 readTimes 过滤。", "source": "/readdata/detail monthly", "option": {"color": ["#1B365D", "#b69b66"], "tooltip": {"trigger": "axis"}, "grid": {"left": 46, "right": 24, "top": 34, "bottom": 54}, "xAxis": {"type": "category", "data": ["2024-05", "2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05"], "axisLabel": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif"}}, "yAxis": {"type": "value", "name": "小时", "axisLabel": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif"}, "splitLine": {"lineStyle": {"color": "#e8e6dc"}}}, "series": [{"type": "bar", "name": "阅读小时", "data": [38.0, 71.0, 68.17, 71.75, 70.58, 68.42, 63.0, 69.92, 72.75, 72.42, 72.58, 68.33, 70.42, 70.5, 71.42, 75.17, 67.17, 71.75, 75.5, 76.42, 70.42, 57.75, 75.17, 66.92, 38.0], "barMaxWidth": 18}]}, "empty": false}, {"id": "chart-b3283361d1", "title": "月度阅读天数", "subtitle": "单日阅读满 1 分钟计为有效阅读日。", "source": "/readdata/detail monthly", "option": {"color": ["#1B365D"], "tooltip": {"trigger": "axis"}, "grid": {"left": 46, "right": 24, "top": 26, "bottom": 54}, "xAxis": {"type": "category", "data": ["2024-05", "2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05"], "axisLabel": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif"}}, "yAxis": {"type": "value", "name": "天数", "axisLabel": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif"}, "splitLine": {"lineStyle": {"color": "#e8e6dc"}}}, "series": [{"name": "天数", "type": "line", "smooth": true, "symbolSize": 5, "data": [9, 18, 18, 19, 18, 18, 18, 19, 18, 17, 19, 18, 18, 18, 19, 20, 18, 18, 18, 19, 19, 16, 19, 18, 10]}]}, "empty": false}, {"id": "chart-298e9008f0", "title": "阅读日时长分布", "subtitle": "只统计有阅读记录的日期，按单日分钟数分桶。", "source": "/readdata/detail readTimes", "option": {"color": ["#1B365D"], "tooltip": {"trigger": "axis"}, "grid": {"left": 42, "right": 24, "top": 26, "bottom": 44}, "xAxis": {"type": "category", "data": ["61-120", "240+", "121-240"], "axisLabel": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif"}}, "yAxis": {"type": "value", "name": "天", "axisLabel": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif"}, "splitLine": {"lineStyle": {"color": "#e8e6dc"}}}, "series": [{"type": "bar", "data": [38, 189, 212], "barMaxWidth": 22}]}, "empty": false}, {"id": "chart-7cbe8aa636", "title": "月内星期节律", "subtitle": "观察哪些月份的哪些星期更容易读书。", "source": "/readdata/detail readTimes", "option": {"tooltip": {"position": "top"}, "grid": {"left": 72, "right": 18, "top": 18, "bottom": 70}, "xAxis": {"type": "category", "data": ["周一", "周二", "周三", "周四", "周五", "周六", "周日"], "axisLabel": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif"}}, "yAxis": {"type": "category", "data": ["2024-05", "2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05"], "axisLabel": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif"}}, "visualMap": {"min": 0, "max": 22.0, "orient": "horizontal", "left": "center", "bottom": 0, "inRange": {"color": ["#ede9dd", "#d1b98b", "#1B365D"]}}, "series": [{"type": "heatmap", "data": [[5, 0, 9.25], [0, 0, 11.08], [2, 0, 9.42], [4, 0, 5.75], [6, 0, 2.5], [6, 1, 8.08], [1, 1, 11.33], [3, 1, 8.08], [5, 1, 6.42], [0, 1, 12.75], [2, 1, 16.75], [4, 1, 7.58], [1, 2, 9.17], [3, 2, 9.5], [5, 2, 11.0], [6, 2, 5.58], [0, 2, 9.25], [2, 2, 14.25], [4, 2, 9.42], [3, 3, 6.42], [5, 3, 9.75], [6, 3, 12.67], [0, 3, 14.25], [1, 3, 7.75], [2, 3, 6.92], [4, 3, 14.0], [0, 4, 13.0], [1, 4, 9.58], [3, 4, 5.92], [5, 4, 8.83], [2, 4, 11.25], [4, 4, 10.25], [6, 4, 11.75], [1, 5, 12.83], [3, 5, 9.17], [5, 5, 3.92], [0, 5, 15.5], [2, 5, 14.5], [4, 5, 5.08], [6, 5, 7.42], [5, 6, 9.42], [0, 6, 6.08], [2, 6, 13.25], [3, 6, 9.17], [4, 6, 14.25], [6, 6, 5.25], [1, 6, 5.58], [0, 7, 10.5], [1, 7, 11.58], [3, 7, 5.58], [5, 7, 10.33], [2, 7, 10.92], [4, 7, 11.75], [6, 7, 9.25], [2, 8, 15.92], [4, 8, 12.92], [6, 8, 4.75], [1, 8, 14.25], [3, 8, 12.75], [5, 8, 5.92], [0, 8, 6.25], [6, 9, 6.58], [1, 9, 13.0], [2, 9, 16.92], [3, 9, 11.5], [4, 9, 8.58], [5, 9, 7.75], [0, 9, 8.08], [5, 10, 8.67], [0, 10, 14.17], [2, 10, 12.5], [3, 10, 12.42], [4, 10, 11.0], [6, 10, 4.75], [1, 10, 9.08], [2, 11, 9.42], [4, 11, 12.25], [5, 11, 7.42], [6, 11, 11.25], [0, 11, 7.75], [1, 11, 13.0], [3, 11, 7.25], [3, 12, 12.08], [5, 12, 13.58], [0, 12, 7.42], [2, 12, 8.25], [4, 12, 6.08], [6, 12, 11.25], [1, 12, 11.75], [0, 13, 22.0], [2, 13, 7.58], [4, 13, 3.92], [6, 13, 10.0], [1, 13, 14.5], [3, 13, 5.08], [5, 13, 7.42], [2, 14, 14.92], [4, 14, 9.75], [5, 14, 7.08], [6, 14, 8.75], [0, 14, 7.42], [1, 14, 14.5], [3, 14, 9.0], [4, 15, 14.58], [5, 15, 11.08], [6, 15, 7.5], [0, 15, 9.25], [2, 15, 12.58], [1, 15, 8.42], [3, 15, 11.75], [0, 16, 12.83], [1, 16, 10.75], [2, 16, 9.42], [4, 16, 5.75], [6, 16, 5.92], [3, 16, 10.5], [5, 16, 12.0], [2, 17, 12.42], [4, 17, 13.42], [6, 17, 7.75], [1, 17, 10.75], [3, 17, 9.25], [5, 17, 8.92], [0, 17, 9.25], [6, 18, 11.17], [1, 18, 13.5], [2, 18, 17.42], [3, 18, 8.0], [4, 18, 7.58], [5, 18, 6.75], [0, 18, 11.08], [0, 19, 18.33], [1, 19, 12.25], [2, 19, 13.33], [4, 19, 5.42], [6, 19, 9.58], [3, 19, 8.0], [5, 19, 9.5], [3, 20, 6.67], [5, 20, 8.17], [0, 20, 14.5], [1, 20, 13.42], [2, 20, 14.5], [4, 20, 7.42], [6, 20, 5.75], [0, 21, 15.75], [2, 21, 14.75], [3, 21, 6.08], [5, 21, 4.42], [4, 21, 5.25], [6, 21, 3.58], [1, 21, 7.92], [6, 22, 10.42], [1, 22, 18.25], [3, 22, 7.25], [4, 22, 7.08], [5, 22, 8.75], [0, 22, 14.5], [2, 22, 8.92], [3, 23, 10.0], [4, 23, 8.92], [5, 23, 7.5], [6, 23, 7.25], [1, 23, 7.58], [0, 23, 8.42], [2, 23, 17.25], [4, 24, 2.75], [6, 24, 6.92], [1, 24, 11.25], [3, 24, 7.58], [5, 24, 5.92], [0, 24, 3.58]], "label": {"show": false}}]}, "empty": false}, {"id": "chart-09681ee7b4", "title": "累计阅读小时", "subtitle": "近 24 个月阅读时间的累积曲线。", "source": "/readdata/detail readTimes", "option": {"color": ["#1B365D"], "tooltip": {"trigger": "axis"}, "grid": {"left": 48, "right": 22, "top": 24, "bottom": 50}, "xAxis": {"type": "time", "axisLabel": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif"}}, "yAxis": {"type": "value", "name": "小时", "axisLabel": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif"}, "splitLine": {"lineStyle": {"color": "#e8e6dc"}}}, "series": [{"name": "累计小时", "type": "line", "smooth": true, "areaStyle": {"color": "#E4ECF5"}, "data": [["2024-05-18", 1.83], ["2024-05-20", 7.83], ["2024-05-22", 13.0], ["2024-05-24", 16.33], ["2024-05-25", 23.75], ["2024-05-26", 26.25], ["2024-05-27", 31.33], ["2024-05-29", 35.58], ["2024-05-31", 38.0], ["2024-06-02", 40.17], ["2024-06-04", 42.5], ["2024-06-06", 47.0], ["2024-06-08", 50.67], ["2024-06-10", 54.5], ["2024-06-11", 59.92], ["2024-06-12", 62.92], ["2024-06-13", 66.5], ["2024-06-15", 69.25], ["2024-06-17", 72.17], ["2024-06-19", 80.75], ["2024-06-21", 85.0], ["2024-06-23", 88.42], ["2024-06-24", 94.42], ["2024-06-25", 98.0], ["2024-06-26", 103.17], ["2024-06-28", 106.5], ["2024-06-30", 109.0], ["2024-07-02", 112.25], ["2024-07-04", 113.67], ["2024-07-06", 118.25], ["2024-07-07", 120.42], ["2024-07-09", 122.75], ["2024-07-11", 127.25], ["2024-07-13", 130.92], ["2024-07-15", 134.75], ["2024-07-17", 137.75], ["2024-07-18", 141.33], ["2024-07-19", 146.5], ["2024-07-20", 149.25], ["2024-07-22", 154.67], ["2024-07-24", 160.75], ["2024-07-26", 165.0], ["2024-07-28", 168.42], ["2024-07-30", 172.0], ["2024-07-31", 177.17], ["2024-08-01", 179.5], ["2024-08-03", 181.0], ["2024-08-04", 184.08], ["2024-08-05", 189.75], ["2024-08-06", 193.0], ["2024-08-08", 194.42], ["2024-08-10", 199.0], ["2024-08-12", 203.75], ["2024-08-14", 207.67], ["2024-08-16", 212.25], ["2024-08-17", 215.92], ["2024-08-18", 221.17], ["2024-08-19", 225.0], ["2024-08-21", 228.0], ["2024-08-23", 233.17], ["2024-08-25", 237.5], ["2024-08-27", 242.0], ["2024-08-29", 244.67], ["2024-08-30", 248.92], ["2024-09-02", 251.5], ["2024-09-03", 255.67], ["2024-09-05", 258.0], ["2024-09-07", 259.5], ["2024-09-09", 265.17], ["2024-09-11", 270.0], ["2024-09-13", 273.0], ["2024-09-14", 277.58], ["2024-09-15", 279.75], ["2024-09-16", 284.5], ["2024-09-18", 290.92], ["2024-09-20", 293.0], ["2024-09-22", 298.25], ["2024-09-24", 303.67], ["2024-09-26", 307.25], ["2024-09-27", 312.42], ["2024-09-28", 315.17], ["2024-09-29", 319.5], ["2024-10-01", 324.58], ["2024-10-03", 327.83], ["2024-10-05", 330.25], ["2024-10-07", 332.83], ["2024-10-09", 338.58], ["2024-10-10", 340.92], ["2024-10-12", 342.42], ["2024-10-14", 348.08], ["2024-10-16", 352.92], ["2024-10-18", 355.92], ["2024-10-20", 358.08], ["2024-10-21", 365.33], ["2024-10-22", 367.67], ["2024-10-23", 371.58], ["2024-10-25", 373.67], ["2024-10-27", 378.92], ["2024-10-29", 384.33], ["2024-10-31", 387.92], ["2024-11-02", 391.25], ["2024-11-04", 394.75], ["2024-11-06", 397.42], ["2024-11-07", 400.67], ["2024-11-08", 405.5], ["2024-11-09", 407.92], ["2024-11-11", 410.5], ["2024-11-13", 416.25], ["2024-11-15", 422.67], ["2024-11-17", 425.75], ["2024-11-19", 429.0], ["2024-11-20", 433.83], ["2024-11-21", 435.25], ["2024-11-22", 438.25], ["2024-11-24", 440.42], ["2024-11-26", 442.75], ["2024-11-28", 447.25], ["2024-11-30", 450.92], ["2024-12-02", 455.33], ["2024-12-03", 461.33], ["2024-12-05", 465.5], ["2024-12-07", 468.83], ["2024-12-09", 472.33], ["2024-12-11", 475.0], ["2024-12-13", 479.83], ["2024-12-14", 482.25], ["2024-12-15", 486.25], ["2024-12-16", 488.83], ["2024-12-18", 497.08], ["2024-12-20", 501.0], ["2024-12-22", 504.08], ["2024-12-24", 507.33], ["2024-12-26", 508.75], ["2024-12-27", 511.75], ["2024-12-28", 516.33], ["2024-12-29", 518.5], ["2024-12-31", 520.83], ["2025-01-01", 526.33], ["2025-01-03", 532.5], ["2025-01-05", 535.33], ["2025-01-07", 538.33], ["2025-01-08", 542.92], ["2025-01-09", 548.08], ["2025-01-10", 550.83], ["2025-01-12", 552.75], ["2025-01-14", 558.83], ["2025-01-16", 563.08], ["2025-01-18", 566.5], ["2025-01-20", 570.08], ["2025-01-21", 575.25], ["2025-01-23", 578.58], ["2025-01-25", 581.08], ["2025-01-27", 583.75], ["2025-01-29", 589.58], ["2025-01-31", 593.58], ["2025-02-02", 597.33], ["2025-02-04", 601.25], ["2025-02-05", 609.25], ["2025-02-06", 611.33], ["2025-02-07", 615.0], ["2025-02-09", 617.83], ["2025-02-11", 620.83], ["2025-02-13", 626.0], ["2025-02-15", 630.33], ["2025-02-17", 634.83], ["2025-02-18", 640.92], ["2025-02-19", 644.58], ["2025-02-20", 648.83], ["2025-02-22", 652.25], ["2025-02-24", 655.83], ["2025-02-26", 661.08], ["2025-02-28", 666.0], ["2025-03-01", 669.08], ["2025-03-03", 672.33], ["2025-03-05", 674.75], ["2025-03-06", 677.75], ["2025-03-07", 682.33], ["2025-03-08", 684.5], ["2025-03-10", 689.33], ["2025-03-12", 694.83], ["2025-03-14", 698.5], ["2025-03-16", 701.33], ["2025-03-18", 704.33], ["2025-03-19", 708.92], ["2025-03-20", 714.08], ["2025-03-21", 716.83], ["2025-03-23", 718.75], ["2025-03-25", 724.83], ["2025-03-27", 729.08], ["2025-03-29", 732.5], ["2025-03-31", 738.58], ["2025-04-02", 741.92], ["2025-04-04", 745.92], ["2025-04-05", 749.0], ["2025-04-06", 753.67], ["2025-04-07", 756.92], ["2025-04-09", 759.33], ["2025-04-11", 763.92], ["2025-04-13", 767.67], ["2025-04-15", 771.58], ["2025-04-17", 773.67], ["2025-04-18", 777.33], ["2025-04-20", 780.17], ["2025-04-22", 783.17], ["2025-04-24", 788.33], ["2025-04-26", 792.67], ["2025-04-28", 797.17], ["2025-04-29", 803.25], ["2025-04-30", 806.92], ["2025-05-01", 811.75], ["2025-05-03", 815.75], ["2025-05-05", 819.92], ["2025-05-07", 825.75], ["2025-05-09", 827.25], ["2025-05-11", 831.92], ["2025-05-12", 835.17], ["2025-05-13", 840.0], ["2025-05-14", 842.42], ["2025-05-16", 847.0], ["2025-05-18", 850.75], ["2025-05-20", 854.67], ["2025-05-22", 856.75], ["2025-05-24", 862.0], ["2025-05-25", 864.83], ["2025-05-27", 867.83], ["2025-05-29", 873.0], ["2025-05-31", 877.33], ["2025-06-02", 882.42], ["2025-06-04", 886.67], ["2025-06-06", 889.08], ["2025-06-08", 890.67], ["2025-06-09", 897.33], ["2025-06-10", 903.08], ["2025-06-11", 906.42], ["2025-06-13", 907.92], ["2025-06-15", 912.58], ["2025-06-17", 917.42], ["2025-06-19", 920.42], ["2025-06-21", 922.58], ["2025-06-22", 926.33], ["2025-06-23", 928.67], ["2025-06-24", 932.58], ["2025-06-26", 934.67], ["2025-06-28", 939.92], ["2025-06-30", 947.83], ["2025-07-02", 953.0], ["2025-07-04", 958.83], ["2025-07-05", 963.75], ["2025-07-06", 966.25], ["2025-07-07", 971.33], ["2025-07-09", 975.58], ["2025-07-11", 978.0], ["2025-07-13", 979.58], ["2025-07-15", 985.33], ["2025-07-17", 989.25], ["2025-07-18", 990.75], ["2025-07-20", 995.42], ["2025-07-22", 1000.25], ["2025-07-24", 1003.25], ["2025-07-26", 1005.42], ["2025-07-28", 1007.75], ["2025-07-29", 1011.67], ["2025-07-30", 1017.17], ["2025-07-31", 1019.25], ["2025-08-01", 1023.5], ["2025-08-02", 1025.33], ["2025-08-03", 1028.75], ["2025-08-04", 1034.75], ["2025-08-06", 1042.42], ["2025-08-08", 1045.75], ["2025-08-10", 1048.25], ["2025-08-12", 1050.92], ["2025-08-14", 1055.75], ["2025-08-15", 1058.17], ["2025-08-16", 1062.17], ["2025-08-17", 1063.75], ["2025-08-19", 1069.5], ["2025-08-21", 1073.42], ["2025-08-23", 1076.5], ["2025-08-25", 1079.75], ["2025-08-27", 1084.67], ["2025-08-28", 1087.67], ["2025-08-29", 1092.25], ["2025-08-30", 1094.42], ["2025-09-01", 1097.33], ["2025-09-02", 1101.83], ["2025-09-03", 1107.92], ["2025-09-05", 1112.17], ["2025-09-07", 1115.58], ["2025-09-09", 1119.17], ["2025-09-11", 1120.92], ["2025-09-13", 1125.83], ["2025-09-14", 1128.33], ["2025-09-16", 1131.0], ["2025-09-18", 1135.83], ["2025-09-20", 1139.83], ["2025-09-22", 1144.0], ["2025-09-24", 1147.33], ["2025-09-25", 1151.25], ["2025-09-26", 1152.75], ["2025-09-27", 1155.83], ["2025-09-29", 1161.58], ["2025-10-01", 1164.58], ["2025-10-03", 1172.25], ["2025-10-05", 1176.58], ["2025-10-07", 1181.08], ["2025-10-08", 1187.17], ["2025-10-09", 1189.83], ["2025-10-10", 1194.08], ["2025-10-12", 1197.5], ["2025-10-14", 1201.08], ["2025-10-16", 1202.83], ["2025-10-18", 1207.75], ["2025-10-20", 1212.83], ["2025-10-21", 1215.5], ["2025-10-23", 1220.33], ["2025-10-25", 1224.33], ["2025-10-27", 1228.5], ["2025-10-29", 1231.83], ["2025-10-31", 1233.33], ["2025-11-02", 1238.58], ["2025-11-04", 1244.0], ["2025-11-05", 1249.5], ["2025-11-06", 1253.08], ["2025-11-07", 1258.25], ["2025-11-09", 1262.58], ["2025-11-11", 1267.08], ["2025-11-13", 1269.75], ["2025-11-15", 1271.58], ["2025-11-17", 1277.58], ["2025-11-18", 1281.17], ["2025-11-19", 1286.33], ["2025-11-20", 1288.08], ["2025-11-22", 1293.0], ["2025-11-24", 1298.08], ["2025-11-26", 1304.83], ["2025-11-28", 1307.25], ["2025-11-30", 1308.83], ["2025-12-01", 1313.58], ["2025-12-02", 1315.92], ["2025-12-03", 1319.83], ["2025-12-05", 1321.92], ["2025-12-07", 1327.17], ["2025-12-09", 1332.58], ["2025-12-11", 1336.17], ["2025-12-13", 1338.92], ["2025-12-14", 1343.25], ["2025-12-16", 1347.75], ["2025-12-18", 1350.42], ["2025-12-20", 1352.25], ["2025-12-22", 1358.25], ["2025-12-24", 1363.42], ["2025-12-25", 1365.17], ["2025-12-26", 1368.5], ["2025-12-27", 1373.42], ["2025-12-29", 1381.0], ["2025-12-31", 1385.25], ["2026-01-01", 1387.67], ["2026-01-03", 1389.25], ["2026-01-05", 1395.0], ["2026-01-06", 1398.33], ["2026-01-07", 1403.25], ["2026-01-08", 1404.75], ["2026-01-10", 1409.42], ["2026-01-12", 1414.25], ["2026-01-14", 1420.75], ["2026-01-16", 1422.92], ["2026-01-18", 1424.25], ["2026-01-19", 1428.17], ["2026-01-20", 1433.67], ["2026-01-21", 1436.75], ["2026-01-23", 1442.0], ["2026-01-25", 1446.42], ["2026-01-27", 1451.0], ["2026-01-29", 1453.75], ["2026-01-31", 1455.67], ["2026-02-02", 1458.33], ["2026-02-04", 1464.17], ["2026-02-05", 1466.58], ["2026-02-07", 1468.17], ["2026-02-09", 1473.92], ["2026-02-11", 1478.83], ["2026-02-13", 1481.92], ["2026-02-15", 1484.17], ["2026-02-16", 1491.5], ["2026-02-17", 1493.92], ["2026-02-18", 1497.92], ["2026-02-20", 1500.08], ["2026-02-22", 1501.42], ["2026-02-24", 1506.92], ["2026-02-26", 1510.58], ["2026-02-28", 1513.42], ["2026-03-01", 1518.42], ["2026-03-03", 1523.58], ["2026-03-05", 1526.92], ["2026-03-06", 1531.83], ["2026-03-08", 1535.92], ["2026-03-10", 1540.17], ["2026-03-12", 1542.58], ["2026-03-14", 1544.17], ["2026-03-16", 1549.92], ["2026-03-17", 1553.25], ["2026-03-18", 1558.17], ["2026-03-19", 1559.67], ["2026-03-21", 1566.83], ["2026-03-23", 1571.67], ["2026-03-25", 1575.67], ["2026-03-27", 1577.83], ["2026-03-29", 1579.17], ["2026-03-30", 1583.08], ["2026-03-31", 1588.58], ["2026-04-02", 1592.83], ["2026-04-03", 1594.67], ["2026-04-04", 1598.08], ["2026-04-05", 1603.08], ["2026-04-07", 1608.25], ["2026-04-09", 1611.58], ["2026-04-11", 1614.08], ["2026-04-13", 1616.75], ["2026-04-15", 1625.08], ["2026-04-16", 1627.5], ["2026-04-17", 1631.5], ["2026-04-18", 1633.08], ["2026-04-20", 1638.83], ["2026-04-22", 1643.75], ["2026-04-24", 1646.83], ["2026-04-26", 1649.08], ["2026-04-28", 1651.5], ["2026-04-29", 1655.5], ["2026-05-01", 1658.25], ["2026-05-03", 1660.17], ["2026-05-05", 1666.25], ["2026-05-07", 1670.5], ["2026-05-09", 1673.92], ["2026-05-10", 1678.92], ["2026-05-11", 1682.5], ["2026-05-12", 1687.67], ["2026-05-14", 1691.0], ["2026-05-16", 1693.5]]}]}, "empty": false}, {"id": "chart-4aa25d2024", "title": "月度读过/读完/笔记", "subtitle": "来自月度 readStat 文案解析，用于趋势观察。", "source": "/readdata/detail readStat", "option": {"color": ["#1B365D", "#b69b66", "#7d8b70", "#a45d4f", "#2D5A8A", "#6f675a", "#9d8062", "#596b7f"], "tooltip": {"trigger": "axis", "axisPointer": {"type": "shadow"}}, "legend": {"top": 0, "textStyle": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif"}}, "grid": {"left": 46, "right": 24, "top": 34, "bottom": 54}, "xAxis": {"type": "category", "data": ["2024-05", "2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05"], "axisLabel": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif"}}, "yAxis": {"type": "value", "axisLabel": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif"}, "splitLine": {"lineStyle": {"color": "#e8e6dc"}}}, "series": [{"name": "读过", "type": "bar", "stack": "total", "data": [16, 37, 42, 49, 32, 37, 42, 49, 32, 35, 44, 47, 32, 37, 44, 51, 32, 37, 42, 49, 34, 33, 44, 47, 18], "barMaxWidth": 18}, {"name": "读完", "type": "bar", "stack": "total", "data": [3, 7, 8, 9, 6, 7, 8, 9, 6, 7, 8, 9, 6, 7, 8, 10, 6, 7, 8, 9, 6, 6, 8, 9, 3], "barMaxWidth": 18}, {"name": "笔记", "type": "bar", "stack": "total", "data": [189, 378, 378, 399, 378, 378, 378, 399, 378, 357, 399, 378, 378, 378, 399, 420, 378, 378, 378, 399, 399, 336, 399, 378, 210], "barMaxWidth": 18}]}, "empty": false}, {"id": "chart-0a7ca81731", "title": "触达自然年对比", "subtitle": "年度接口按自然年返回；默认报告范围跨到的年份都会展示。", "source": "/readdata/detail annually", "option": {"color": ["#1B365D", "#b69b66", "#7d8b70", "#a45d4f", "#2D5A8A", "#6f675a", "#9d8062", "#596b7f"], "tooltip": {"trigger": "axis"}, "legend": {"top": 0, "textStyle": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif"}}, "grid": {"left": 46, "right": 24, "top": 34, "bottom": 44}, "xAxis": {"type": "category", "data": ["2024", "2025", "2026"], "axisLabel": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif"}}, "yAxis": {"type": "value", "axisLabel": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif"}, "splitLine": {"lineStyle": {"color": "#e8e6dc"}}}, "series": [{"name": "阅读小时", "type": "bar", "data": [520.83, 864.42, 308.25], "barMaxWidth": 22}, {"name": "阅读天数", "type": "bar", "data": [137, 220, 82], "barMaxWidth": 22}]}, "empty": false}, {"id": "chart-be35f38a57", "title": "读得最久的书", "subtitle": "按月度 readLongest 聚合，避免直接用书架推断时长。", "source": "/readdata/detail readLongest", "option": {"color": ["#1B365D"], "tooltip": {"trigger": "axis", "axisPointer": {"type": "shadow"}, "valueFormatter": "function(v){return v + '小时'}"}, "grid": {"left": 128, "right": 24, "top": 24, "bottom": 36}, "xAxis": {"type": "value", "axisLabel": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif"}, "splitLine": {"lineStyle": {"color": "#e8e6dc"}}}, "yAxis": {"type": "category", "data": ["重构", "超级智能", "高增长手册", "影响力", "创业维艰", "必然", "用户体验要素", "系统之美", "原则", "管理的实践", "深度学习", "架构整洁之道", "生命3.0", "创新者的窘境", "定位"], "axisLabel": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif", "width": 112, "overflow": "truncate"}}, "series": [{"type": "bar", "data": [17.6, 17.74, 17.75, 17.94, 20.53, 20.74, 23.81, 24.85, 25.19, 25.91, 26.66, 26.9, 27.13, 27.14, 27.46], "barMaxWidth": 14}]}, "empty": false}, {"id": "chart-de20a2b125", "title": "阅读分类雷达", "subtitle": "按年度偏好分类 readingTime 聚合。", "source": "/readdata/detail preferCategory", "option": {"color": ["#1B365D"], "tooltip": {}, "radar": {"indicator": [{"name": "AI技术", "max": 545.307}, {"name": "创业管理", "max": 545.307}, {"name": "产品增长", "max": 545.307}, {"name": "商业财经", "max": 545.307}, {"name": "组织管理", "max": 545.307}, {"name": "系统思维", "max": 545.307}, {"name": "科技趋势", "max": 545.307}, {"name": "认知学习", "max": 545.307}], "axisName": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif"}, "splitLine": {"lineStyle": {"color": "#e8e6dc"}}, "splitArea": {"areaStyle": {"color": ["#faf9f5", "#f5f4ed"]}}, "axisLine": {"lineStyle": {"color": "#e8e6dc"}}}, "series": [{"type": "radar", "areaStyle": {"color": "#E4ECF5"}, "data": [{"value": [474.18, 338.7, 254.03, 203.22, 169.35, 118.55, 84.67, 50.8], "name": "阅读小时"}]}]}, "empty": false}, {"id": "chart-cba424e726", "title": "分类阅读时长", "subtitle": "分类按阅读小时降序。", "source": "/readdata/detail preferCategory", "option": {"color": ["#1B365D"], "tooltip": {"trigger": "axis", "axisPointer": {"type": "shadow"}, "valueFormatter": "function(v){return v + '小时'}"}, "grid": {"left": 128, "right": 24, "top": 24, "bottom": 36}, "xAxis": {"type": "value", "axisLabel": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif"}, "splitLine": {"lineStyle": {"color": "#e8e6dc"}}}, "yAxis": {"type": "category", "data": ["认知学习", "科技趋势", "系统思维", "组织管理", "商业财经", "产品增长", "创业管理", "AI技术"], "axisLabel": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif", "width": 112, "overflow": "truncate"}}, "series": [{"type": "bar", "data": [50.8, 84.67, 118.55, 169.35, 203.22, 254.03, 338.7, 474.18], "barMaxWidth": 14}]}, "empty": false}, {"id": "chart-db29788f54", "title": "分类阅读地图", "subtitle": "面积代表分类阅读时长。", "source": "/readdata/detail preferCategory", "option": {"color": ["#1B365D", "#b69b66", "#7d8b70", "#a45d4f", "#2D5A8A", "#6f675a", "#9d8062", "#596b7f"], "tooltip": {"formatter": "{b}: {c}"}, "series": [{"type": "treemap", "roam": false, "breadcrumb": {"show": false}, "label": {"color": "#faf9f5"}, "upperLabel": {"show": false}, "itemStyle": {"borderColor": "#faf9f5", "borderWidth": 2}, "data": [{"name": "AI技术", "value": 474.18}, {"name": "创业管理", "value": 338.7}, {"name": "产品增长", "value": 254.03}, {"name": "商业财经", "value": 203.22}, {"name": "组织管理", "value": 169.35}, {"name": "系统思维", "value": 118.55}, {"name": "科技趋势", "value": 84.67}, {"name": "认知学习", "value": 50.8}]}]}, "empty": false}, {"id": "chart-45c014dcb9", "title": "偏好作者", "subtitle": "作者偏好来自年度接口，时长字段按中文时长解析。", "source": "/readdata/detail preferAuthor", "option": {"color": ["#1B365D"], "tooltip": {"trigger": "axis", "axisPointer": {"type": "shadow"}, "valueFormatter": "function(v){return v + '小时'}"}, "grid": {"left": 128, "right": 24, "top": 24, "bottom": 36}, "xAxis": {"type": "value", "axisLabel": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif"}, "splitLine": {"lineStyle": {"color": "#e8e6dc"}}}, "yAxis": {"type": "category", "data": ["李开复 / 陈楸帆", "AI工程团队", "Ian Goodfellow / Yoshua Bengio / Aaron Courville", "Stuart Russell / Peter Norvig", "丹尼尔·卡尼曼", "瑞·达利欧", "埃里克·乔根森", "埃拉德·吉尔", "克莱顿·克里斯坦森", "埃里克·莱斯", "彼得·蒂尔", "本·霍洛维茨"], "axisLabel": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif", "width": 112, "overflow": "truncate"}}, "series": [{"type": "bar", "data": [84.65, 84.65, 98.2, 111.75, 125.3, 138.83, 152.38, 165.93, 179.48, 193.03, 206.58, 220.13], "barMaxWidth": 14}]}, "empty": false}, {"id": "chart-0069ce8507", "title": "偏好出版社", "subtitle": "按年度接口返回的出版社阅读本数聚合。", "source": "/readdata/detail preferPublisher", "option": {"color": ["#1B365D"], "tooltip": {"trigger": "axis", "axisPointer": {"type": "shadow"}, "valueFormatter": "function(v){return v + '本'}"}, "grid": {"left": 128, "right": 24, "top": 24, "bottom": 36}, "xAxis": {"type": "value", "axisLabel": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif"}, "splitLine": {"lineStyle": {"color": "#e8e6dc"}}}, "yAxis": {"type": "category", "data": ["新星出版社", "上海人民出版社", "中国人民大学出版社", "浙江人民出版社", "机械工业出版社", "人民邮电出版社", "电子工业出版社", "中信出版社"], "axisLabel": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif", "width": 112, "overflow": "truncate"}}, "series": [{"type": "bar", "data": [18, 33, 48, 63, 78, 93, 108, 123], "barMaxWidth": 14}]}, "empty": false}, {"id": "chart-e72cb625da", "title": "文字阅读与听书", "subtitle": "接口仅在满足展示阈值时返回，按触达自然年聚合。", "source": "/readdata/detail wrReadTime/wrListenTime", "option": {"color": ["#1B365D", "#b69b66", "#7d8b70", "#a45d4f", "#2D5A8A", "#6f675a", "#9d8062", "#596b7f"], "tooltip": {"trigger": "item"}, "legend": {"bottom": 0, "textStyle": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif"}}, "series": [{"type": "pie", "radius": ["42%", "68%"], "center": ["50%", "44%"], "avoidLabelOverlap": true, "label": {"formatter": "{b}: {d}%"}, "data": [{"name": "文字阅读", "value": 1422.54}, {"name": "听书/有声", "value": 270.96}]}]}, "empty": false}, {"id": "chart-a5b586097b", "title": "书架构成", "subtitle": "书架总数包含电子书、专辑/有声书和文章收藏入口。", "source": "/shelf/sync", "option": {"color": ["#1B365D", "#b69b66", "#7d8b70", "#a45d4f", "#2D5A8A", "#6f675a", "#9d8062", "#596b7f"], "tooltip": {"trigger": "item"}, "legend": {"bottom": 0, "textStyle": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif"}}, "series": [{"type": "pie", "radius": ["42%", "68%"], "center": ["50%", "44%"], "avoidLabelOverlap": true, "label": {"formatter": "{b}: {d}%"}, "data": [{"name": "电子书", "value": 725}, {"name": "有声/专辑", "value": 45}, {"name": "文章收藏", "value": 1}]}]}, "empty": false}, {"id": "chart-d1ff5c9c0c", "title": "书架分类资产", "subtitle": "按书架条目 category 分布；有声和文章收藏单独归类。", "source": "/shelf/sync books/albums/mp", "option": {"color": ["#1B365D", "#b69b66", "#7d8b70", "#a45d4f", "#2D5A8A", "#6f675a", "#9d8062", "#596b7f"], "tooltip": {"formatter": "{b}: {c}"}, "series": [{"type": "treemap", "roam": false, "breadcrumb": {"show": false}, "label": {"color": "#faf9f5"}, "upperLabel": {"show": false}, "itemStyle": {"borderColor": "#faf9f5", "borderWidth": 2}, "data": [{"name": "认知学习", "value": 87}, {"name": "创业管理", "value": 72}, {"name": "组织管理", "value": 69}, {"name": "工程架构", "value": 68}, {"name": "科技趋势", "value": 68}, {"name": "AI技术", "value": 54}, {"name": "商业财经", "value": 52}, {"name": "AI趋势", "value": 51}, {"name": "系统思维", "value": 51}, {"name": "产品增长", "value": 51}, {"name": "人物传记", "value": 51}, {"name": "有声/专辑", "value": 45}, {"name": "营销品牌", "value": 34}, {"name": "心理成长", "value": 17}, {"name": "文章收藏", "value": 1}]}]}, "empty": false}, {"id": "chart-d356bcfe4e", "title": "书架读完状态", "subtitle": "电子书用 finishReading，专辑用完结状态。", "source": "/shelf/sync", "option": {"color": ["#1B365D", "#b69b66", "#7d8b70", "#a45d4f", "#2D5A8A", "#6f675a", "#9d8062", "#596b7f"], "tooltip": {"trigger": "item"}, "legend": {"bottom": 0, "textStyle": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif"}}, "series": [{"type": "pie", "radius": ["42%", "68%"], "center": ["50%", "44%"], "avoidLabelOverlap": true, "label": {"formatter": "{b}: {d}%"}, "data": [{"name": "未读完", "value": 182}, {"name": "已读完", "value": 543}, {"name": "连载/未完结专辑", "value": 15}, {"name": "已完结专辑", "value": 30}]}]}, "empty": false}, {"id": "chart-2430e21475", "title": "公开/私密阅读", "subtitle": "文章收藏入口固定计入私密阅读。", "source": "/shelf/sync", "option": {"color": ["#1B365D", "#b69b66", "#7d8b70", "#a45d4f", "#2D5A8A", "#6f675a", "#9d8062", "#596b7f"], "tooltip": {"trigger": "item"}, "legend": {"bottom": 0, "textStyle": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif"}}, "series": [{"type": "pie", "radius": ["42%", "68%"], "center": ["50%", "44%"], "avoidLabelOverlap": true, "label": {"formatter": "{b}: {d}%"}, "data": [{"name": "私密阅读", "value": 88}, {"name": "公开阅读", "value": 683}]}]}, "empty": false}, {"id": "chart-974517f00e", "title": "书单规模", "subtitle": "archive[].bookIds 的数量。", "source": "/shelf/sync archive", "option": {"color": ["#1B365D"], "tooltip": {"trigger": "axis", "axisPointer": {"type": "shadow"}, "valueFormatter": "function(v){return v + '本'}"}, "grid": {"left": 128, "right": 24, "top": 24, "bottom": 36}, "xAxis": {"type": "value", "axisLabel": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif"}, "splitLine": {"lineStyle": {"color": "#e8e6dc"}}}, "yAxis": {"type": "category", "data": ["周末深读", "系统思维与复杂性", "创始人传记", "融资、财务与商业化", "组织管理与OKR", "产品增长实验室", "大模型工程与智能体", "AI创业核心书单"], "axisLabel": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif", "width": 112, "overflow": "truncate"}}, "series": [{"type": "bar", "data": [30, 40, 40, 50, 60, 70, 80, 90], "barMaxWidth": 14}]}, "empty": false}, {"id": "chart-3da278e30a", "title": "近两年书架活动", "subtitle": "按最近阅读或更新时间聚合的书架活动条目数。", "source": "/shelf/sync readUpdateTime", "option": {"color": ["#1B365D"], "tooltip": {"trigger": "axis"}, "grid": {"left": 46, "right": 24, "top": 26, "bottom": 54}, "xAxis": {"type": "category", "data": ["2024-05", "2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05"], "axisLabel": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif"}}, "yAxis": {"type": "value", "name": "条目", "axisLabel": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif"}, "splitLine": {"lineStyle": {"color": "#e8e6dc"}}}, "series": [{"name": "条目", "type": "line", "smooth": true, "symbolSize": 5, "data": [18, 36, 35, 37, 37, 19, 36, 35, 36, 19, 36, 36, 35, 36, 19, 36, 36, 35, 36, 19, 36, 33, 34, 18, 17]}]}, "empty": false}, {"id": "chart-71c88e7dfe", "title": "笔记最多的书", "subtitle": "总笔记数 = 划线 + 想法/点评 + 书签。", "source": "/user/notebooks", "option": {"color": ["#1B365D"], "tooltip": {"trigger": "axis", "axisPointer": {"type": "shadow"}, "valueFormatter": "function(v){return v + '条'}"}, "grid": {"left": 128, "right": 24, "top": 24, "bottom": 36}, "xAxis": {"type": "value", "axisLabel": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif"}, "splitLine": {"lineStyle": {"color": "#e8e6dc"}}}, "yAxis": {"type": "category", "data": ["架构整洁之道", "刻意练习", "高增长手册", "创新者的窘境", "失控", "OKR工作法", "深度学习", "置身事内", "程序员修炼之道", "增长黑客", "启示录", "纳瓦尔宝典", "AI 2041", "浪潮之巅", "被讨厌的勇气"], "axisLabel": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif", "width": 112, "overflow": "truncate"}}, "series": [{"type": "bar", "data": [295, 305, 305, 310, 315, 320, 320, 330, 330, 340, 345, 345, 355, 370, 380], "barMaxWidth": 14}]}, "empty": false}, {"id": "chart-fd003420d1", "title": "笔记类型构成", "subtitle": "书签只展示数量，当前接口不能导出书签内容。", "source": "/user/notebooks", "option": {"color": ["#1B365D", "#b69b66", "#7d8b70", "#a45d4f", "#2D5A8A", "#6f675a", "#9d8062", "#596b7f"], "tooltip": {"trigger": "item"}, "legend": {"bottom": 0, "textStyle": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif"}}, "series": [{"type": "pie", "radius": ["42%", "68%"], "center": ["50%", "44%"], "avoidLabelOverlap": true, "label": {"formatter": "{b}: {d}%"}, "data": [{"name": "划线", "value": 7455}, {"name": "想法/点评", "value": 2445}, {"name": "书签", "value": 1050}]}]}, "empty": false}, {"id": "chart-413eed1bc5", "title": "阅读进度与笔记量", "subtitle": "每个点是一本文档；横轴阅读进度，纵轴笔记总数。", "source": "/user/notebooks readingProgress", "option": {"color": ["#1B365D"], "tooltip": {"formatter": "{b}<br/>进度: {@[0]}%<br/>笔记: {@[1]}条"}, "grid": {"left": 46, "right": 24, "top": 24, "bottom": 44}, "xAxis": {"type": "value", "name": "进度%", "min": 0, "max": 100, "axisLabel": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif"}, "splitLine": {"lineStyle": {"color": "#e8e6dc"}}}, "yAxis": {"type": "value", "name": "笔记", "axisLabel": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif"}, "splitLine": {"lineStyle": {"color": "#e8e6dc"}}}, "series": [{"type": "scatter", "symbolSize": 8, "data": [[96, 380, "被讨厌的勇气"], [100, 370, "浪潮之巅"], [78, 355, "AI 2041"], [90, 345, "纳瓦尔宝典"], [43, 345, "启示录"], [54, 340, "增长黑客"], [66, 330, "程序员修炼之道"], [97, 330, "置身事内"], [56, 320, "深度学习"], [100, 320, "OKR工作法"], [42, 315, "失控"], [68, 310, "创新者的窘境"], [79, 305, "高增长手册"], [85, 305, "刻意练习"], [44, 295, "架构整洁之道"], [55, 290, "重构"], [67, 280, "大模型应用开发"], [98, 280, "管理的实践"], [57, 270, "精益创业"], [100, 270, "用户体验要素"], [63, 270, "穷查理宝典"], [74, 265, "事实"], [86, 255, "芯片战争"], [45, 245, "人工智能：现代方法"], [76, 245, "影响力"], [88, 235, "规模"], [99, 230, "复杂"], [52, 230, "详谈：左晖"], [100, 220, "设计数据密集型应用"], [64, 220, "硅谷钢铁侠"], [75, 215, "史蒂夫·乔布斯传"], [100, 210, "原则"], [87, 205, "卓有成效的管理者"], [46, 195, "从0到1"], [77, 195, "系统之美"], [89, 185, "生命3.0"], [100, 180, "超级智能"], [53, 180, "必然"], [100, 170, "思考，快与慢"], [65, 170, "定位"], [41, 155, "腾讯传"], [35, 120, "创业维艰"]]}]}, "empty": false}, {"id": "chart-d1c6cbcda7", "title": "划线与想法词云", "subtitle": "由近两年划线和想法文本抽取高频短语。", "source": "/book/bookmarklist + /review/list/mine", "option": {"tooltip": {}, "series": [{"type": "wordCloud", "shape": "circle", "gridSize": 6, "sizeRange": [12, 48], "rotationRange": [-25, 25], "textStyle": {"fontFamily": "TsangerJinKai02, Source Han Serif SC, serif", "color": "function(){var c=['#1B365D','#7d8b70','#a45d4f','#6f675a','#2D5A8A'];return c[Math.floor(Math.random()*c.length)]}"}, "data": [{"name": "创业", "value": 60126}, {"name": "商业化", "value": 49704}, {"name": "智能体", "value": 49650}, {"name": "产品市场匹配", "value": 49644}, {"name": "模型", "value": 34716}, {"name": "渠道", "value": 19632}, {"name": "定价", "value": 19572}, {"name": "留存", "value": 14670}, {"name": "模型评测体系", "value": 14670}, {"name": "用户", "value": 10374}, {"name": "管理", "value": 5448}, {"name": "系统", "value": 5394}, {"name": "大模型", "value": 5100}, {"name": "客户反馈", "value": 5004}, {"name": "网络效应", "value": 5004}, {"name": "技术", "value": 4980}, {"name": "创始人", "value": 4974}, {"name": "融资节奏", "value": 4962}, {"name": "现金流", "value": 4962}, {"name": "增长飞轮", "value": 4962}, {"name": "商业模式", "value": 4962}, {"name": "开源模型", "value": 4962}, {"name": "护城河", "value": 4962}, {"name": "数据飞轮", "value": 4962}, {"name": "分发渠道", "value": 4962}, {"name": "团队", "value": 4938}, {"name": "北极星指标", "value": 4938}, {"name": "公司", "value": 4938}, {"name": "算力成本", "value": 4920}, {"name": "客户访谈", "value": 4914}, {"name": "提示词", "value": 4902}, {"name": "工作流重构", "value": 4902}, {"name": "权限边界", "value": 4902}, {"name": "组织设计", "value": 4902}, {"name": "复盘", "value": 4890}]}]}, "empty": false}, {"id": "chart-53f71eb8f9", "title": "笔记时间线", "subtitle": "按划线和想法创建时间聚合。", "source": "/book/bookmarklist createTime + /review/list/mine createTime", "option": {"color": ["#1B365D"], "tooltip": {"trigger": "axis"}, "grid": {"left": 46, "right": 24, "top": 26, "bottom": 54}, "xAxis": {"type": "category", "data": ["2024-05", "2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05"], "axisLabel": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif"}}, "yAxis": {"type": "value", "name": "条", "axisLabel": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif"}, "splitLine": {"lineStyle": {"color": "#e8e6dc"}}}, "series": [{"name": "条", "type": "line", "smooth": true, "symbolSize": 5, "data": [212, 417, 427, 430, 431, 367, 415, 424, 430, 339, 426, 433, 428, 423, 370, 432, 434, 424, 414, 367, 428, 396, 428, 377, 228]}]}, "empty": false}, {"id": "chart-5cf2890b9d", "title": "划线长度分布", "subtitle": "按划线原文字数分桶。", "source": "/book/bookmarklist markText", "option": {"color": ["#1B365D"], "tooltip": {"trigger": "axis"}, "grid": {"left": 42, "right": 24, "top": 26, "bottom": 44}, "xAxis": {"type": "category", "data": ["51-100"], "axisLabel": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif"}}, "yAxis": {"type": "value", "name": "条", "axisLabel": {"color": "#87867f", "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif"}, "splitLine": {"lineStyle": {"color": "#e8e6dc"}}}, "series": [{"type": "bar", "data": [7455], "barMaxWidth": 22}]}, "empty": false}];
+function reviveFunctions(option) {
+  if (!option || typeof option !== 'object') return option;
+  for (const key of Object.keys(option)) {
+    const value = option[key];
+    if (typeof value === 'string' && value.startsWith('function(')) {
+      try { option[key] = new Function('return (' + value + ')')(); } catch (err) {}
+    } else if (value && typeof value === 'object') {
+      reviveFunctions(value);
+    }
+  }
+  return option;
+}
+function bootCharts() {
+  if (!window.echarts) {
+    document.querySelectorAll('.chart-card').forEach(card => card.classList.add('is-empty'));
+    return;
+  }
+  CHARTS.forEach(item => {
+    const el = document.getElementById(item.id);
+    const card = document.querySelector(`[data-chart-card="${item.id}"]`);
+    if (!el || !card) return;
+    if (item.empty) {
+      card.classList.add('is-empty');
+      return;
+    }
+    const chart = echarts.init(el, null, { renderer: 'canvas' });
+    chart.setOption(reviveFunctions(item.option));
+    window.addEventListener('resize', () => chart.resize());
+  });
+}
+bootCharts();
+</script>
+</body>
+</html>

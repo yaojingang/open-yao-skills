@@ -117,9 +117,35 @@ yao-open-skills/
 - [Yao Game Theory Skill](docs/skills/yao-gametheory-skill.md)
 - [Yao Kelly Skill](docs/skills/yao-kelly-skill.md)
 - [Yao Tutorial Skill](docs/skills/yao-tutorial-skill.md)
+- [Yao WeRead Skill](docs/skills/yao-weread-skill.md)
 - [Yao Websecurity Skill](docs/skills/yao-websecurity-skill.md)
 
 ## Featured Published Skills
+
+### Yao WeRead Skill
+
+[`yao-weread-skill`](docs/skills/yao-weread-skill.md) 是一个面向微信读书数据的个人阅读可视化报告 Skill。
+
+它会把近两年的阅读时长、阅读节律、书架资产、内容偏好和笔记语义组织成一份可直接打开的 HTML 报告。相比简单统计阅读分钟数，它更关注“你如何读书、读什么、在哪些书上留下了想法”。
+
+它的公开版本现在有这些比较突出的特点：
+
+- 默认生成 26 个图表模块，覆盖月度阅读、星期节律、累计阅读、读得最久的书、分类雷达、作者/出版社偏好、书架构成、笔记类型、进度散点、词云和笔记时间线
+- 支持真实微信读书账号报告，也支持无需账号的 AI 创业者示例画像
+- 使用 `/readdata/detail`、`/shelf/sync`、`/user/notebooks`、`/book/bookmarklist` 和 `/review/list/mine` 组合出完整数据视图
+- 词云优先保留高信号领域词，并过滤常见中文分词碎片
+- HTML 报告采用温暖纸面、墨蓝强调和紧凑证据卡片，适合本地浏览、截图和归档
+- API Key 只从环境变量读取，真实报告默认不进入公开仓库
+
+如果你想快速理解这个 Skill，建议按这个顺序看：
+
+1. [公开说明文档](docs/skills/yao-weread-skill.md)
+2. [目录说明](skills/yao-weread-skill/README.md)
+3. [Skill 入口](skills/yao-weread-skill/SKILL.md)
+4. [图表目录](skills/yao-weread-skill/references/chart-catalog.md)
+5. [数据契约](skills/yao-weread-skill/references/data-contract.md)
+6. [生成脚本](skills/yao-weread-skill/scripts/generate_weread_report.py)
+7. [AI 创业者版示例报告](skills/yao-weread-skill/examples/ai-founder-report/weread-report.html)
 
 ### Yao Websecurity Skill
 
@@ -279,6 +305,7 @@ yao-open-skills/
 | [yao-open-skills-sync](skills/yao-open-skills-sync/SKILL.md) | [guide](docs/skills/yao-open-skills-sync.md) | `active` | `published` | [skills/yao-open-skills-sync](skills/yao-open-skills-sync) | [skills/yao-open-skills-sync](skills/yao-open-skills-sync) | [link](https://github.com/yaojingang/yao-open-skills/tree/main/skills/yao-open-skills-sync) |
 | [yao-tutorial-skill](skills/yao-tutorial-skill/SKILL.md) | [guide](docs/skills/yao-tutorial-skill.md) | `active` | `published` | [skills/yao-tutorial-skill](skills/yao-tutorial-skill) | `external-local-source` | [link](https://github.com/yaojingang/yao-open-skills/tree/main/skills/yao-tutorial-skill) |
 | [yao-websecurity-skill](skills/yao-websecurity-skill/SKILL.md) | [guide](docs/skills/yao-websecurity-skill.md) | `active` | `published` | [skills/yao-websecurity-skill](skills/yao-websecurity-skill) | `external-local-source` | [link](https://github.com/yaojingang/yao-open-skills/tree/main/skills/yao-websecurity-skill) |
+| [yao-weread-skill](skills/yao-weread-skill/SKILL.md) | [guide](docs/skills/yao-weread-skill.md) | `active` | `published` | [skills/yao-weread-skill](skills/yao-weread-skill) | `external-local-source` | [link](https://github.com/yaojingang/yao-open-skills/tree/main/skills/yao-weread-skill) |
 <!-- catalog:end -->
 
 ## 后续约定

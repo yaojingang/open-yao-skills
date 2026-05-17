@@ -1,0 +1,10 @@
+{
+  "name": "yao-weread-skill",
+  "version": "0.1.0",
+  "description": "Generate polished live or sample WeRead visual reading reports from 微信读书 skill data.",
+  "entrypoint": "scripts/generate_weread_report.py",
+  "requires_env": [],
+  "optional_env": ["WEREAD_API_KEY"],
+  "modes": ["live-weread", "sample-ai-founder"],
+  "artifacts": ["reports/generated/weread-report.html", "reports/generated/weread-report-data.json", "reports/generated/ai-founder-sample/weread-report.html"]
+}

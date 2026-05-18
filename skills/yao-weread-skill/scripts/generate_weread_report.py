@@ -702,6 +702,161 @@ def bucket(value: int, edges: list[int]) -> str:
     return f"{edges[-1]}+"
 
 
+def clean_quote_text(text: str) -> str:
+    clean = re.sub(r"https?://\S+", " ", text or "")
+    clean = re.sub(r"\s+", " ", clean).strip()
+    clean = clean.strip(" \t\r\n\"'“”‘’")
+    return clean
+
+
+def split_highlight_sentences(text: str) -> list[str]:
+    clean = clean_quote_text(text)
+    if not clean:
+        return []
+    pieces = re.findall(r"[^。！？!?；;\n]+[。！？!?；;]?", clean)
+    if not pieces:
+        pieces = [clean]
+    sentences: list[str] = []
+    for piece in pieces:
+        sentence = clean_quote_text(piece)
+        if len(sentence) < 10:
+            continue
+        if len(sentence) > 180:
+            shorter_parts = [clean_quote_text(part) for part in re.split(r"[，,：:]", sentence) if clean_quote_text(part)]
+            sentence = next((part for part in shorter_parts if 12 <= len(part) <= 120), sentence[:176] + "...")
+        sentences.append(sentence)
+    return sentences
+
+
+def quote_fingerprint(text: str) -> str:
+    compact = re.sub(r"[^\w\u4e00-\u9fff]+", "", text).lower()
+    return compact[:120]
+
+
+def quote_keywords(text: str, category: str, top_terms: list[str], top_categories: list[str]) -> list[str]:
+    keywords: list[str] = []
+    for term in top_terms:
+        if term and term in text and term not in keywords:
+            keywords.append(term)
+    if category and category in top_categories and category not in keywords:
+        keywords.append(category)
+    for term in DOMAIN_TERMS:
+        if len(keywords) >= 4:
+            break
+        if term in text and term not in keywords:
+            keywords.append(term)
+    return keywords[:4]
+
+
+def quote_score(candidate: dict[str, Any], top_terms: list[str], top_categories: list[str], top_titles: list[str]) -> float:
+    text = candidate["text"]
+    score = 0.0
+    score += min(len(text), 120) / 18
+    for term in top_terms[:14]:
+        if term and term in text:
+            score += 8
+    for term in DOMAIN_TERMS:
+        if term in text:
+            score += 3
+    if candidate.get("category") in top_categories[:5]:
+        score += 5
+    if candidate.get("bookTitle") in top_titles[:6]:
+        score += 4
+    if any(mark in text for mark in ("方法", "系统", "价值", "增长", "行动", "反馈", "判断", "模型", "用户")):
+        score += 4
+    if len(text) < 16:
+        score -= 5
+    if len(text) > 140:
+        score -= 2
+    return score
+
+
+def build_poetic_summary(data: dict[str, Any]) -> str:
+    kpis = data["kpis"]
+    top_category = (data["reading"]["categories"][0]["name"] if data["reading"]["categories"] else "多重兴趣")
+    top_book = (data["reading"]["topBooks"][0]["title"] if data["reading"]["topBooks"] else "一本本书")
+    terms = [row["name"] for row in data["notes"].get("wordCloud", [])[:4]]
+    term_phrase = "、".join(terms) if terms else "问题、方法和判断"
+    closing = (
+        "那些被划下的句子不是碎片，而是路标；它们把兴趣、判断和行动慢慢连成一张个人地图。"
+        if kpis.get("highlightsFetchedInRange")
+        else "这些阅读记录不是冷冰冰的数字，而是一条持续靠近问题、方法和生活秩序的路径。"
+    )
+    return (
+        f"这位读者把书架当作一间有灯的工作室：在 {kpis['readDays']} 个阅读日里，"
+        f"时间流向「{top_category}」和《{top_book}》，又在 {kpis['noteTotal']} 条笔记里沉淀为{term_phrase}。"
+        f"{closing}"
+    )
+
+
+def build_reader_portrait(data: dict[str, Any], highlight_candidates: list[dict[str, Any]]) -> dict[str, Any]:
+    top_terms = [row["name"] for row in data["notes"].get("wordCloud", [])]
+    top_categories = [row["name"] for row in data["reading"].get("categories", [])]
+    top_titles = [row["title"] for row in data["reading"].get("topBooks", [])]
+    ranked = []
+    for candidate in highlight_candidates:
+        fingerprint = quote_fingerprint(candidate["text"])
+        if not fingerprint:
+            continue
+        keywords = quote_keywords(candidate["text"], candidate.get("category") or "", top_terms, top_categories)
+        ranked.append(
+            {
+                **candidate,
+                "fingerprint": fingerprint,
+                "keywords": keywords,
+                "reason": "关联：" + " / ".join(keywords[:3]) if keywords else "关联：阅读画像",
+                "score": quote_score(candidate, top_terms, top_categories, top_titles),
+            }
+        )
+    ranked.sort(key=lambda row: row["score"], reverse=True)
+
+    selected: list[dict[str, Any]] = []
+    deferred: list[dict[str, Any]] = []
+    book_counts: Counter[str] = Counter()
+    seen: set[str] = set()
+    for row in ranked:
+        fingerprint = row["fingerprint"]
+        if fingerprint in seen:
+            continue
+        title = row.get("bookTitle") or "未知书籍"
+        if book_counts[title] >= 3:
+            deferred.append(row)
+            continue
+        selected.append(row)
+        book_counts[title] += 1
+        seen.add(fingerprint)
+        if len(selected) >= 20:
+            break
+    if len(selected) < 20:
+        for row in deferred:
+            if row["fingerprint"] in seen:
+                continue
+            selected.append(row)
+            seen.add(row["fingerprint"])
+            if len(selected) >= 20:
+                break
+
+    quotes = []
+    for index, row in enumerate(selected[:20], start=1):
+        quotes.append(
+            {
+                "rank": index,
+                "text": row["text"],
+                "bookTitle": row.get("bookTitle") or "未知书籍",
+                "author": row.get("author") or "",
+                "category": row.get("category") or "",
+                "keywords": row.get("keywords") or [],
+                "reason": row.get("reason") or "关联：阅读画像",
+            }
+        )
+    return {
+        "poeticSummary": build_poetic_summary(data),
+        "goldenQuote": quotes[0] if quotes else None,
+        "quotes": quotes,
+        "quoteCount": len(quotes),
+    }
+
+
 AI_FOUNDER_BOOK_CATALOG = [
     {"title": "创业维艰", "author": "本·霍洛维茨", "category": "创业管理", "publisher": "中信出版社"},
     {"title": "从0到1", "author": "彼得·蒂尔", "category": "创业管理", "publisher": "中信出版社"},
@@ -760,6 +915,14 @@ AI_FOUNDER_NOTE_TEMPLATES = [
     "创业公司要警惕伪需求，最好的信号是客户愿意付费、迁移数据并承担切换成本。",
     "如果一个模型能力不能嵌入用户的日常流程，它就只是一段有趣的技术展示。",
     "商业化阶段要把销售话术、成功案例和交付能力做成系统，而不是依赖创始人个人英雄主义。",
+    "最好的产品路线图不是功能清单，而是用户工作流里反复出现的阻塞点。",
+    "创始人需要同时看见技术曲线和人性惯性，前者决定可能性，后者决定采用速度。",
+    "组织设计的目标不是制造层级，而是让信息、责任和决策在正确的位置相遇。",
+    "增长不是把漏斗做大，而是让每一次触达都更接近真实价值和长期信任。",
+    "真正有效的智能体不会替人炫技，而是在低频错误和高频琐事之间节省注意力。",
+    "当市场还没有共识时，最稀缺的能力是把模糊需求翻译成可验证的实验。",
+    "一家公司的护城河往往藏在日复一日的流程里，而不是发布会上的形容词里。",
+    "读书的意义不是获得确定答案，而是让自己的问题变得更准确、更有行动方向。",
 ]
 
 
@@ -1109,12 +1272,15 @@ def aggregate(
         )
     notebook_rows.sort(key=lambda row: row["total"], reverse=True)
 
+    book_lookup = {row["bookId"]: row for row in notebook_rows if row.get("bookId")}
     text_pool: list[str] = []
+    highlight_candidates: list[dict[str, Any]] = []
     note_timeline: Counter[str] = Counter()
     highlight_length: Counter[str] = Counter()
     highlights_in_range = 0
     reviews_in_range = 0
     for detail in note_details:
+        detail_book = book_lookup.get(str(detail.get("bookId") or ""), {})
         for item in detail.get("highlights") or []:
             day = from_ts(item.get("createTime"))
             if day and not (report_range.start <= day <= report_range.end):
@@ -1124,6 +1290,17 @@ def aggregate(
                 text_pool.append(text)
                 highlights_in_range += 1
                 highlight_length[bucket(len(text), [20, 50, 100, 200, 400])] += 1
+                for sentence in split_highlight_sentences(text):
+                    highlight_candidates.append(
+                        {
+                            "text": sentence,
+                            "bookId": str(detail.get("bookId") or ""),
+                            "bookTitle": detail_book.get("title") or "未知书籍",
+                            "author": detail_book.get("author") or "",
+                            "category": detail_book.get("category") or "",
+                            "createdAt": day.isoformat() if day else "",
+                        }
+                    )
             if day:
                 note_timeline[month_label(date(day.year, day.month, 1))] += 1
         for item in detail.get("reviews") or []:
@@ -1151,6 +1328,7 @@ def aggregate(
         running += daily_map[day_str]
         cumulative.append([day_str, hours(running)])
 
+    word_cloud = extract_terms(text_pool, limit=35)
     report_data = {
         "meta": {
             "range": report_range.label,
@@ -1230,7 +1408,7 @@ def aggregate(
             "topBooks": notebook_rows[:20],
             "typeTotals": [{"name": name, "value": value} for name, value in note_type_totals.items()],
             "progressScatter": [[row["progress"], row["total"], row["title"]] for row in notebook_rows if row["progress"] is not None],
-            "wordCloud": extract_terms(text_pool, limit=35),
+            "wordCloud": word_cloud,
             "timeline": [{"month": label, "count": note_timeline.get(label, 0)} for label in months],
             "highlightLength": [{"bucket": name, "count": count} for name, count in sorted(highlight_length.items())],
             "categories": [{"name": name, "value": count} for name, count in notebook_category_counts.most_common(14)],
@@ -1245,6 +1423,7 @@ def aggregate(
         "noteDetailBooksFetched": len(note_details),
         "noteFetchErrors": note_errors,
     }
+    report_data["readerPortrait"] = build_reader_portrait(report_data, highlight_candidates)
     report_data["charts"] = build_charts(report_data)
     report_data["tables"] = build_tables(report_data)
     report_data["insights"] = build_insights(report_data)
@@ -1582,9 +1761,19 @@ def build_html(data: dict[str, Any]) -> str:
     report_subtitle = data["meta"].get("subtitle") or "把近两年的阅读时间、书架资产、内容偏好和笔记语义放在同一张纸面上：先看节律，再看兴趣，最后看留下来的句子。"
     report_eyebrow = data["meta"].get("eyebrow") or "WeRead Personal Analytics"
     overview_copy = data["meta"].get("overviewCopy") or "这里的数字来自微信读书账户数据。阅读时长按秒计算后转成人类可读格式，书架总数包含电子书、有声/专辑和文章收藏入口。"
+    portrait = data.get("readerPortrait") or {}
+    golden_quote = portrait.get("goldenQuote") or {}
+    poetic_summary = portrait.get("poeticSummary") or ""
     charts_json = json.dumps(data["charts"], ensure_ascii=False).replace("</", "<\\/")
     data_json = json.dumps(
-        {"meta": data["meta"], "kpis": data["kpis"], "tables": data["tables"], "insights": data["insights"], "coverage": data["coverage"]},
+        {
+            "meta": data["meta"],
+            "kpis": data["kpis"],
+            "tables": data["tables"],
+            "insights": data["insights"],
+            "coverage": data["coverage"],
+            "readerPortrait": portrait,
+        },
         ensure_ascii=False,
     ).replace("</", "<\\/")
     chart_card_items = [
@@ -1638,6 +1827,40 @@ def build_html(data: dict[str, Any]) -> str:
     if data["meta"].get("persona"):
         meta_tags.append(("画像", data["meta"]["persona"]))
     meta_badges = "\n".join(f'<span class="tag">{escape_html(label)}：{escape_html(str(value))}</span>' for label, value in meta_tags)
+    golden_quote_html = ""
+    if golden_quote:
+        quote_source = f"《{golden_quote.get('bookTitle') or '未知书籍'}》"
+        if golden_quote.get("author"):
+            quote_source += f" · {golden_quote['author']}"
+        golden_quote_html = f"""
+      <figure class="golden-quote">
+        <blockquote>{escape_html(golden_quote.get('text') or '')}</blockquote>
+        <figcaption>画像金句 · {escape_html(quote_source)}</figcaption>
+      </figure>
+        """
+    portrait_summary_html = ""
+    if poetic_summary:
+        portrait_summary_html = f"""
+      <div class="portrait-summary">
+        <span>读者画像</span>
+        <p>{escape_html(poetic_summary)}</p>
+      </div>
+        """
+    quote_items = []
+    for quote in portrait.get("quotes") or []:
+        source = f"《{quote.get('bookTitle') or '未知书籍'}》"
+        if quote.get("author"):
+            source += f" · {quote['author']}"
+        quote_items.append(
+            f"""
+        <article class="quote-card">
+          <span class="quote-index">{int(quote.get('rank') or 0):02d}</span>
+          <p>{escape_html(quote.get('text') or '')}</p>
+          <footer>{escape_html(source)}<em>{escape_html(quote.get('reason') or '关联：阅读画像')}</em></footer>
+        </article>
+            """
+        )
+    portrait_quotes_html = "\n".join(quote_items) if quote_items else '<div class="quote-empty">当前没有足够划线文本生成画像清单。</div>'
     return f"""<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -1686,6 +1909,12 @@ def build_html(data: dict[str, Any]) -> str:
   .subtitle {{ max-width:760px; color:var(--olive); font-size:20px; line-height:1.5; margin:0; }}
   .meta-line {{ display:flex; flex-wrap:wrap; gap:10px; color:var(--stone); font-size:14px; margin-top:30px; }}
   .tag {{ background:var(--tag-bg); color:var(--brand); border-radius:4px; padding:4px 8px; }}
+  .portrait-summary {{ max-width:860px; margin-top:30px; padding-left:16px; border-left:3px solid var(--brand); }}
+  .portrait-summary span {{ display:block; color:var(--brand); font-size:12px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:8px; }}
+  .portrait-summary p {{ margin:0; color:var(--dark-warm); font-family:"TsangerJinKai02","Source Han Serif SC","Noto Serif CJK SC","Songti SC",serif; font-size:24px; line-height:1.58; }}
+  .golden-quote {{ max-width:820px; margin:26px 0 0; padding:0; }}
+  .golden-quote blockquote {{ margin:0; color:var(--near-black); font-family:"TsangerJinKai02","Source Han Serif SC","Noto Serif CJK SC","Songti SC",serif; font-size:28px; line-height:1.45; }}
+  .golden-quote figcaption {{ margin-top:10px; color:var(--stone); font-size:13px; }}
   section {{ padding:42px 0; border-bottom:1px solid var(--border); }}
   .section-title {{ border-left:3px solid var(--brand); padding-left:12px; margin-bottom:18px; }}
   .section-title h2 {{ margin:0; font-size:28px; line-height:1.2; }}
@@ -1717,12 +1946,20 @@ def build_html(data: dict[str, Any]) -> str:
   .appendix {{ display:grid; grid-template-columns:1.2fr .8fr; gap:18px; }}
   .note {{ color:var(--olive); background:var(--ivory); border:1px solid var(--border); border-radius:8px; padding:18px 20px; }}
   .note p {{ margin:0 0 10px; }}
+  .quote-grid {{ display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:14px; }}
+  .quote-card {{ position:relative; min-width:0; background:var(--ivory); border:1px solid var(--border); border-radius:8px; padding:18px 18px 16px 54px; }}
+  .quote-index {{ position:absolute; left:18px; top:20px; color:var(--brand); font-family:"TsangerJinKai02","Source Han Serif SC",serif; font-size:18px; line-height:1; }}
+  .quote-card p {{ margin:0; color:var(--near-black); font-family:"TsangerJinKai02","Source Han Serif SC","Noto Serif CJK SC","Songti SC",serif; font-size:19px; line-height:1.55; }}
+  .quote-card footer {{ margin-top:12px; color:var(--stone); font-size:12px; line-height:1.45; }}
+  .quote-card footer em {{ display:block; margin-top:4px; color:var(--olive); font-style:normal; overflow-wrap:anywhere; }}
+  .quote-empty {{ background:var(--ivory); border:1px dashed var(--border); border-radius:8px; padding:22px; color:var(--stone); }}
   @media (max-width: 920px) {{
     .page {{ padding:28px 16px 52px; }}
     h1 {{ max-width:100%; font-size:30px; line-height:1.18; white-space:normal; word-break:break-all; overflow-wrap:anywhere; }}
     .subtitle {{ max-width:100%; font-size:18px; white-space:normal; word-break:break-all; overflow-wrap:anywhere; }}
     .metrics {{ grid-template-columns:repeat(2, minmax(0, 1fr)); }}
     .chart-grid {{ grid-template-columns:1fr; }}
+    .quote-grid {{ grid-template-columns:1fr; }}
     .appendix {{ grid-template-columns:1fr; }}
     .chart-head {{ display:block; min-height:auto; }}
     .chart-head span {{ display:block; max-width:none; text-align:left; margin-top:8px; }}
@@ -1741,6 +1978,8 @@ def build_html(data: dict[str, Any]) -> str:
       <div class="eyebrow">{escape_html(report_eyebrow)}</div>
       <h1>{escape_html(report_title)}</h1>
       <p class="subtitle">{escape_html(report_subtitle)}</p>
+      {portrait_summary_html}
+      {golden_quote_html}
       <div class="meta-line">{meta_badges}</div>
     </div>
   </header>
@@ -1784,6 +2023,14 @@ def build_html(data: dict[str, Any]) -> str:
       <p>划线和想法是阅读后真正留下来的东西。词云是高频短语抽取，不等于严格自然语言分词。</p>
     </div>
     <div class="chart-grid">{groups['notes']}</div>
+  </section>
+
+  <section>
+    <div class="section-title">
+      <h2>画像划线清单</h2>
+      <p>从近两年划线中挑出最贴近本报告画像的句子。顶部金句来自这组清单的第一条。</p>
+    </div>
+    <div class="quote-grid">{portrait_quotes_html}</div>
   </section>
 
   <section>
@@ -1902,12 +2149,21 @@ def validate_output(html: str, data: dict[str, Any]) -> list[str]:
             label = series.get("label") or {}
             if not label.get("formatter") or not series.get("labelLayout"):
                 errors.append(f"treemap label guard missing: {chart.get('title')}")
+    portrait = data.get("readerPortrait") or {}
+    quotes = portrait.get("quotes") or []
+    golden_quote = portrait.get("goldenQuote")
+    if data.get("meta", {}).get("sampleReport") and len(quotes) < 20:
+        errors.append("sample report expected 20 portrait quotes")
+    if quotes and (not golden_quote or golden_quote.get("text") != quotes[0].get("text")):
+        errors.append("golden quote must be the first portrait quote")
+    if quotes and "画像划线清单" not in html:
+        errors.append("portrait quote section missing in HTML")
     return errors
 
 
 def write_outputs(output_dir: Path, data: dict[str, Any]) -> tuple[Path, Path, Path]:
     output_dir.mkdir(parents=True, exist_ok=True)
-    html = build_html(data)
+    html = "\n".join(line.rstrip() for line in build_html(data).splitlines()) + "\n"
     errors = validate_output(html, data)
     if errors:
         raise SystemExit("Output validation failed:\n" + "\n".join(f"- {item}" for item in errors))
@@ -1916,7 +2172,13 @@ def write_outputs(output_dir: Path, data: dict[str, Any]) -> tuple[Path, Path, P
     summary_path = output_dir / "weread-raw-summary.json"
     html_path.write_text(html, encoding="utf-8")
     data_path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
-    summary = {"meta": data["meta"], "kpis": data["kpis"], "coverage": data["coverage"], "chartCount": len(data["charts"])}
+    summary = {
+        "meta": data["meta"],
+        "kpis": data["kpis"],
+        "coverage": data["coverage"],
+        "chartCount": len(data["charts"]),
+        "portraitQuoteCount": data.get("readerPortrait", {}).get("quoteCount", 0),
+    }
     summary_path.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
     return html_path, data_path, summary_path
 

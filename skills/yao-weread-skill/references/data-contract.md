@@ -17,7 +17,7 @@ X: https://x.com/yaojingang
 | 阅读统计 | `/readdata/detail` | 月度和年度阅读时长、阅读天数、阅读统计、Top 书籍、分类、作者、出版社，以及可用时的阅读/听书拆分 |
 | 书架 | `/shelf/sync` | 书籍、有声专辑、文章收藏入口数量，书架分类，近期阅读/更新信号，归档数量，公开/私密状态 |
 | 笔记总览 | `/user/notebooks` | 有笔记的书、笔记总量、划线、想法、书签、阅读进度 |
-| 划线文本 | `/book/bookmarklist` | 用户划线，用于词云、长度分布、划线时间线 |
+| 划线文本 | `/book/bookmarklist` | 用户划线，用于词云、长度分布、划线时间线、画像金句和 20 条画像划线清单 |
 | 想法/书评 | `/review/list/mine` | 用户想法和书评，用于词云和笔记时间线 |
 
 ## 必须遵守的语义
@@ -28,6 +28,8 @@ X: https://x.com/yaojingang
 - 笔记分页使用 `count` 和顶层 `lastSort`；不要使用 `params`、`offset` 或 `limit`。
 - `/review/list/mine` 需要小写 `bookid`。
 - `readTimes` 是明细数据；完整周期汇总使用 `totalReadTime`，日/月可视化使用 `readTimes`。
+- `readerPortrait.quotes` 只允许使用用户划线文本，不允许从书籍正文、想法点评或统计摘要中编造。
+- `readerPortrait.goldenQuote` 必须等于画像划线清单第一条。
 
 ## 默认范围
 
@@ -45,6 +47,7 @@ X: https://x.com/yaojingang
 - 如果偏好字段缺失，图表面板应显示明确空状态。
 - 如果某本书的划线/想法文本拉取失败，保留笔记总览数据，并记录拉取错误数量。
 - 如果中文分词不可用，使用确定性短语抽取，结合中文停用词、领域词优先和 n-gram 过滤。
+- 如果有效划线不足 20 条，画像划线清单按实际数量展示；不要补写虚构句子。
 - 如果图表库加载失败，报告仍应展示 KPI 卡片、表格和文字摘要。
 
 ## AI 创业者示例模式
